@@ -39,7 +39,7 @@ function Navbar() {
       <Box component={Link} to="/" sx={{ display: "flex", alignItems: "center" }}>
         <Box
           component="img"
-          src="/assets/logo/maris-logo.png"
+          src="/assets/logo/logo.png"
           alt="Mari's Balloon Bar Logo"
           sx={{ height: "100px" }}
           marginLeft={5} marginBottom={3}
