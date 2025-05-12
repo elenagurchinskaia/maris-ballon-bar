@@ -11,10 +11,10 @@ import BookEvent from "./pages/BookEvent";
 import Error from "./pages/Error";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter, RouterProvider } from "react-router-dom";
 // 
 
-const router = createBrowserRouter([
+const router = BrowserRouter([
   {
     path: "/",
     element: <App />,
