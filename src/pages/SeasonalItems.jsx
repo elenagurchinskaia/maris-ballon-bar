@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import {
   Box,
@@ -12,44 +11,37 @@ import {
   Button,
 } from "@mui/material";
 
+import { useCart } from "../components/CartContext";
+
 function SeasonalItems() {
-  const [cart, setCart] = useState([]);
+  const { addToCart } = useCart();
 
   const items = [
     {
       id: 1,
       name: "Spring Bouquet",
-      src: "https://via.placeholder.com/300x300?text=Spring+Bouquet",
+      src: "/assets/gallery/seasonal-spring.jpg",
       price: "$25",
     },
     {
       id: 2,
       name: "Summer Festival",
-      src: "https://via.placeholder.com/300x300?text=Summer+Festival",
+      src: "/assets/gallery/seasonal-summer-01.webp",
       price: "$30",
     },
     {
       id: 3,
       name: "Autumn Wreath",
-      src: "https://via.placeholder.com/300x300?text=Autumn+Wreath",
+      src: "/assets/gallery/seasonal-autumn.webp",
       price: "$28",
     },
     {
       id: 4,
       name: "Winter Garland",
-      src: "https://via.placeholder.com/300x300?text=Winter+Garland",
+      src: "/assets/gallery/seasonal-winter",
       price: "$35",
     },
   ];
-
-  const addToCart = (item) => {
-    setCart([...cart, item]);
-  };
-
-  const handlePurchase = () => {
-    alert(`Purchasing ${cart.length} items!`);
-    setCart([]);
-  };
 
   return (
     <>
@@ -79,6 +71,7 @@ function SeasonalItems() {
                   </Typography>
                   <Typography sx={{ fontFamily: "Trap" }}>{item.price}</Typography>
                 </CardContent>
+
                 <CardActions>
                   <Button
                     size="small"
@@ -102,30 +95,7 @@ function SeasonalItems() {
             </Grid>
           ))}
         </Grid>
-
-        {cart.length > 0 && (
-          <Box sx={{ textAlign: "center", mt: 6 }}>
-            <Button
-              variant="contained"
-              onClick={handlePurchase}
-              sx={{
-                backgroundColor: "#f6d1e3",
-                color: "#000",
-                px: 4,
-                py: 1.5,
-                fontWeight: 700,
-                fontFamily: "Trap",
-                borderRadius: 2,
-                "&:hover": {
-                  backgroundColor: "#f1bdd4",
-                },
-              }}
-            >
-              Make Purchase ({cart.length})
-            </Button>
-          </Box>
-        )}
-      </Container>
+      </Container >
     </>
   );
 }

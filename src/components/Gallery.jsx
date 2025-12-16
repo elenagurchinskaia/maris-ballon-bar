@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Grid } from "@mui/material";
 
 const images = [
@@ -10,7 +9,18 @@ const images = [
 
 function Gallery() {
   return (
-    <Box sx={{ width: "100%", overflow: "hidden", display: "flex", justifyContent: "center" }}>
+    <Box sx={{
+      backgroundColor: "white",
+      width: "100%",
+      maxWidth: "100%",
+      position: "relative",
+      zIndex: 2,
+      // overflow: "hidden",
+      display: "flex",
+      justifyContent: "center",
+
+      // mt: { xs: 12, md: 12 },
+    }}>
       <Grid container spacing={2}>
         {images.map((img, index) => (
           <Grid

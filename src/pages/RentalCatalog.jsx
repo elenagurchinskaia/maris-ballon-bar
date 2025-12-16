@@ -1,7 +1,5 @@
 import Navbar from "../components/Navbar";
-import React, { useState } from "react";
 import {
-  Box,
   Container,
   Typography,
   Grid,
@@ -11,45 +9,37 @@ import {
   CardActions,
   Button,
 } from "@mui/material";
+import { useCart } from "../components/CartContext";
 
 function RentalItems() {
-  const [cart, setCart] = useState([]);
+  const { addToCart } = useCart();
 
   const items = [
     {
       id: 1,
       name: "Deluxe Party Pack",
-      src: "https://via.placeholder.com/300x300?text=Deluxe+Party+Pack",
+      src: "/assets/gallery/rental-deluxe-party-pack-01.jpg",
       price: "$45",
     },
     {
       id: 2,
       name: "Wedding Decor Set",
-      src: "https://via.placeholder.com/300x300?text=Wedding+Decor+Set",
+      src: "/assets/gallery/rental-wedding-decor-set.jpg",
       price: "$120",
     },
     {
       id: 3,
       name: "Corporate Event Kit",
-      src: "https://via.placeholder.com/300x300?text=Corporate+Event+Kit",
+      src: "/assets/gallery/rental-corporate-kit.webp",
       price: "$200",
     },
     {
       id: 4,
       name: "Birthday Bash Supplies",
-      src: "https://via.placeholder.com/300x300?text=Birthday+Bash+Supplies",
+      src: "/assets/gallery/rental-deluxe-party-pack-01.avif",
       price: "$85",
     },
   ];
-
-  const addToCart = (item) => {
-    setCart([...cart, item]);
-  };
-
-  const handlePurchase = () => {
-    alert(`Purchasing ${cart.length} items!`);
-    setCart([]);
-  };
 
   return (
     <>
@@ -83,7 +73,7 @@ function RentalItems() {
                   <Button
                     size="small"
                     variant="outlined"
-                    onClick={() => addToCart(item)}
+                    onClick={() => addToCart(item)} // ✅ now from context
                     sx={{
                       fontFamily: "Trap",
                       textTransform: "uppercase",
@@ -102,33 +92,9 @@ function RentalItems() {
             </Grid>
           ))}
         </Grid>
-
-        {cart.length > 0 && (
-          <Box sx={{ textAlign: "center", mt: 6 }}>
-            <Button
-              variant="contained"
-              onClick={handlePurchase}
-              sx={{
-                backgroundColor: "#f6d1e3",
-                color: "#000",
-                px: 4,
-                py: 1.5,
-                fontWeight: 700,
-                fontFamily: "Trap",
-                borderRadius: 2,
-                "&:hover": {
-                  backgroundColor: "#f1bdd4",
-                },
-              }}
-            >
-              Make Purchase ({cart.length})
-            </Button>
-          </Box>
-        )}
       </Container>
     </>
   );
 }
 
 export default RentalItems;
-

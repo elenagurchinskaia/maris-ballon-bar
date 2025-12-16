@@ -52,13 +52,16 @@ function BookEvent() {
               alignItems: "center",
             }}
           >
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              minDate={new Date()}
-              dateFormat="MMMM d, yyyy"
-              inline
-            />
+            <Box mt={6} sx={{ width: "100%", maxWidth: 800, mx: "auto" }}>
+              <iframe
+                src="https://app.acuityscheduling.com/schedule.php?owner=37492301"
+                title="Schedule Your Event"
+                width="100%"
+                height="800"
+                frameBorder="0"
+                style={{ border: "none" }}
+              ></iframe>
+            </Box>
             <Button
               type="submit"
               variant="contained"

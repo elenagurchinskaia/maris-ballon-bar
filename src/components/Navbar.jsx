@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { Box, Typography } from "@mui/material";
+import { useCart } from "./CartContext";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [activeTab, setActiveTab] = useState("");
   const currentPage = useLocation().pathname;
+  const { cart } = useCart();
+  const navigate = useNavigate();
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -31,7 +36,8 @@ function Navbar() {
         width: "100%",
         overflow: "hidden",
         flexWrap: "wrap",
-        maxWidth: "1700px"
+        maxWidth: "1700px",
+
 
       }}
     >
@@ -39,7 +45,7 @@ function Navbar() {
       <Box component={Link} to="/" sx={{ display: "flex", alignItems: "center" }}>
         <Box
           component="img"
-          src="/assets/logo/logo.png"
+          src="/assets/logo/maris-logo-colored.png"
           alt="Mari's Balloon Bar Logo"
           sx={{ height: "100px" }}
           marginLeft={5} marginBottom={3}
@@ -82,10 +88,30 @@ function Navbar() {
           </Box>
         ))}
       </Box>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Box sx={{ position: "relative", cursor: "pointer" }} onClick={() => navigate("/cart")}>
+          <ShoppingCartIcon />
+          {cart.length > 0 && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: -5,
+                right: -10,
+                color: "black",
+                width: 20,
+                fontSize: 12,
+                textAlign: "center",
+              }}
+            >
+              {cart.length}
+            </Box>
+
+          )}
+        </Box>
 
 
-      {/* Social Icons */}
-      <Box sx={{ display: "flex", alignItems: "center" }}>
+        {/* Social Icons */}
+        {/* <Box sx={{ display: "flex", alignItems: "center" }}> */}
         <Link
           to="https://www.facebook.com/Marisballoonbar?mibextid=ZbWKwL"
           target="_blank"

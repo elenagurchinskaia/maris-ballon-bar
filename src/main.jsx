@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import Home from "./pages/Home";
@@ -9,10 +8,11 @@ import RentalCatalog from "./pages/RentalCatalog";
 import SeasonalItems from "./pages/SeasonalItems";
 import BookEvent from "./pages/BookEvent";
 import Error from "./pages/Error";
+import CartPage from "./pages/CartPage";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-// 
+
 
 const router = createBrowserRouter([
   {
@@ -47,6 +47,11 @@ const router = createBrowserRouter([
       {
         path: "/book-event",
         element: <BookEvent />
+      },
+
+      {
+        path: "/cart",
+        element: <CartPage />
       },
     ],
     errorElement: <Error />,

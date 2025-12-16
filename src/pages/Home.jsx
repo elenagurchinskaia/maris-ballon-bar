@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Gallery from "../components/Gallery";
+
+
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import {
   Box,
@@ -194,13 +196,18 @@ function Home() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          width: "100%",
+          overflowX: "hidden",
+
+
         }}
       >
         <Navbar />
         <Gallery />
+
         <Footer />
       </Box>
-    </Box>
+    </Box >
   );
 }
 

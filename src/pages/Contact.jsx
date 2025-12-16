@@ -1,5 +1,4 @@
 import Navbar from "../components/Navbar";
-import React from "react";
 import {
   Box,
   TextField,
@@ -8,14 +7,40 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
+import { set } from "date-fns";
 
 function ContactForm() {
+  const form = useRef();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [sending, setSending] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Form submitted!");
+    setSending(true);
+
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        form.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => {
+          console.log("Email sent:", result.text);
+          alert("Thank you! Your message has been sent successfully!");
+          form.current.reset();
+          setSending(false);
+        },
+        (error) => {
+          console.error("Email error:", error.text);
+          alert("Oops! Something went wrong. Please try again later.");
+          setSending(false);
+        }
+      );
   };
 
   return (
@@ -23,6 +48,7 @@ function ContactForm() {
       <Navbar />
       <Box
         component="form"
+        ref={form}
         onSubmit={handleSubmit}
         sx={{
           maxWidth: 600,
@@ -55,6 +81,7 @@ function ContactForm() {
           required
           fullWidth
           label="First and Last Name"
+          name="user_name"
           margin="normal"
           variant="outlined"
         />
@@ -62,6 +89,7 @@ function ContactForm() {
           required
           fullWidth
           label="Email Address"
+          name="user_email"
           margin="normal"
           type="email"
           variant="outlined"
@@ -70,24 +98,28 @@ function ContactForm() {
           required
           fullWidth
           label="Phone Number"
+          name="user_phone"
           margin="normal"
           variant="outlined"
         />
         <TextField
           fullWidth
           label="Company Name (if applicable)"
+          name="company_name"
           margin="normal"
           variant="outlined"
         />
         <TextField
           fullWidth
           label="How did you hear about us?"
+          name="referral_source"
           margin="normal"
           variant="outlined"
         />
         <TextField
           fullWidth
           label="Event Date"
+          name="event_date"
           margin="normal"
           type="date"
           InputLabelProps={{ shrink: true }}
@@ -96,6 +128,7 @@ function ContactForm() {
           required
           fullWidth
           label="Message"
+          name="message"
           margin="normal"
           multiline
           rows={4}
@@ -105,6 +138,7 @@ function ContactForm() {
         <Button
           type="submit"
           variant="contained"
+          disabled={sending}
           sx={{
             mt: 3,
             backgroundColor: "#f6d1e3",
@@ -120,7 +154,7 @@ function ContactForm() {
             },
           }}
         >
-          SUBMIT
+          {sending ? "Sending..." : "SUBMIT"}
         </Button>
       </Box>
     </>
