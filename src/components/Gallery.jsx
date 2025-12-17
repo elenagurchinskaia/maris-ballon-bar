@@ -16,7 +16,9 @@ function Gallery() {
         width: "100%",
         padding: { xs: 2, md: 4 },
         boxSizing: "border-box",
-        minHeight: "110vh",
+        minwidth: { xs: "90px", md: "480px", sm: "380px" }
+
+
 
       }}
     >
@@ -39,10 +41,14 @@ function Gallery() {
               alt={img.alt}
               sx={{
                 width: "100%",
-                maxWidth: "320px",
+                maxWidth: {
+                  xs: "320px",   // phones
+                  sm: "420px",   // tablets
+                  md: "500px",   // desktops
+                },
                 height: "auto",
                 objectFit: "cover",
-                borderRadius: 2,
+                // borderRadius: 2,
                 boxShadow: 3,
                 transition: "transform 0.3s ease",
                 "&:hover": {
