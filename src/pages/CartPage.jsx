@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Navbar from "../components/Navbar";
 import { CartContext } from "../components/CartContext";
 import {
@@ -10,7 +10,8 @@ import {
     ListItemText,
     Button,
     IconButton,
-    Grid
+    Grid,
+    TextField
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import emailjs from "@emailjs/browser";
@@ -18,26 +19,41 @@ import emailjs from "@emailjs/browser";
 function CartPage() {
     const { cart, setCart } = useContext(CartContext);
 
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPhone, setUserPhone] = useState("");
+    const [companyName, setCompanyName] = useState("");
+
     const removeItem = (index) => {
         const updatedCart = cart.filter((_, i) => i !== index);
-        setCart(updatedCart); // now works!
+        setCart(updatedCart);
     };
 
     const handleSendEmail = async () => {
+        const total = cart.reduce((acc, item) => acc + Number(item.price.replace("$", "")), 0);
+
         const templateParams = {
+            user_name: userName,
+            user_email: userEmail,
+            user_phone: userPhone,
+            company_name: companyName,
             items: cart.map((item) => `${item.name} - ${item.price}`).join(", "),
-            total: cart.reduce((acc, item) => acc + Number(item.price.replace("$", "")), 0),
+            total: `$${total.toFixed(2)}`
         };
 
         try {
             await emailjs.send(
-                "your_service_id",
-                "your_template_id",
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID_CART,
                 templateParams,
-                "your_public_key"
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
             );
             alert("Your request has been sent!");
             setCart([]);
+            setUserName("");
+            setUserEmail("");
+            setUserPhone("");
+            setCompanyName("");
         } catch (error) {
             console.error("Email error:", error);
             alert("Oops! Something went wrong.");
@@ -58,9 +74,13 @@ function CartPage() {
         <>
             <Navbar />
             <Container sx={{ py: 6 }}>
+
+
                 <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 3 }}>
                     Your Items
                 </Typography>
+
+
 
                 <List>
                     {cart.map((item, idx) => (
@@ -107,6 +127,47 @@ function CartPage() {
                         </ListItem>
                     ))}
                 </List>
+
+                <TextField
+                    required
+                    fullWidth
+                    label="First and Last Name"
+                    name="user_name"
+                    margin="normal"
+                    variant="outlined"
+                    value={userName}
+                    onChange={(e) => setUserName(e.target.value)}
+                />
+                <TextField
+                    required
+                    fullWidth
+                    label="Email Address"
+                    name="user_email"
+                    margin="normal"
+                    type="email"
+                    variant="outlined"
+                    value={userEmail}
+                    onChange={(e) => setUserEmail(e.target.value)}
+                />
+                <TextField
+                    required
+                    fullWidth
+                    label="Phone Number"
+                    name="user_phone"
+                    margin="normal"
+                    variant="outlined"
+                    value={userPhone}
+                    onChange={(e) => setUserPhone(e.target.value)}
+                />
+                <TextField
+                    fullWidth
+                    label="Company Name (if applicable)"
+                    name="company_name"
+                    margin="normal"
+                    variant="outlined"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                />
 
                 <Box sx={{ mt: 4 }}>
                     <Button

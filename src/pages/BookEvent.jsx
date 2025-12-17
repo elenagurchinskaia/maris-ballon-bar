@@ -54,7 +54,7 @@ function BookEvent() {
           >
             <Box mt={6} sx={{ width: "100%", maxWidth: 800, mx: "auto" }}>
               <iframe
-                src="https://app.acuityscheduling.com/schedule.php?owner=37492301"
+                src="https://app.acuityscheduling.com/schedule/fb5c12b4/appointment/86871886/calendar/13244198"
                 title="Schedule Your Event"
                 width="100%"
                 height="800"
