@@ -25,6 +25,7 @@ function CartPage() {
     const [companyName, setCompanyName] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSending, setIsSending] = useState(false);
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail);
 
     const removeItem = (index) => {
         const updatedCart = cart.filter((_, i) => i !== index);
@@ -68,15 +69,15 @@ function CartPage() {
         }
     };
 
-    if (cart.length === 0) {
-        return (
-            <Container sx={{ py: 6, textAlign: "center" }}>
-                <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 2 }}>
-                    Your Cart is Empty
-                </Typography>
-            </Container>
-        );
-    }
+    // if (cart.length === 0) {
+    //     return (
+    //         <Container sx={{ py: 6, textAlign: "center" }}>
+    //             <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 2 }}>
+    //                 Your Cart is Empty
+    //             </Typography>
+    //         </Container>
+    //     );
+    // }
 
     return (
         <>
@@ -95,7 +96,11 @@ function CartPage() {
                     </Typography>
 
                     <Typography sx={{ mb: 4 }}>
-                        She’ll review your items and contact you shortly with pricing and an invoice.
+                        We will review your selected items and contact you shortly with pricing and an invoice.
+                    </Typography>
+
+                    <Typography sx={{ mb: 4, color: "text.secondary" }}>
+                        You’re welcome to continue browsing while we prepare your quote.
                     </Typography>
 
                     <Button
@@ -113,10 +118,15 @@ function CartPage() {
                         BACK TO SHOP
                     </Button>
                 </Container>
+            ) : cart.length === 0 ? (
+                <Container sx={{ py: 10, textAlign: "center" }}>
+                    <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 2 }}>
+                        Your Cart is Empty
+                    </Typography>
+                </Container>
             ) : (
                 <Container sx={{ py: 6 }}>
-
-
+                    {/* CART ITEMS LIST */}
                     <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 3 }}>
                         Your Items
                     </Typography>
