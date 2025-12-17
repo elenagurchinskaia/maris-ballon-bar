@@ -23,6 +23,8 @@ function CartPage() {
     const [userEmail, setUserEmail] = useState("");
     const [userPhone, setUserPhone] = useState("");
     const [companyName, setCompanyName] = useState("");
+    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSending, setIsSending] = useState(false);
 
     const removeItem = (index) => {
         const updatedCart = cart.filter((_, i) => i !== index);
@@ -30,6 +32,9 @@ function CartPage() {
     };
 
     const handleSendEmail = async () => {
+        if (!userName || !userEmail || !userPhone) return;
+        setIsSending(true);
+
         const total = cart.reduce((acc, item) => acc + Number(item.price.replace("$", "")), 0);
 
         const templateParams = {
@@ -57,6 +62,9 @@ function CartPage() {
         } catch (error) {
             console.error("Email error:", error);
             alert("Oops! Something went wrong.");
+        } finally {
+            setIsSending(false);
+            setIsSubmitted(true);
         }
     };
 
@@ -73,106 +81,25 @@ function CartPage() {
     return (
         <>
             <Navbar />
-            <Container sx={{ py: 6 }}>
+            {isSubmitted ? (
+                <Container sx={{ py: 10, textAlign: "center" }}>
+                    <Typography
+                        variant="h4"
+                        sx={{ fontFamily: "Trap", fontWeight: 700, mb: 2 }}
+                    >
+                        Thank you! 🎉
+                    </Typography>
 
+                    <Typography sx={{ mb: 2 }}>
+                        Your request has been sent to Mari.
+                    </Typography>
 
-                <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 3 }}>
-                    Your Items
-                </Typography>
+                    <Typography sx={{ mb: 4 }}>
+                        She’ll review your items and contact you shortly with pricing and an invoice.
+                    </Typography>
 
-
-
-                <List>
-                    {cart.map((item, idx) => (
-                        <ListItem
-                            key={idx}
-                            sx={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                borderBottom: "1px solid #eee",
-                                py: 2
-                            }}
-                        >
-                            <Grid container spacing={2} alignItems="center">
-                                {/* IMAGE */}
-                                <Grid item xs={2} sm={1}>
-                                    <img
-                                        src={item.src}
-                                        alt={item.name}
-                                        style={{ width: "60px", borderRadius: "4px" }}
-                                    />
-                                </Grid>
-
-                                {/* NAME + PRICE */}
-                                <Grid item xs={8} sm={9}>
-                                    <ListItemText
-                                        primary={item.name}
-                                        secondary={item.price}
-                                        sx={{ fontFamily: "Trap" }}
-                                    />
-                                </Grid>
-
-                                {/* DELETE BUTTON */}
-                                <Grid item xs={2} sm={2}>
-                                    <IconButton
-                                        onClick={() => removeItem(idx)}
-                                        sx={{
-                                            "&:hover": { color: "#ff4444" }
-                                        }}
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </Grid>
-                            </Grid>
-                        </ListItem>
-                    ))}
-                </List>
-
-                <TextField
-                    required
-                    fullWidth
-                    label="First and Last Name"
-                    name="user_name"
-                    margin="normal"
-                    variant="outlined"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                />
-                <TextField
-                    required
-                    fullWidth
-                    label="Email Address"
-                    name="user_email"
-                    margin="normal"
-                    type="email"
-                    variant="outlined"
-                    value={userEmail}
-                    onChange={(e) => setUserEmail(e.target.value)}
-                />
-                <TextField
-                    required
-                    fullWidth
-                    label="Phone Number"
-                    name="user_phone"
-                    margin="normal"
-                    variant="outlined"
-                    value={userPhone}
-                    onChange={(e) => setUserPhone(e.target.value)}
-                />
-                <TextField
-                    fullWidth
-                    label="Company Name (if applicable)"
-                    name="company_name"
-                    margin="normal"
-                    variant="outlined"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                />
-
-                <Box sx={{ mt: 4 }}>
                     <Button
                         variant="contained"
-                        onClick={handleSendEmail}
                         sx={{
                             backgroundColor: "#f6d1e3",
                             color: "#000",
@@ -181,11 +108,134 @@ function CartPage() {
                             px: 4,
                             "&:hover": { backgroundColor: "#f1bdd4" }
                         }}
+                        onClick={() => setIsSubmitted(false)}
                     >
-                        SEND TO MARI
+                        BACK TO SHOP
                     </Button>
-                </Box>
-            </Container>
+                </Container>
+            ) : (
+                <Container sx={{ py: 6 }}>
+
+
+                    <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 3 }}>
+                        Your Items
+                    </Typography>
+
+
+
+                    <List>
+                        {cart.map((item, idx) => (
+                            <ListItem
+                                key={idx}
+                                sx={{
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    borderBottom: "1px solid #eee",
+                                    py: 2
+                                }}
+                            >
+                                <Grid container spacing={2} alignItems="center">
+                                    {/* IMAGE */}
+                                    <Grid item xs={2} sm={1}>
+                                        <img
+                                            src={item.src}
+                                            alt={item.name}
+                                            style={{ width: "60px", borderRadius: "4px" }}
+                                        />
+                                    </Grid>
+
+                                    {/* NAME + PRICE */}
+                                    <Grid item xs={8} sm={9}>
+                                        <ListItemText
+                                            primary={item.name}
+                                            secondary={item.price}
+                                            sx={{ fontFamily: "Trap" }}
+                                        />
+                                    </Grid>
+
+                                    {/* DELETE BUTTON */}
+                                    <Grid item xs={2} sm={2}>
+                                        <IconButton
+                                            onClick={() => removeItem(idx)}
+                                            sx={{
+                                                "&:hover": { color: "#ff4444" }
+                                            }}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </Grid>
+                                </Grid>
+                            </ListItem>
+                        ))}
+                    </List>
+
+                    {/* Total */}
+                    <Box sx={{ mt: 3, mb: 2, textAlign: "right" }}>
+                        <Typography variant="h6" sx={{ fontFamily: "Trap", fontWeight: 700 }}>
+                            Total: ${cart.reduce((acc, item) => acc + Number(item.price.replace("$", "")), 0).toFixed(2)}
+                        </Typography>
+                    </Box>
+
+                    <TextField sx={{ my: 2 }}
+                        required
+                        fullWidth
+                        label="First and Last Name"
+                        name="user_name"
+                        margin="normal"
+                        variant="outlined"
+                        value={userName}
+                        onChange={(e) => setUserName(e.target.value)}
+                    />
+                    <TextField sx={{ my: 2 }}
+                        required
+                        fullWidth
+                        label="Email Address"
+                        name="user_email"
+                        margin="normal"
+                        type="email"
+                        variant="outlined"
+                        value={userEmail}
+                        onChange={(e) => setUserEmail(e.target.value)}
+                    />
+                    <TextField sx={{ my: 2 }}
+                        required
+                        fullWidth
+                        label="Phone Number"
+                        name="user_phone"
+                        margin="normal"
+                        variant="outlined"
+                        value={userPhone}
+                        onChange={(e) => setUserPhone(e.target.value)}
+                    />
+                    <TextField sx={{ my: 2 }}
+                        fullWidth
+                        label="Company Name (if applicable)"
+                        name="company_name"
+                        margin="normal"
+                        variant="outlined"
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
+                    />
+
+                    <Box sx={{ mt: 4 }}>
+                        <Button
+                            variant="contained"
+                            onClick={handleSendEmail}
+                            disabled={isSending}
+                            sx={{
+                                backgroundColor: "#f6d1e3",
+                                color: "#000",
+                                fontFamily: "Trap",
+                                fontWeight: 700,
+                                px: 4,
+                                "&:hover": { backgroundColor: "#f1bdd4" }
+                            }}
+                        >
+                            {isSending ? "SENDING..." : "SEND REQUEST"}
+                        </Button>
+                    </Box>
+                </Container>
+            )}
         </>
     );
 }
