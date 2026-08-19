@@ -49,35 +49,38 @@ function Home() {
       {/* Hero */}
       <Box
         sx={{
-          pt: { xs: "90px", md: "130px" },
+          pt: { xs: "60px", md: "90px" },
           pb: { xs: 6, md: 10 },
-          px: { xs: 3, md: 8 },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: "center",
-          gap: { xs: 5, md: 8 },
-          maxWidth: 1400,
-          mx: "auto",
+          gap: { xs: 5, md: 0 },
         }}
       >
         {/* Text column */}
-        <Box sx={{ flex: 1, position: "relative" }}>
+        <Box
+          sx={{
+            flex: 1,
+            position: "relative",
+            px: { xs: 3, md: 8 },
+          }}
+        >
           <Box
             component="svg"
             viewBox="0 0 60 40"
             sx={{
               position: "absolute",
-              top: -18,
-              right: { xs: 8, md: 60 },
-              width: 50,
-              height: 34,
+              top: { xs: 40, md: 52 },
+              left: { xs: 200, sm: 260, md: 330 },
+              width: 70,
+              height: 46,
               display: { xs: "none", sm: "block" },
             }}
           >
             <path
-              d="M2 20 C 10 5, 20 5, 20 15 C 20 25, 10 25, 12 15 C 14 5, 25 2, 30 12"
+              d="M2 30 C 4 14, 14 12, 16 22 C 18 32, 8 34, 10 24 C 12 14, 24 6, 34 10 C 42 13, 44 20, 40 24"
               stroke={colors.softAccent}
-              strokeWidth="2.5"
+              strokeWidth="3"
               fill="none"
               strokeLinecap="round"
             />
@@ -87,10 +90,10 @@ function Home() {
             viewBox="0 0 24 24"
             sx={{
               position: "absolute",
-              top: 14,
-              right: { xs: 0, md: 24 },
-              width: 20,
-              height: 20,
+              top: { xs: 34, md: 46 },
+              left: { xs: 268, sm: 340, md: 420 },
+              width: 34,
+              height: 34,
               display: { xs: "none", sm: "block" },
             }}
           >
@@ -105,15 +108,15 @@ function Home() {
               fontWeight: 700,
               letterSpacing: "0.15em",
               textTransform: "uppercase",
-              fontSize: "0.85rem",
+              fontSize: { xs: "1rem", md: "0.85rem" },
               color: colors.text,
-              mb: 1,
+              mb: 0,
             }}
           >
             Bespoke Balloons For
           </Typography>
 
-          <Typography variant="h1" sx={{ lineHeight: 1, mb: 3 }}>
+          <Typography variant="h1" sx={{ lineHeight: 1, mb: 1 }}>
             <Box
               component="span"
               sx={{
@@ -121,7 +124,7 @@ function Home() {
                 fontStyle: "italic",
                 fontWeight: 500,
                 color: colors.primary,
-                fontSize: { xs: "3rem", sm: "4rem", md: "5rem" },
+                fontSize: { xs: "3.75rem", sm: "4.5rem", md: "5rem" },
               }}
             >
               every
@@ -132,7 +135,7 @@ function Home() {
                 display: "block",
                 fontWeight: 700,
                 color: colors.text,
-                fontSize: { xs: "3rem", sm: "4rem", md: "5rem" },
+                fontSize: { xs: "3.75rem", sm: "4.5rem", md: "5rem" },
               }}
             >
               moment
@@ -142,8 +145,8 @@ function Home() {
           <Typography
             sx={{
               color: colors.textMuted,
-              fontSize: "1.05rem",
-              maxWidth: 440,
+              fontSize: { xs: "1.2rem", md: "1.05rem" },
+              maxWidth: { xs: "100%", md: 440 },
               mb: 4,
             }}
           >
@@ -151,7 +154,7 @@ function Home() {
             everything in between.
           </Typography>
 
-          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+          <Box sx={{ display: "flex", gap: { xs: 2, md: 1.25 }, flexWrap: "nowrap" }}>
             <Button
               component={Link}
               to="/book-event"
@@ -163,8 +166,10 @@ function Home() {
                 fontWeight: 700,
                 letterSpacing: "0.05em",
                 borderRadius: "999px",
-                px: 3.5,
+                whiteSpace: "nowrap",
+                px: { xs: 3.5, md: 2.25 },
                 py: 1.5,
+                fontSize: { md: "0.8rem" },
                 "&:hover": { backgroundColor: colors.primaryHover },
               }}
             >
@@ -181,8 +186,10 @@ function Home() {
                 fontWeight: 700,
                 letterSpacing: "0.05em",
                 borderRadius: "999px",
-                px: 3.5,
+                whiteSpace: "nowrap",
+                px: { xs: 3.5, md: 2.25 },
                 py: 1.5,
+                fontSize: { md: "0.8rem" },
                 "&:hover": {
                   borderColor: colors.primaryHover,
                   backgroundColor: "rgba(242, 90, 155, 0.08)",
@@ -196,16 +203,27 @@ function Home() {
 
         {/* Image column */}
         <Box
-          component="img"
-          src="/assets/logo/balloons-arch.png"
-          alt="Custom balloon installation by Mari's Balloon Bar"
           sx={{
-            flex: 1,
-            width: "100%",
-            maxWidth: { xs: "100%", md: 560 },
-            height: "auto",
+            width: { xs: "10%", md: "72%" },
+            flexShrink: 0,
+            height: { xs: 380, sm: 480, md: "calc(100vh - 90px)" },
+            overflow: "hidden",
+            backgroundColor: colors.background,
+            transform: { md: "translateX(-24px)" },
           }}
-        />
+        >
+          <Box
+            component="img"
+            src="/assets/logo/balloons-arch-v3.png"
+            alt="Custom balloon installation by Mari's Balloon Bar"
+            sx={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              objectPosition: "center",
+            }}
+          />
+        </Box>
       </Box>
 
       {/* Features */}
