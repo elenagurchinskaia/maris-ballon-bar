@@ -10,36 +10,52 @@ import {
   Button,
 } from "@mui/material";
 import { useCart } from "../components/CartContext";
+import { colors } from "../theme";
+
+// NOTE: names and prices below are placeholders based on what each photo
+// shows (table/linen/chair rentals) — confirm real item names and pricing
+// with Mari before this goes live.
+const items = [
+  {
+    id: 1,
+    name: 'Round Table (60")',
+    src: "/assets/rental-items/1.png",
+    price: "$12/day",
+  },
+  {
+    id: 2,
+    name: "Round Table Linen",
+    src: "/assets/rental-items/2.png",
+    price: "$10/day",
+  },
+  {
+    id: 3,
+    name: "Rectangular Table (6ft)",
+    src: "/assets/rental-items/3.png",
+    price: "$12/day",
+  },
+  {
+    id: 4,
+    name: "Rectangular Table Linen",
+    src: "/assets/rental-items/4.png",
+    price: "$10/day",
+  },
+  {
+    id: 5,
+    name: "Folding Chair",
+    src: "/assets/rental-items/5.png",
+    price: "$2/day",
+  },
+  {
+    id: 6,
+    name: "Chair Spandex Cover",
+    src: "/assets/rental-items/6.png",
+    price: "$3/day",
+  },
+];
 
 function RentalItems() {
   const { addToCart } = useCart();
-
-  const items = [
-    {
-      id: 1,
-      name: "Deluxe Party Pack",
-      src: "/assets/gallery/rental-deluxe-party-pack-01.jpg",
-      price: "$45",
-    },
-    {
-      id: 2,
-      name: "Wedding Decor Set",
-      src: "/assets/gallery/rental-wedding-decor-set.jpg",
-      price: "$120",
-    },
-    {
-      id: 3,
-      name: "Corporate Event Kit",
-      src: "/assets/gallery/rental-corporate-kit.webp",
-      price: "$200",
-    },
-    {
-      id: 4,
-      name: "Birthday Bash Supplies",
-      src: "/assets/gallery/rental-deluxe-party-pack-01.avif",
-      price: "$85",
-    },
-  ];
 
   return (
     <>
@@ -48,7 +64,7 @@ function RentalItems() {
         <Typography
           variant="h3"
           align="center"
-          sx={{ fontWeight: 700, mb: 4, fontFamily: "trap" }}
+          sx={{ fontWeight: 700, mb: 4 }}
         >
           RENTAL CATALOG
         </Typography>
@@ -64,24 +80,24 @@ function RentalItems() {
                   sx={{ height: 240 }}
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h6" component="h3" sx={{ fontFamily: "Trap" }}>
+                  <Typography gutterBottom variant="h6" component="h3">
                     {item.name}
                   </Typography>
-                  <Typography sx={{ fontFamily: "Trap" }}>{item.price}</Typography>
+                  <Typography>{item.price}</Typography>
                 </CardContent>
                 <CardActions>
                   <Button
                     size="small"
                     variant="outlined"
-                    onClick={() => addToCart(item)} // ✅ now from context
+                    onClick={() => addToCart(item)}
                     sx={{
-                      fontFamily: "Trap",
                       textTransform: "uppercase",
-                      borderColor: "#f6d1e3",
-                      color: "#000",
+                      borderColor: colors.primary,
+                      color: colors.primary,
                       "&:hover": {
-                        backgroundColor: "#f6d1e3",
-                        borderColor: "#f6d1e3",
+                        backgroundColor: colors.primary,
+                        borderColor: colors.primary,
+                        color: "#fff",
                       },
                     }}
                   >

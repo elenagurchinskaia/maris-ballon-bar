@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import emailjs from "@emailjs/browser";
+import { colors } from "../theme";
 
 function CartPage() {
     const { cart, setCart } = useContext(CartContext);
@@ -86,7 +87,7 @@ function CartPage() {
                 <Container sx={{ py: 10, textAlign: "center" }}>
                     <Typography
                         variant="h4"
-                        sx={{ fontFamily: "Trap", fontWeight: 700, mb: 2 }}
+                        sx={{ fontWeight: 700, mb: 2 }}
                     >
                         Thank you! 🎉
                     </Typography>
@@ -106,12 +107,11 @@ function CartPage() {
                     <Button
                         variant="contained"
                         sx={{
-                            backgroundColor: "#f6d1e3",
-                            color: "#000",
-                            fontFamily: "Trap",
+                            backgroundColor: colors.primary,
+                            color: "#fff",
                             fontWeight: 700,
                             px: 4,
-                            "&:hover": { backgroundColor: "#f1bdd4" }
+                            "&:hover": { backgroundColor: colors.primaryHover }
                         }}
                         onClick={() => setIsSubmitted(false)}
                     >
@@ -120,14 +120,14 @@ function CartPage() {
                 </Container>
             ) : cart.length === 0 ? (
                 <Container sx={{ py: 10, textAlign: "center" }}>
-                    <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 2 }}>
+                    <Typography variant="h4" sx={{ mb: 2 }}>
                         Your Cart is Empty
                     </Typography>
                 </Container>
             ) : (
                 <Container sx={{ py: 6 }}>
                     {/* CART ITEMS LIST */}
-                    <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 3 }}>
+                    <Typography variant="h4" sx={{ mb: 3 }}>
                         Your Items
                     </Typography>
 
@@ -140,7 +140,7 @@ function CartPage() {
                                 sx={{
                                     display: "flex",
                                     justifyContent: "space-between",
-                                    borderBottom: "1px solid #eee",
+                                    borderBottom: `1px solid ${colors.border}`,
                                     py: 2
                                 }}
                             >
@@ -159,7 +159,6 @@ function CartPage() {
                                         <ListItemText
                                             primary={item.name}
                                             secondary={item.price}
-                                            sx={{ fontFamily: "Trap" }}
                                         />
                                     </Grid>
 
@@ -181,7 +180,7 @@ function CartPage() {
 
                     {/* Total */}
                     <Box sx={{ mt: 3, mb: 2, textAlign: "right" }}>
-                        <Typography variant="h6" sx={{ fontFamily: "Trap", fontWeight: 700 }}>
+                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
                             Total: ${cart.reduce((acc, item) => acc + Number(item.price.replace("$", "")), 0).toFixed(2)}
                         </Typography>
                     </Box>
@@ -233,12 +232,11 @@ function CartPage() {
                             onClick={handleSendEmail}
                             disabled={isSending}
                             sx={{
-                                backgroundColor: "#f6d1e3",
-                                color: "#000",
-                                fontFamily: "Trap",
+                                backgroundColor: colors.primary,
+                                color: "#fff",
                                 fontWeight: 700,
                                 px: 4,
-                                "&:hover": { backgroundColor: "#f1bdd4" }
+                                "&:hover": { backgroundColor: colors.primaryHover }
                             }}
                         >
                             {isSending ? "SENDING..." : "SEND REQUEST"}

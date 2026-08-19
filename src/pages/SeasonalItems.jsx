@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 
 import { useCart } from "../components/CartContext";
+import { colors } from "../theme";
 
 function SeasonalItems() {
   const { addToCart } = useCart();
@@ -50,7 +51,7 @@ function SeasonalItems() {
         <Typography
           variant="h3"
           align="center"
-          sx={{ fontWeight: 700, mb: 4, fontFamily: "trap" }}
+          sx={{ fontWeight: 700, mb: 4 }}
         >
           SEASONAL ITEMS
         </Typography>
@@ -66,10 +67,10 @@ function SeasonalItems() {
                   sx={{ height: 240 }}
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h6" component="h3" sx={{ fontFamily: "Trap" }}>
+                  <Typography gutterBottom variant="h6" component="h3">
                     {item.name}
                   </Typography>
-                  <Typography sx={{ fontFamily: "Trap" }}>{item.price}</Typography>
+                  <Typography>{item.price}</Typography>
                 </CardContent>
 
                 <CardActions>
@@ -78,13 +79,13 @@ function SeasonalItems() {
                     variant="outlined"
                     onClick={() => addToCart(item)}
                     sx={{
-                      fontFamily: "Trap",
                       textTransform: "uppercase",
-                      borderColor: "#f6d1e3",
-                      color: "#000",
+                      borderColor: colors.primary,
+                      color: colors.primary,
                       "&:hover": {
-                        backgroundColor: "#f6d1e3",
-                        borderColor: "#f6d1e3",
+                        backgroundColor: colors.primary,
+                        borderColor: colors.primary,
+                        color: "#fff",
                       },
                     }}
                   >

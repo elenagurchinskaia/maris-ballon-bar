@@ -1,4 +1,4 @@
-import { Box, Grid, useTheme } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
 const images = [
   { src: "/assets/gallery/cotton-candy.jpg", alt: "Cotton candy" },
@@ -7,8 +7,6 @@ const images = [
 ];
 
 function Gallery() {
-  const theme = useTheme();
-
   return (
     <Box
       sx={{

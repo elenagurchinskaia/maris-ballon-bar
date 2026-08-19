@@ -6,11 +6,11 @@ function About() {
   return (
     <>
       <Navbar />
-      <Container maxWidth="md" sx={{ mt: 8, mb: 6, textAlign: "center", fontFamily: "Trap" }}>
+      <Container maxWidth="md" sx={{ mt: 8, mb: 6, textAlign: "center" }}>
         <Typography
           variant="h3"
           gutterBottom
-          sx={{ fontFamily: "trap", fontWeight: 700 }}
+          sx={{ fontWeight: 700 }}
         >
           ABOUT US
         </Typography>

@@ -5,4 +5,21 @@
   --font-weight-normal: 500;
   --font-weight-thin: 200;
   --font-style-normal: normal;
+  color-scheme: light;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  background-color: #fff;
 }

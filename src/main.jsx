@@ -1,4 +1,7 @@
 import ReactDOM from "react-dom/client";
+import "./index.css";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import theme from "./theme";
 import App from "./App";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -62,6 +65,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
 
-  <RouterProvider router={router} />
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <RouterProvider router={router} />
+  </ThemeProvider>
 
 );
