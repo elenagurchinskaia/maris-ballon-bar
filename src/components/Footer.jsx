@@ -82,8 +82,8 @@ function Footer() {
                   sx={{
                     fontFamily: "'Fraunces', serif",
                     fontStyle: "italic",
-                    fontWeight: 500,
-                    fontVariationSettings: '"opsz" 144, "WONK" 1',
+                    fontWeight: 550,
+                    fontVariationSettings: '"opsz" 20, "WONK" 0',
                     color: colors.primary,
                   }}
                 >

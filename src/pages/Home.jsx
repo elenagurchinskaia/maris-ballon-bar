@@ -77,43 +77,16 @@ function Home() {
           </Typography>
 
           <Typography variant="h1" sx={{ lineHeight: 1, mb: 1, mt: -1 }}>
-            <Box sx={{ display: "flex", alignItems: "center", gap: 3, flexWrap: "wrap" }}>
-              <Box
-                component="span"
-                sx={{
-                  fontStyle: "italic",
-                  fontWeight: 500,
-                  color: colors.primary,
-                  fontSize: { xs: "4.25rem", sm: "5.25rem", md: "6rem" },
-                }}
-              >
-                every
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Box
-                  component="svg"
-                  viewBox="0 0 60 40"
-                  sx={{ width: { xs: 50, md: 60 }, height: { xs: 34, md: 40 } }}
-                >
-                  <path
-                    d="M2 30 C 4 14, 14 12, 16 22 C 18 32, 8 34, 10 24 C 12 14, 24 6, 34 10 C 42 13, 44 20, 40 24"
-                    stroke={colors.softAccent}
-                    strokeWidth="3"
-                    fill="none"
-                    strokeLinecap="round"
-                  />
-                </Box>
-                <Box
-                  component="svg"
-                  viewBox="0 0 24 24"
-                  sx={{ width: { xs: 22, md: 28 }, height: { xs: 22, md: 28 } }}
-                >
-                  <path
-                    d="M12 0 L14.2 9.3 L23 12 L14.2 14.7 L12 24 L9.8 14.7 L1 12 L9.8 9.3 Z"
-                    fill={colors.accent}
-                  />
-                </Box>
-              </Box>
+            <Box
+              component="span"
+              sx={{
+                fontStyle: "italic",
+                fontWeight: 500,
+                color: colors.primary,
+                fontSize: { xs: "4.25rem", sm: "5.25rem", md: "6rem" },
+              }}
+            >
+              every
             </Box>
             <Box
               component="span"
