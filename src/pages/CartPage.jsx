@@ -14,6 +14,7 @@ import {
     TextField
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import emailjs from "@emailjs/browser";
 import { colors } from "../theme";
 
@@ -105,17 +106,20 @@ function CartPage() {
                     </Typography>
 
                     <Button
-                        variant="contained"
                         sx={{
                             backgroundColor: colors.primary,
                             color: "#fff",
+                            textTransform: "uppercase",
                             fontWeight: 700,
-                            px: 4,
+                            letterSpacing: "0.05em",
+                            borderRadius: "999px",
+                            px: 3.5,
+                            py: 1.5,
                             "&:hover": { backgroundColor: colors.primaryHover }
                         }}
                         onClick={() => setIsSubmitted(false)}
                     >
-                        BACK TO SHOP
+                        Back to Shop
                     </Button>
                 </Container>
             ) : cart.length === 0 ? (
@@ -228,18 +232,22 @@ function CartPage() {
 
                     <Box sx={{ mt: 4 }}>
                         <Button
-                            variant="contained"
                             onClick={handleSendEmail}
                             disabled={isSending}
+                            endIcon={!isSending && <ArrowForwardIcon />}
                             sx={{
                                 backgroundColor: colors.primary,
                                 color: "#fff",
+                                textTransform: "uppercase",
                                 fontWeight: 700,
-                                px: 4,
+                                letterSpacing: "0.05em",
+                                borderRadius: "999px",
+                                px: 3.5,
+                                py: 1.5,
                                 "&:hover": { backgroundColor: colors.primaryHover }
                             }}
                         >
-                            {isSending ? "SENDING..." : "SEND REQUEST"}
+                            {isSending ? "Sending..." : "Send Request"}
                         </Button>
                     </Box>
                 </Container>

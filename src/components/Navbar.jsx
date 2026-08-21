@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaFacebook, FaInstagram, FaBars, FaTimes } from "react-icons/fa";
+import { FiInstagram, FiShoppingCart } from "react-icons/fi";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { Box, Typography, IconButton, Drawer } from "@mui/material";
 import { useCart } from "./CartContext";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { colors } from "../theme";
+
+const iconColor = colors.textMuted;
 
 function Navbar() {
   const [activeTab, setActiveTab] = useState("");
@@ -23,7 +25,7 @@ function Navbar() {
     { label: "about", path: "/about" },
     { label: "gallery", path: "/gallery" },
     { label: "seasonal", path: "/seasonal-items" },
-    { label: "rental", path: "/rental-catalog" },
+    { label: "rentals", path: "/rental-catalog" },
     { label: "contact", path: "/contact" },
   ];
 
@@ -36,7 +38,9 @@ function Navbar() {
         justifyContent: "space-between",
         backgroundColor: colors.background,
         padding: "10px 20px",
-        position: "relative",
+        position: "sticky",
+        top: 0,
+        width: "100%",
         zIndex: 1000,
       }}
     >
@@ -76,10 +80,7 @@ function Navbar() {
               <Link
                 to={path}
                 onClick={() => handleTabClick(label)}
-                style={{
-                  textDecoration: "none",
-                  color: isActive ? colors.primary : colors.text,
-                }}
+                style={{ textDecoration: "none" }}
               >
                 <Typography
                   variant="body2"
@@ -88,7 +89,10 @@ function Navbar() {
                     letterSpacing: "0.05em",
                     textTransform: "uppercase",
                     pb: 0.5,
+                    color: isActive ? colors.primary : colors.textMuted,
                     borderBottom: isActive ? `2px solid ${colors.primary}` : "2px solid transparent",
+                    transition: "color 0.15s ease-in-out",
+                    "&:hover": { color: colors.primary },
                   }}
                 >
                   {label}
@@ -99,7 +103,7 @@ function Navbar() {
         })}
       </Box>
 
-      {/* Right Section - Cart, Social & Book Now */}
+      {/* Right Section - Utility icons & CTA */}
       <Box
         sx={{
           display: "flex",
@@ -107,45 +111,63 @@ function Navbar() {
           gap: 2,
         }}
       >
-        {/* Cart */}
-        <Box sx={{ position: "relative", cursor: "pointer" }} onClick={() => navigate("/cart")}>
-          <ShoppingCartIcon sx={{ color: colors.text }} />
-          {cart.length > 0 && (
-            <Box
-              sx={{
-                position: "absolute",
-                top: -5,
-                right: -10,
-                fontSize: 12,
-                color: colors.text,
-              }}
-            >
-              {cart.length}
-            </Box>
-          )}
-        </Box>
-
-        {/* Social Icons */}
-        <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-          <a
-            href="https://www.facebook.com/Marisballoonbar?mibextid=ZbWKwL"
-            target="_blank"
-            rel="noreferrer"
-            style={{ color: colors.text, fontSize: 24 }}
-          >
-            <FaFacebook />
-          </a>
-          <a
+        {/* Utility group: Instagram + Cart */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, ml: { md: 4 } }}>
+          <Box
+            component="a"
             href="https://www.instagram.com/marisballoonbar/"
             target="_blank"
             rel="noreferrer"
-            style={{ color: colors.text, fontSize: 24 }}
+            sx={{
+              display: { xs: "none", md: "flex" },
+              color: iconColor,
+              fontSize: 22,
+              transition: "color 0.15s ease-in-out",
+              "&:hover": { color: colors.primary },
+            }}
           >
-            <FaInstagram />
-          </a>
+            <FiInstagram />
+          </Box>
+
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              cursor: "pointer",
+              color: iconColor,
+              fontSize: 22,
+              transition: "color 0.15s ease-in-out",
+              "&:hover": { color: colors.primary },
+            }}
+            onClick={() => navigate("/cart")}
+          >
+            <FiShoppingCart />
+            {cart.length > 0 && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: -6,
+                  right: -6,
+                  minWidth: 15,
+                  height: 15,
+                  px: "3px",
+                  borderRadius: "999px",
+                  backgroundColor: colors.accent,
+                  color: colors.text,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {cart.length}
+              </Box>
+            )}
+          </Box>
         </Box>
 
-        {/* Book Now button */}
+        {/* Check Availability button */}
         <Box
           component={Link}
           to="/book-event"
@@ -168,13 +190,13 @@ function Navbar() {
             },
           }}
         >
-          Book Now
+          Check Availability
         </Box>
 
         {/* Hamburger menu for mobile */}
         <IconButton
           onClick={() => setMenuOpen(!menuOpen)}
-          sx={{ display: { xs: "block", md: "none" }, color: colors.text }}
+          sx={{ display: { xs: "block", md: "none" }, color: iconColor }}
         >
           {menuOpen ? <FaTimes /> : <FaBars />}
         </IconButton>
@@ -198,7 +220,7 @@ function Navbar() {
               onClick={() => handleTabClick(label)}
               style={{
                 textDecoration: "none",
-                color: currentPage === path ? colors.primary : colors.text,
+                color: currentPage === path ? colors.primary : colors.textMuted,
               }}
             >
               <Typography
@@ -210,7 +232,7 @@ function Navbar() {
             </Link>
           ))}
 
-          {/* Book Now button */}
+          {/* Check Availability button */}
           <Box
             component={Link}
             to="/book-event"
@@ -230,17 +252,29 @@ function Navbar() {
               borderRadius: "999px",
             }}
           >
-            Book Now
+            Check Availability
           </Box>
 
-          {/* Social icons in drawer */}
-          <Box sx={{ display: "flex", gap: 2, marginTop: 2 }}>
-            <a href="https://www.facebook.com/Marisballoonbar?mibextid=ZbWKwL" target="_blank" rel="noreferrer">
-              <FaFacebook size={24} color={colors.text} />
-            </a>
-            <a href="https://www.instagram.com/marisballoonbar/" target="_blank" rel="noreferrer">
-              <FaInstagram size={24} color={colors.text} />
-            </a>
+          {/* Utility icons in drawer */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 3, marginTop: 2 }}>
+            <Box
+              component="a"
+              href="https://www.instagram.com/marisballoonbar/"
+              target="_blank"
+              rel="noreferrer"
+              sx={{ display: "flex", color: iconColor, fontSize: 22, "&:hover": { color: colors.primary } }}
+            >
+              <FiInstagram />
+            </Box>
+            <Box
+              sx={{ display: "flex", color: iconColor, fontSize: 22, cursor: "pointer", "&:hover": { color: colors.primary } }}
+              onClick={() => {
+                setMenuOpen(false);
+                navigate("/cart");
+              }}
+            >
+              <FiShoppingCart />
+            </Box>
           </Box>
         </Box>
       </Drawer>

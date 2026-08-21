@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Gallery from "../components/Gallery";
+import TestimonialCTA from "../components/TestimonialCTA";
 
 import { GiBalloons } from "react-icons/gi";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
@@ -41,15 +42,12 @@ const features = [
 function Home() {
   return (
     <Box sx={{ backgroundColor: colors.background }}>
-      {/* Header - fixed so it stays visible over the hero and while scrolling */}
-      <Box sx={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 10 }}>
-        <Navbar />
-      </Box>
+      <Navbar />
 
       {/* Hero */}
       <Box
         sx={{
-          pt: { xs: "60px", md: "90px" },
+          pt: { xs: 3, md: 4 },
           pb: { xs: 6, md: 10 },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
@@ -65,44 +63,6 @@ function Home() {
             px: { xs: 3, md: 8 },
           }}
         >
-          <Box
-            component="svg"
-            viewBox="0 0 60 40"
-            sx={{
-              position: "absolute",
-              top: { xs: 40, md: 52 },
-              left: { xs: 200, sm: 260, md: 330 },
-              width: 70,
-              height: 46,
-              display: { xs: "none", sm: "block" },
-            }}
-          >
-            <path
-              d="M2 30 C 4 14, 14 12, 16 22 C 18 32, 8 34, 10 24 C 12 14, 24 6, 34 10 C 42 13, 44 20, 40 24"
-              stroke={colors.softAccent}
-              strokeWidth="3"
-              fill="none"
-              strokeLinecap="round"
-            />
-          </Box>
-          <Box
-            component="svg"
-            viewBox="0 0 24 24"
-            sx={{
-              position: "absolute",
-              top: { xs: 34, md: 46 },
-              left: { xs: 268, sm: 340, md: 420 },
-              width: 34,
-              height: 34,
-              display: { xs: "none", sm: "block" },
-            }}
-          >
-            <path
-              d="M12 0 L14.2 9.3 L23 12 L14.2 14.7 L12 24 L9.8 14.7 L1 12 L9.8 9.3 Z"
-              fill={colors.accent}
-            />
-          </Box>
-
           <Typography
             sx={{
               fontWeight: 700,
@@ -116,18 +76,44 @@ function Home() {
             Bespoke Balloons For
           </Typography>
 
-          <Typography variant="h1" sx={{ lineHeight: 1, mb: 1 }}>
-            <Box
-              component="span"
-              sx={{
-                display: "block",
-                fontStyle: "italic",
-                fontWeight: 500,
-                color: colors.primary,
-                fontSize: { xs: "3.75rem", sm: "4.5rem", md: "5rem" },
-              }}
-            >
-              every
+          <Typography variant="h1" sx={{ lineHeight: 1, mb: 1, mt: -1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 3, flexWrap: "wrap" }}>
+              <Box
+                component="span"
+                sx={{
+                  fontStyle: "italic",
+                  fontWeight: 500,
+                  color: colors.primary,
+                  fontSize: { xs: "4.25rem", sm: "5.25rem", md: "6rem" },
+                }}
+              >
+                every
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Box
+                  component="svg"
+                  viewBox="0 0 60 40"
+                  sx={{ width: { xs: 50, md: 60 }, height: { xs: 34, md: 40 } }}
+                >
+                  <path
+                    d="M2 30 C 4 14, 14 12, 16 22 C 18 32, 8 34, 10 24 C 12 14, 24 6, 34 10 C 42 13, 44 20, 40 24"
+                    stroke={colors.softAccent}
+                    strokeWidth="3"
+                    fill="none"
+                    strokeLinecap="round"
+                  />
+                </Box>
+                <Box
+                  component="svg"
+                  viewBox="0 0 24 24"
+                  sx={{ width: { xs: 22, md: 28 }, height: { xs: 22, md: 28 } }}
+                >
+                  <path
+                    d="M12 0 L14.2 9.3 L23 12 L14.2 14.7 L12 24 L9.8 14.7 L1 12 L9.8 9.3 Z"
+                    fill={colors.accent}
+                  />
+                </Box>
+              </Box>
             </Box>
             <Box
               component="span"
@@ -135,7 +121,8 @@ function Home() {
                 display: "block",
                 fontWeight: 700,
                 color: colors.text,
-                fontSize: { xs: "3.75rem", sm: "4.5rem", md: "5rem" },
+                fontSize: { xs: "4.25rem", sm: "5.25rem", md: "6rem" },
+                mt: -1,
               }}
             >
               moment
@@ -146,7 +133,7 @@ function Home() {
             sx={{
               color: colors.textMuted,
               fontSize: { xs: "1.2rem", md: "1.05rem" },
-              maxWidth: { xs: "100%", md: 440 },
+              maxWidth: { xs: "100%", md: 600 },
               mb: 4,
             }}
           >
@@ -154,7 +141,7 @@ function Home() {
             everything in between.
           </Typography>
 
-          <Box sx={{ display: "flex", gap: { xs: 2, md: 1.25 }, flexWrap: "nowrap" }}>
+          <Box sx={{ display: "flex", gap: { xs: 2, md: 1 }, flexWrap: "wrap" }}>
             <Button
               component={Link}
               to="/book-event"
@@ -167,9 +154,9 @@ function Home() {
                 letterSpacing: "0.05em",
                 borderRadius: "999px",
                 whiteSpace: "nowrap",
-                px: { xs: 3.5, md: 2.25 },
+                px: { xs: 3.5, md: 3 },
                 py: 1.5,
-                fontSize: { md: "0.8rem" },
+                fontSize: { md: "0.75rem" },
                 "&:hover": { backgroundColor: colors.primaryHover },
               }}
             >
@@ -187,9 +174,9 @@ function Home() {
                 letterSpacing: "0.05em",
                 borderRadius: "999px",
                 whiteSpace: "nowrap",
-                px: { xs: 3.5, md: 2.25 },
+                px: { xs: 3.5, md: 1.75 },
                 py: 1.5,
-                fontSize: { md: "0.8rem" },
+                fontSize: { md: "0.75rem" },
                 "&:hover": {
                   borderColor: colors.primaryHover,
                   backgroundColor: "rgba(242, 90, 155, 0.08)",
@@ -204,12 +191,12 @@ function Home() {
         {/* Image column */}
         <Box
           sx={{
-            width: { xs: "10%", md: "72%" },
+            width: { xs: "100%", md: "80%" },
             flexShrink: 0,
             height: { xs: 380, sm: 480, md: "calc(100vh - 90px)" },
             overflow: "hidden",
             backgroundColor: colors.background,
-            transform: { md: "translateX(-24px)" },
+            transform: { md: "translateX(-64px)" },
           }}
         >
           <Box
@@ -290,9 +277,11 @@ function Home() {
         </Box>
       </Box>
 
-      <Box sx={{ backgroundColor: "#fff" }}>
+      <Box sx={{ backgroundColor: colors.background }}>
         <Gallery />
       </Box>
+
+      <TestimonialCTA />
     </Box>
   );
 }

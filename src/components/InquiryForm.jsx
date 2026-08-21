@@ -8,6 +8,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { colors } from "../theme";
 
 /**
@@ -20,7 +21,7 @@ import { colors } from "../theme";
 function InquiryForm({
   heading,
   description,
-  submitLabel = "SUBMIT",
+  submitLabel = "Submit",
   successMessage = "Thank you! Your message has been sent successfully!",
 }) {
   const form = useRef();
@@ -140,17 +141,19 @@ function InquiryForm({
 
       <Button
         type="submit"
-        variant="contained"
         disabled={sending}
+        endIcon={!sending && <ArrowForwardIcon />}
         sx={{
           mt: 3,
           backgroundColor: colors.primary,
           color: "#fff",
+          textTransform: "uppercase",
           fontWeight: 700,
-          fontSize: isMobile ? "1rem" : "1.25rem",
-          px: 1.5,
-          py: 0.3,
-          borderRadius: "8px",
+          letterSpacing: "0.05em",
+          fontSize: isMobile ? "0.85rem" : "0.95rem",
+          borderRadius: "999px",
+          px: 3.5,
+          py: 1.5,
           "&:hover": {
             backgroundColor: colors.primaryHover,
           },

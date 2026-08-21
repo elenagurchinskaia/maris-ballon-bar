@@ -1,4 +1,5 @@
 import { Box, Grid } from "@mui/material";
+import { colors } from "../theme";
 
 const images = [
   { src: "/assets/gallery/cotton-candy.jpg", alt: "Cotton candy" },
@@ -10,7 +11,7 @@ function Gallery() {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
+        backgroundColor: colors.background,
         width: "100%",
         padding: { xs: 2, md: 4 },
         boxSizing: "border-box",

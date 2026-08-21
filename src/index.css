@@ -15,11 +15,11 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: #FFF7ED;
   min-height: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 #root {
-  background-color: #fff;
+  background-color: #FFF7ED;
 }
