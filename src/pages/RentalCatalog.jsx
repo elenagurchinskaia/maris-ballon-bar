@@ -6,7 +6,8 @@ import { useCart } from "../components/CartContext";
 import { colors } from "../theme";
 import { useDocumentMeta } from "../utils/useDocumentMeta";
 
-// Names and prices are Mari's existing verified rates.
+// Names and prices are Mari's existing verified rates. Order is mixed so the
+// backgrounds read pink, lilac, yellow, yellow, lilac, pink across the grid.
 const items = [
   {
     id: 1,
@@ -31,10 +32,10 @@ const items = [
   },
   {
     id: 4,
-    name: "Rectangular Table Linen",
-    detail: "Fits a 6-ft table",
-    src: "/assets/rental-items/rectangular-table-linen-01.png",
-    price: "$10/day",
+    name: "Chair Spandex Cover",
+    detail: "Available in white",
+    src: "/assets/rental-items/chair-spandex-cover-01.png",
+    price: "$3/day",
   },
   {
     id: 5,
@@ -45,15 +46,17 @@ const items = [
   },
   {
     id: 6,
-    name: "Chair Spandex Cover",
-    detail: "Available in white",
-    src: "/assets/rental-items/chair-spandex-cover-01.png",
-    price: "$3/day",
+    name: "Rectangular Table Linen",
+    detail: "Fits a 6-ft table",
+    src: "/assets/rental-items/rectangular-table-linen-01.png",
+    price: "$10/day",
   },
 ];
 
-// Repeats automatically by card position, so new items keep the sequence.
-const cardTints = ["#FCE4ED", "#EDE2FA", "#FFF1BF"];
+// Fallback color per position (matches the pink/lilac/yellow/yellow/lilac/pink
+// order above) in case an image fails to load; repeats as a block if more
+// items are added.
+const cardTints = ["#FCE4ED", "#EDE2FA", "#FFF1BF", "#FFF1BF", "#EDE2FA", "#FCE4ED"];
 
 function RentalCatalog() {
   useDocumentMeta(

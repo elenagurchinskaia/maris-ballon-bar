@@ -61,8 +61,8 @@ function TestimonialCTA() {
         sx={{
           backgroundColor: testimonialBg,
           position: "relative",
-          pt: { xs: 6, md: 8 },
-          pb: { xs: 10, md: 14 },
+          pt: { xs: 5, md: 8 },
+          pb: { xs: 6, md: 14 },
           px: { xs: 3, md: 8 },
           overflow: "hidden",
         }}
@@ -84,7 +84,8 @@ function TestimonialCTA() {
             aria-label="Previous testimonial"
             sx={{
               position: "absolute",
-              left: { xs: -8, md: -32 },
+              left: { xs: 0, md: -32 },
+              zIndex: 2,
               backgroundColor: "#fff",
               boxShadow: "0 6px 16px rgba(48,34,54,0.15)",
               "&:hover": { backgroundColor: "#fff" },
@@ -100,6 +101,7 @@ function TestimonialCTA() {
               justifyContent: "center",
               width: "100%",
               gap: { xs: 2, md: 6 },
+              px: { xs: 6, md: 0 },
             }}
           >
             <Box sx={{ display: { xs: "none", md: "block" }, flexShrink: 0 }}>
@@ -111,8 +113,8 @@ function TestimonialCTA() {
               <Typography
                 sx={{
                   color: colors.text,
-                  fontSize: { xs: "1.05rem", md: "1.3rem" },
-                  lineHeight: 1.5,
+                  fontSize: { xs: "1.1rem", md: "1.3rem" },
+                  lineHeight: 1.55,
                   mb: 2,
                 }}
               >
@@ -136,7 +138,8 @@ function TestimonialCTA() {
             aria-label="Next testimonial"
             sx={{
               position: "absolute",
-              right: { xs: -8, md: -32 },
+              right: { xs: 0, md: -32 },
+              zIndex: 2,
               backgroundColor: "#fff",
               boxShadow: "0 6px 16px rgba(48,34,54,0.15)",
               "&:hover": { backgroundColor: "#fff" },

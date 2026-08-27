@@ -21,6 +21,7 @@ function Footer() {
           display: "block",
           width: "100%",
           height: { xs: 28, sm: 34, md: 44 },
+          mb: "-1px",
           backgroundColor: colors.background,
         }}
       >
@@ -136,7 +137,7 @@ function Footer() {
               textAlign: { xs: "center", md: "left" },
             }}
           >
-            <Typography sx={{ fontSize: "0.72rem" }}>
+            <Typography sx={{ fontSize: { xs: "0.8rem", md: "0.72rem" }, lineHeight: { xs: 1.6, md: 1.5 } }}>
               <Box component="span" sx={{ color: "#fff", fontWeight: 700, letterSpacing: "0.06em" }}>
                 MARI’S BALLOON BAR
               </Box>{" "}
@@ -181,7 +182,7 @@ function Footer() {
               >
                 <FaEnvelope size={14} />
               </IconButton>
-              <Typography sx={{ color: lightText, fontSize: "0.72rem", ml: 0.75 }}>
+              <Typography sx={{ color: lightText, fontSize: { xs: "0.78rem", md: "0.72rem" }, ml: 0.75 }}>
                 © {new Date().getFullYear()} Mari’s Balloon Bar
               </Typography>
             </Box>

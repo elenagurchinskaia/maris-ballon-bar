@@ -165,11 +165,11 @@ function Home() {
       <Box
         sx={{
           pt: { xs: 3, md: 4 },
-          pb: { xs: 6, md: 10 },
+          pb: { xs: 4, md: 10 },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: { xs: "center", md: "flex-start" },
-          gap: { xs: 5, md: 0 },
+          gap: { xs: 3, md: 0 },
         }}
       >
         {/* Text column */}
@@ -287,7 +287,7 @@ function Home() {
           sx={{
             width: { xs: "100%", md: "72%" },
             flexShrink: 0,
-            height: { xs: 342, sm: 432, md: "calc((100vh - 90px) * 0.9)" },
+            height: { xs: 300, sm: 432, md: "calc((100vh - 90px) * 0.9)" },
             overflow: "hidden",
             backgroundColor: colors.background,
             transform: { md: "translateX(-64px)" },
@@ -321,7 +321,7 @@ function Home() {
         aria-labelledby="services-heading"
         sx={{
           px: { xs: 3, md: 8 },
-          pb: { xs: 8, md: 12 },
+          pb: { xs: 5, md: 12 },
           maxWidth: 1400,
           mx: "auto",
         }}
@@ -363,7 +363,7 @@ function Home() {
           sx={{
             display: "grid",
             gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" },
-            gap: { xs: "24px", sm: "18px" },
+            gap: { xs: "16px", sm: "18px" },
           }}
         >
           {features.map((feature) => (
@@ -374,10 +374,10 @@ function Home() {
                 backgroundColor: feature.bg,
                 border: `1px solid ${feature.border}`,
                 borderRadius: "24px",
-                p: 3,
+                p: { xs: 2.5, sm: 3 },
                 display: "grid",
-                gridTemplateRows: "48px minmax(44px, auto) 1fr",
-                rowGap: "12px",
+                gridTemplateRows: { xs: "40px minmax(40px, auto) 1fr", sm: "48px minmax(44px, auto) 1fr" },
+                rowGap: { xs: "8px", sm: "12px" },
                 justifyItems: "center",
                 textAlign: "center",
                 minHeight: { xs: "auto", sm: 260, md: 280 },
@@ -424,8 +424,8 @@ function Home() {
                 sx={{
                   position: "relative",
                   zIndex: 1,
-                  width: 48,
-                  height: 48,
+                  width: { xs: 40, sm: 48 },
+                  height: { xs: 40, sm: 48 },
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -445,7 +445,7 @@ function Home() {
                   fontWeight: 700,
                   textTransform: "uppercase",
                   letterSpacing: "0.04em",
-                  fontSize: "0.82rem",
+                  fontSize: { xs: "0.85rem", sm: "0.82rem" },
                   lineHeight: 1.35,
                   maxWidth: 210,
                   color: feature.color,
@@ -459,7 +459,8 @@ function Home() {
                   position: "relative",
                   zIndex: 1,
                   color: "rgba(48, 34, 54, 0.78)",
-                  fontSize: "0.9rem",
+                  fontSize: { xs: "0.93rem", sm: "0.9rem" },
+                  lineHeight: 1.5,
                   maxWidth: 220,
                 }}
               >
@@ -477,7 +478,7 @@ function Home() {
           ))}
         </Box>
 
-        <Box sx={{ display: "flex", justifyContent: "center", mt: "28px" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: { xs: "20px", sm: "28px" } }}>
           <Button
             component={Link}
             to="/contact"
@@ -507,7 +508,7 @@ function Home() {
         sx={{
           position: "relative",
           px: { xs: 3, md: 8 },
-          pb: { xs: 5, md: 6 },
+          pb: { xs: 4, md: 6 },
           maxWidth: 1400,
           mx: "auto",
         }}
@@ -564,9 +565,9 @@ function Home() {
                 display: { xs: "block", sm: "none" },
                 position: "absolute",
                 zIndex: 2,
-                bottom: -18,
-                right: -16,
-                width: 64,
+                bottom: -25,
+                right: -22,
+                width: 62,
                 aspectRatio: "1301 / 1209",
                 height: "auto",
               }}
@@ -700,7 +701,8 @@ function Home() {
         aria-labelledby="gallery-preview-heading"
         sx={{
           px: { xs: 3, md: 8 },
-          py: { xs: 8, md: 10 },
+          pt: { xs: 5, md: 10 },
+          pb: { xs: 6, md: 10 },
           maxWidth: 1600,
           mx: "auto",
           overflow: "hidden",
@@ -758,7 +760,7 @@ function Home() {
                 borderRadius: "999px",
                 px: 3,
                 py: 1.5,
-                fontSize: "0.8rem",
+                fontSize: { xs: "0.85rem", md: "0.8rem" },
                 "&:hover": {
                   borderColor: colors.primaryHover,
                   backgroundColor: "rgba(242, 90, 155, 0.08)",
@@ -775,7 +777,7 @@ function Home() {
               ref={galleryScrollRef}
               sx={{
                 display: "flex",
-                gap: 2,
+                gap: { xs: 1.5, md: 2 },
                 overflowX: "auto",
                 scrollBehavior: "smooth",
                 pb: { xs: 1, md: 0 },
@@ -785,7 +787,7 @@ function Home() {
               }}
             >
               {galleryPreviewImages.map((img) => (
-                <Box key={img.src} sx={{ flexShrink: 0, width: { xs: 200, md: 260 } }}>
+                <Box key={img.src} sx={{ flexShrink: 0, width: { xs: 216, md: 260 } }}>
                   <Box
                     component="img"
                     src={img.src}

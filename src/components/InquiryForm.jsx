@@ -3,13 +3,12 @@ import emailjs from "@emailjs/browser";
 import {
   Box,
   TextField,
+  MenuItem,
   Typography,
   Button,
   Checkbox,
   FormGroup,
   FormControlLabel,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { colors } from "../theme";
@@ -28,6 +27,48 @@ const SERVICE_OPTIONS = [
   "Not sure yet",
 ];
 
+const REFERRAL_OPTIONS = [
+  "Instagram",
+  "Google",
+  "Friend or referral",
+  "Returning client",
+  "Venue or event planner",
+  "Other",
+];
+
+// Permanent label rendered above a field, connected via htmlFor — used
+// instead of MUI's floating/inside label per the brand's form conventions.
+function FieldLabel({ htmlFor, children, required, optional }) {
+  return (
+    <Typography
+      component="label"
+      htmlFor={htmlFor}
+      sx={{
+        display: "block",
+        fontWeight: 700,
+        fontSize: "0.8rem",
+        letterSpacing: "0.02em",
+        color: colors.text,
+        mb: 0.75,
+      }}
+    >
+      {children}
+      {required && (
+        <Box component="span" sx={{ color: colors.primary }}>
+          {" "}
+          *
+        </Box>
+      )}
+      {optional && (
+        <Box component="span" sx={{ color: colors.textMuted, fontWeight: 500 }}>
+          {" "}
+          (Optional)
+        </Box>
+      )}
+    </Typography>
+  );
+}
+
 /**
  * Shared inquiry/booking form. Used by both the Contact page and the
  * Book Event page so the fields, EmailJS wiring, and styling only live
@@ -41,10 +82,12 @@ function InquiryForm({
   submitLabel = "Submit",
   successMessage = "Thank you! Your message has been sent successfully!",
   preselectedServices = [],
+  cardMaxWidth = 600,
+  fullWidthSubmit = false,
+  responseNote = "",
+  sectionPadding = true,
 }) {
   const form = useRef();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [sending, setSending] = useState(false);
   const [selectedServices, setSelectedServices] = useState(preselectedServices);
 
@@ -86,110 +129,134 @@ function InquiryForm({
       backgroundColor: colors.background,
       "& fieldset": { borderColor: colors.border },
       "&:hover fieldset": { borderColor: colors.softAccent },
-      "&.Mui-focused fieldset": { borderColor: colors.primary },
+      "&.Mui-focused fieldset": { borderColor: colors.primary, borderWidth: "2px" },
     },
   };
 
-  return (
-    <Box sx={{ px: { xs: 3, md: 4 }, pt: { xs: 5, md: 7 }, pb: { xs: 8, md: 12 } }}>
-      <Box
-        component="form"
-        ref={form}
-        onSubmit={handleSubmit}
-        sx={{
-          maxWidth: 600,
-          mx: "auto",
-          backgroundColor: "#fff",
-          border: `1px solid ${colors.border}`,
-          borderRadius: "20px",
-          boxShadow: "0 16px 32px rgba(48,34,54,0.08)",
-          px: { xs: 3, md: 5 },
-          py: { xs: 4, md: 5 },
-        }}
-      >
-        {heading && (
-          <Typography
-            align="center"
-            sx={{
-              fontFamily: "'Fraunces', serif",
-              fontWeight: 700,
-              color: colors.text,
-              fontSize: { xs: "1.75rem", md: "2rem" },
-              mb: description ? 1.5 : 3,
-            }}
-          >
-            {heading}
-          </Typography>
-        )}
-
-        {description && (
-          <Typography align="center" sx={{ color: colors.textMuted, fontSize: "0.95rem", lineHeight: 1.6, mb: 3 }}>
-            {description}
-          </Typography>
-        )}
-
-        <TextField
-          required
-          fullWidth
-          label="First and Last Name"
-          name="user_name"
-          margin="normal"
-          variant="outlined"
-          sx={fieldSx}
-        />
-        <TextField
-          required
-          fullWidth
-          label="Email Address"
-          name="user_email"
-          margin="normal"
-          type="email"
-          variant="outlined"
-          sx={fieldSx}
-        />
-        <TextField
-          required
-          fullWidth
-          label="Phone Number"
-          name="user_phone"
-          margin="normal"
-          variant="outlined"
-          sx={fieldSx}
-        />
-        <TextField
-          fullWidth
-          label="Company Name (if applicable)"
-          name="company_name"
-          margin="normal"
-          variant="outlined"
-          sx={fieldSx}
-        />
-        <TextField
-          fullWidth
-          label="How did you hear about us?"
-          name="referral_source"
-          margin="normal"
-          variant="outlined"
-          sx={fieldSx}
-        />
-        <TextField
-          fullWidth
-          label="Preferred Event Date"
-          name="event_date"
-          margin="normal"
-          type="date"
-          InputLabelProps={{ shrink: true }}
-          sx={fieldSx}
-        />
-        <Box
-          component="fieldset"
-          sx={{ border: "none", p: 0, m: 0, mt: 2, mb: 1 }}
+  const formCard = (
+    <Box
+      component="form"
+      ref={form}
+      onSubmit={handleSubmit}
+      sx={{
+        maxWidth: cardMaxWidth,
+        mx: "auto",
+        backgroundColor: "#fff",
+        border: `1px solid ${colors.border}`,
+        borderRadius: "20px",
+        boxShadow: "0 16px 32px rgba(48,34,54,0.08)",
+        px: { xs: 3, md: 5 },
+        py: { xs: 4, md: 5 },
+      }}
+    >
+      {heading && (
+        <Typography
+          align="center"
+          sx={{
+            fontFamily: "'Fraunces', serif",
+            fontWeight: 700,
+            color: colors.text,
+            fontSize: { xs: "1.75rem", md: "2rem" },
+            mb: description ? 1.5 : 3,
+          }}
         >
+          {heading}
+        </Typography>
+      )}
+
+      {description && (
+        <Typography align="center" sx={{ color: colors.textMuted, fontSize: "0.95rem", lineHeight: 1.6, mb: 3 }}>
+          {description}
+        </Typography>
+      )}
+
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
+        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2.5 }}>
+          <Box>
+            <FieldLabel htmlFor="user_name" required>
+              First and Last Name
+            </FieldLabel>
+            <TextField id="user_name" required fullWidth name="user_name" variant="outlined" sx={fieldSx} />
+          </Box>
+          <Box>
+            <FieldLabel htmlFor="user_email" required>
+              Email Address
+            </FieldLabel>
+            <TextField
+              id="user_email"
+              required
+              fullWidth
+              name="user_email"
+              type="email"
+              variant="outlined"
+              sx={fieldSx}
+            />
+          </Box>
+        </Box>
+
+        <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", md: "1fr 1fr" }, gap: 2.5 }}>
+          <Box>
+            <FieldLabel htmlFor="user_phone" required>
+              Phone Number
+            </FieldLabel>
+            <TextField id="user_phone" required fullWidth name="user_phone" variant="outlined" sx={fieldSx} />
+          </Box>
+          <Box>
+            <FieldLabel htmlFor="company_name" optional>
+              Company Name
+            </FieldLabel>
+            <TextField id="company_name" fullWidth name="company_name" variant="outlined" sx={fieldSx} />
+          </Box>
+        </Box>
+
+        <Box>
+          <FieldLabel htmlFor="referral_source" optional>
+            How did you hear about us?
+          </FieldLabel>
+          <TextField
+            id="referral_source"
+            select
+            fullWidth
+            name="referral_source"
+            variant="outlined"
+            defaultValue=""
+            sx={fieldSx}
+          >
+            <MenuItem value="">
+              <em>Select an option</em>
+            </MenuItem>
+            {REFERRAL_OPTIONS.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Box>
+
+        <Box>
+          <FieldLabel htmlFor="event_date" optional>
+            Preferred Event Date
+          </FieldLabel>
+          <TextField
+            id="event_date"
+            fullWidth
+            name="event_date"
+            type="date"
+            variant="outlined"
+            InputLabelProps={{ shrink: true }}
+            sx={fieldSx}
+          />
+        </Box>
+
+        <Box component="fieldset" sx={{ border: "none", p: 0, m: 0 }}>
           <Typography
             component="legend"
-            sx={{ color: colors.text, fontWeight: 700, fontSize: "0.9rem", mb: 1, p: 0 }}
+            sx={{ color: colors.text, fontWeight: 700, fontSize: "0.8rem", letterSpacing: "0.02em", mb: 1, p: 0 }}
           >
-            What services are you interested in?
+            What services are you interested in?{" "}
+            <Box component="span" sx={{ color: colors.textMuted, fontWeight: 500 }}>
+              (Optional)
+            </Box>
           </Typography>
           <FormGroup
             sx={{
@@ -219,45 +286,58 @@ function InquiryForm({
         </Box>
         <input type="hidden" name="services_interested" value={selectedServices.join(", ")} />
 
-        <TextField
-          required
-          fullWidth
-          label="Message"
-          name="message"
-          margin="normal"
-          multiline
-          rows={4}
-          variant="outlined"
-          sx={fieldSx}
-        />
-
-        <Box sx={{ textAlign: "center" }}>
-          <Button
-            type="submit"
-            disabled={sending}
-            endIcon={!sending && <ArrowForwardIcon />}
-            sx={{
-              mt: 3,
-              backgroundColor: colors.primary,
-              color: "#fff",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              letterSpacing: "0.05em",
-              fontSize: isMobile ? "0.85rem" : "0.95rem",
-              borderRadius: "999px",
-              px: 3.5,
-              py: 1.5,
-              "&:hover": {
-                backgroundColor: colors.primaryHover,
-              },
-            }}
-          >
-            {sending ? "Sending..." : submitLabel}
-          </Button>
+        <Box>
+          <FieldLabel htmlFor="message" required>
+            Message
+          </FieldLabel>
+          <TextField
+            id="message"
+            required
+            fullWidth
+            name="message"
+            multiline
+            rows={4}
+            variant="outlined"
+            sx={fieldSx}
+          />
         </Box>
+      </Box>
+
+      <Box sx={{ textAlign: "center", mt: 3 }}>
+        <Button
+          type="submit"
+          disabled={sending}
+          fullWidth={fullWidthSubmit}
+          endIcon={!sending && <ArrowForwardIcon />}
+          sx={{
+            backgroundColor: colors.primary,
+            color: "#fff",
+            textTransform: "uppercase",
+            fontWeight: 700,
+            letterSpacing: "0.05em",
+            fontSize: { xs: "0.85rem", md: "0.95rem" },
+            borderRadius: "999px",
+            px: 3.5,
+            py: 1.5,
+            "&:hover": { backgroundColor: colors.primaryHover },
+            "&:focus-visible": { outline: `2px solid ${colors.text}`, outlineOffset: "3px" },
+            "&.Mui-disabled": { backgroundColor: colors.primaryHover, color: "rgba(255,255,255,0.8)" },
+          }}
+        >
+          {sending ? "Sending..." : submitLabel}
+        </Button>
+        {responseNote && (
+          <Typography sx={{ mt: 2, color: colors.textMuted, fontSize: "0.85rem" }}>{responseNote}</Typography>
+        )}
       </Box>
     </Box>
   );
+
+  if (!sectionPadding) {
+    return formCard;
+  }
+
+  return <Box sx={{ px: { xs: 3, md: 4 }, pt: { xs: 5, md: 7 }, pb: { xs: 8, md: 12 } }}>{formCard}</Box>;
 }
 
 export default InquiryForm;
