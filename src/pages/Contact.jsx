@@ -1,27 +1,86 @@
+import { useSearchParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import InquiryForm from "../components/InquiryForm";
+import { Box, Typography } from "@mui/material";
+import { colors } from "../theme";
+import { Sparkle, Squiggle } from "../components/Decor";
+import { useDocumentMeta } from "../utils/useDocumentMeta";
 
-function ContactForm() {
+function Contact() {
+  useDocumentMeta(
+    "Contact | Mari's Balloon Bar",
+    "Get in touch about balloon decor, backdrops, event styling, and party rentals in Austin, Texas."
+  );
+
+  const [searchParams] = useSearchParams();
+  const preselectedService = searchParams.get("service");
+
   return (
-    <>
+    <Box sx={{ backgroundColor: colors.background }}>
       <Navbar />
-      <InquiryForm
-        heading="CONTACT"
-        description={
-          <>
-            PLEASE FILL OUT THE FORM BELOW TO START PLANNING YOUR EVENT DECOR.
-            OUR DESIGN TEAM IS READY TO CREATE EYE-CATCHING BALLOON
-            DECORATIONS FOR YOU.
-            <br />
-            <br />
-            Do you have any questions? Send us an email to{" "}
-            <b>marisballoonbar@gmail.com</b> or call us at{" "}
-            <b>512-825-5833</b>
-          </>
-        }
-      />
-    </>
+
+      {/* Hero */}
+      <Box sx={{ px: { xs: 3, md: 8 }, pt: { xs: 5, md: 7 }, pb: { xs: 3, md: 4 } }}>
+        <Box sx={{ maxWidth: 1400, mx: "auto", textAlign: "center" }}>
+          <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 2, flexWrap: "wrap", position: "relative" }}>
+            <Typography
+              sx={{
+                fontFamily: "'Fraunces', serif",
+                fontWeight: 700,
+                color: colors.text,
+                fontSize: { xs: "2.75rem", md: "3.5rem" },
+                lineHeight: 1,
+              }}
+            >
+              Get in
+            </Typography>
+            <Box sx={{ position: "relative", display: { xs: "none", sm: "block" }, width: 40, height: 40 }}>
+              <Squiggle color={colors.softAccent} sx={{ top: 0, left: 0, width: 34, height: 24 }} />
+              <Sparkle color={colors.accent} sx={{ top: -8, right: -4, width: 16, height: 16 }} />
+            </Box>
+          </Box>
+          <Typography
+            sx={{
+              fontFamily: "'Fraunces', serif",
+              fontStyle: "italic",
+              fontWeight: 550,
+              fontVariationSettings: '"opsz" 20, "WONK" 0',
+              color: colors.softAccent,
+              fontSize: { xs: "3rem", md: "3.75rem" },
+              lineHeight: 1,
+              mt: -1,
+              mb: 3,
+            }}
+          >
+            touch
+          </Typography>
+          <Typography sx={{ color: colors.textMuted, fontSize: "1.05rem", maxWidth: 520, mx: "auto" }}>
+            Fill out the form below to start planning your event decor — our design team is
+            ready to create something eye-catching for you.
+          </Typography>
+        </Box>
+      </Box>
+
+      <Box sx={{ pt: { xs: 3, md: 5 } }}>
+        <InquiryForm
+          preselectedServices={preselectedService ? [preselectedService] : []}
+          description={
+            <>
+              Have a quick question instead? Email{" "}
+              <Box component="b" sx={{ color: colors.text }}>
+                marisballoonbar@gmail.com
+              </Box>{" "}
+              or call{" "}
+              <Box component="b" sx={{ color: colors.text }}>
+                512-825-5833
+              </Box>
+              .
+            </>
+          }
+        />
+      </Box>
+    </Box>
   );
 }
 
-export default ContactForm;
+export default Contact;

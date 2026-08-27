@@ -1,22 +1,32 @@
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { CartContext } from "../components/CartContext";
 import {
-    Container,
-    Typography,
     Box,
-    List,
-    ListItem,
-    ListItemText,
+    Typography,
     Button,
     IconButton,
-    Grid,
     TextField
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import emailjs from "@emailjs/browser";
 import { colors } from "../theme";
+
+// Prices are display strings like "$12/day" — pull out just the numeric
+// rate so totals can be summed instead of producing NaN.
+const getPriceValue = (price) => parseFloat(price.replace(/[^0-9.]/g, "")) || 0;
+
+const fieldSx = {
+    "& .MuiOutlinedInput-root": {
+        borderRadius: "10px",
+        backgroundColor: colors.background,
+        "& fieldset": { borderColor: colors.border },
+        "&:hover fieldset": { borderColor: colors.softAccent },
+        "&.Mui-focused fieldset": { borderColor: colors.primary },
+    },
+};
 
 function CartPage() {
     const { cart, setCart } = useContext(CartContext);
@@ -38,7 +48,7 @@ function CartPage() {
         if (!userName || !userEmail || !userPhone) return;
         setIsSending(true);
 
-        const total = cart.reduce((acc, item) => acc + Number(item.price.replace("$", "")), 0);
+        const total = cart.reduce((acc, item) => acc + getPriceValue(item.price), 0);
 
         const templateParams = {
             user_name: userName,
@@ -71,170 +81,49 @@ function CartPage() {
         }
     };
 
-    // if (cart.length === 0) {
-    //     return (
-    //         <Container sx={{ py: 6, textAlign: "center" }}>
-    //             <Typography variant="h4" sx={{ fontFamily: "Trap", mb: 2 }}>
-    //                 Your Cart is Empty
-    //             </Typography>
-    //         </Container>
-    //     );
-    // }
-
     return (
-        <>
+        <Box sx={{ backgroundColor: colors.background }}>
             <Navbar />
+
             {isSubmitted ? (
-                <Container sx={{ py: 10, textAlign: "center" }}>
-                    <Typography
-                        variant="h4"
-                        sx={{ fontWeight: 700, mb: 2 }}
-                    >
-                        Thank you! 🎉
-                    </Typography>
-
-                    <Typography sx={{ mb: 2 }}>
-                        Your request has been sent to Mari.
-                    </Typography>
-
-                    <Typography sx={{ mb: 4 }}>
-                        We will review your selected items and contact you shortly with pricing and an invoice.
-                    </Typography>
-
-                    <Typography sx={{ mb: 4, color: "text.secondary" }}>
-                        You’re welcome to continue browsing while we prepare your quote.
-                    </Typography>
-
-                    <Button
+                <Box sx={{ px: { xs: 3, md: 8 }, py: { xs: 10, md: 14 }, textAlign: "center" }}>
+                    <Box
                         sx={{
-                            backgroundColor: colors.primary,
-                            color: "#fff",
-                            textTransform: "uppercase",
-                            fontWeight: 700,
-                            letterSpacing: "0.05em",
-                            borderRadius: "999px",
-                            px: 3.5,
-                            py: 1.5,
-                            "&:hover": { backgroundColor: colors.primaryHover }
+                            maxWidth: 520,
+                            mx: "auto",
+                            backgroundColor: "#fff",
+                            border: `1px solid ${colors.border}`,
+                            borderRadius: "20px",
+                            boxShadow: "0 16px 32px rgba(48,34,54,0.08)",
+                            px: { xs: 3, md: 5 },
+                            py: { xs: 5, md: 6 },
                         }}
-                        onClick={() => setIsSubmitted(false)}
                     >
-                        Back to Shop
-                    </Button>
-                </Container>
-            ) : cart.length === 0 ? (
-                <Container sx={{ py: 10, textAlign: "center" }}>
-                    <Typography variant="h4" sx={{ mb: 2 }}>
-                        Your Cart is Empty
-                    </Typography>
-                </Container>
-            ) : (
-                <Container sx={{ py: 6 }}>
-                    {/* CART ITEMS LIST */}
-                    <Typography variant="h4" sx={{ mb: 3 }}>
-                        Your Items
-                    </Typography>
-
-
-
-                    <List>
-                        {cart.map((item, idx) => (
-                            <ListItem
-                                key={idx}
-                                sx={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    borderBottom: `1px solid ${colors.border}`,
-                                    py: 2
-                                }}
-                            >
-                                <Grid container spacing={2} alignItems="center">
-                                    {/* IMAGE */}
-                                    <Grid item xs={2} sm={1}>
-                                        <img
-                                            src={item.src}
-                                            alt={item.name}
-                                            style={{ width: "60px", borderRadius: "4px" }}
-                                        />
-                                    </Grid>
-
-                                    {/* NAME + PRICE */}
-                                    <Grid item xs={8} sm={9}>
-                                        <ListItemText
-                                            primary={item.name}
-                                            secondary={item.price}
-                                        />
-                                    </Grid>
-
-                                    {/* DELETE BUTTON */}
-                                    <Grid item xs={2} sm={2}>
-                                        <IconButton
-                                            onClick={() => removeItem(idx)}
-                                            sx={{
-                                                "&:hover": { color: "#ff4444" }
-                                            }}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </Grid>
-                                </Grid>
-                            </ListItem>
-                        ))}
-                    </List>
-
-                    {/* Total */}
-                    <Box sx={{ mt: 3, mb: 2, textAlign: "right" }}>
-                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                            Total: ${cart.reduce((acc, item) => acc + Number(item.price.replace("$", "")), 0).toFixed(2)}
+                        <Typography
+                            sx={{
+                                fontFamily: "'Fraunces', serif",
+                                fontWeight: 700,
+                                color: colors.text,
+                                fontSize: { xs: "1.75rem", md: "2rem" },
+                                mb: 2,
+                            }}
+                        >
+                            Thank you! 🎉
                         </Typography>
-                    </Box>
 
-                    <TextField sx={{ my: 2 }}
-                        required
-                        fullWidth
-                        label="First and Last Name"
-                        name="user_name"
-                        margin="normal"
-                        variant="outlined"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
-                    />
-                    <TextField sx={{ my: 2 }}
-                        required
-                        fullWidth
-                        label="Email Address"
-                        name="user_email"
-                        margin="normal"
-                        type="email"
-                        variant="outlined"
-                        value={userEmail}
-                        onChange={(e) => setUserEmail(e.target.value)}
-                    />
-                    <TextField sx={{ my: 2 }}
-                        required
-                        fullWidth
-                        label="Phone Number"
-                        name="user_phone"
-                        margin="normal"
-                        variant="outlined"
-                        value={userPhone}
-                        onChange={(e) => setUserPhone(e.target.value)}
-                    />
-                    <TextField sx={{ my: 2 }}
-                        fullWidth
-                        label="Company Name (if applicable)"
-                        name="company_name"
-                        margin="normal"
-                        variant="outlined"
-                        value={companyName}
-                        onChange={(e) => setCompanyName(e.target.value)}
-                    />
+                        <Typography sx={{ color: colors.textMuted, mb: 1.5 }}>
+                            Your request has been sent to Mari.
+                        </Typography>
 
-                    <Box sx={{ mt: 4 }}>
+                        <Typography sx={{ color: colors.textMuted, mb: 1.5 }}>
+                            We will review your selected items and contact you shortly with pricing and an invoice.
+                        </Typography>
+
+                        <Typography sx={{ color: colors.textMuted, mb: 4 }}>
+                            You're welcome to continue browsing while we prepare your quote.
+                        </Typography>
+
                         <Button
-                            onClick={handleSendEmail}
-                            disabled={isSending}
-                            endIcon={!isSending && <ArrowForwardIcon />}
                             sx={{
                                 backgroundColor: colors.primary,
                                 color: "#fff",
@@ -246,13 +135,210 @@ function CartPage() {
                                 py: 1.5,
                                 "&:hover": { backgroundColor: colors.primaryHover }
                             }}
+                            onClick={() => setIsSubmitted(false)}
                         >
-                            {isSending ? "Sending..." : "Send Request"}
+                            Back to Shop
                         </Button>
                     </Box>
-                </Container>
+                </Box>
+            ) : (
+                <>
+                    {/* Hero */}
+                    <Box sx={{ px: { xs: 3, md: 8 }, pt: { xs: 5, md: 7 }, pb: { xs: 3, md: 4 } }}>
+                        <Box
+                            sx={{
+                                maxWidth: 1400,
+                                mx: "auto",
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "baseline",
+                                gap: 1.5,
+                                flexWrap: "wrap",
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontFamily: "'Fraunces', serif",
+                                    fontWeight: 700,
+                                    color: colors.text,
+                                    fontSize: { xs: "2.75rem", md: "3.5rem" },
+                                    lineHeight: 1,
+                                }}
+                            >
+                                Your
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    fontFamily: "'Fraunces', serif",
+                                    fontStyle: "italic",
+                                    fontWeight: 550,
+                                    fontVariationSettings: '"opsz" 20, "WONK" 0',
+                                    color: colors.softAccent,
+                                    fontSize: { xs: "3rem", md: "3.75rem" },
+                                    lineHeight: 1,
+                                }}
+                            >
+                                cart
+                            </Typography>
+                        </Box>
+                    </Box>
+
+                    {cart.length === 0 ? (
+                        <Box sx={{ px: { xs: 3, md: 8 }, pb: { xs: 10, md: 14 }, textAlign: "center" }}>
+                            <Typography sx={{ color: colors.textMuted, fontSize: "1.05rem", mb: 3 }}>
+                                Your cart is empty.
+                            </Typography>
+                            <Button
+                                component={Link}
+                                to="/rental-catalog"
+                                endIcon={<ArrowForwardIcon />}
+                                sx={{
+                                    backgroundColor: colors.primary,
+                                    color: "#fff",
+                                    textTransform: "uppercase",
+                                    fontWeight: 700,
+                                    letterSpacing: "0.05em",
+                                    borderRadius: "999px",
+                                    px: 3.5,
+                                    py: 1.5,
+                                    "&:hover": { backgroundColor: colors.primaryHover }
+                                }}
+                            >
+                                Browse Rentals
+                            </Button>
+                        </Box>
+                    ) : (
+                        <Box sx={{ px: { xs: 3, md: 8 }, pb: { xs: 10, md: 14 } }}>
+                            <Box sx={{ maxWidth: 800, mx: "auto" }}>
+                                <Box
+                                    sx={{
+                                        backgroundColor: "#fff",
+                                        border: `1px solid ${colors.border}`,
+                                        borderRadius: "20px",
+                                        overflow: "hidden",
+                                        mb: 4,
+                                    }}
+                                >
+                                    {cart.map((item, idx) => (
+                                        <Box
+                                            key={idx}
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: 2,
+                                                px: { xs: 2.5, md: 3 },
+                                                py: 2,
+                                                borderBottom: idx < cart.length - 1 ? `1px solid ${colors.border}` : "none",
+                                            }}
+                                        >
+                                            <Box
+                                                component="img"
+                                                src={item.src}
+                                                alt={item.name}
+                                                sx={{ width: 60, height: 60, objectFit: "cover", borderRadius: "10px", flexShrink: 0 }}
+                                            />
+                                            <Box sx={{ flex: 1, minWidth: 0 }}>
+                                                <Typography sx={{ fontWeight: 700, color: colors.text }}>{item.name}</Typography>
+                                                <Typography sx={{ color: colors.textMuted, fontSize: "0.9rem" }}>{item.price}</Typography>
+                                            </Box>
+                                            <IconButton
+                                                onClick={() => removeItem(idx)}
+                                                sx={{ color: colors.textMuted, "&:hover": { color: colors.primary } }}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </Box>
+                                    ))}
+                                </Box>
+
+                                {/* Total */}
+                                <Box sx={{ textAlign: "right", mb: 4 }}>
+                                    <Typography sx={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "1.3rem", color: colors.text }}>
+                                        Total: ${cart.reduce((acc, item) => acc + getPriceValue(item.price), 0).toFixed(2)}
+                                    </Typography>
+                                </Box>
+
+                                <Box
+                                    sx={{
+                                        backgroundColor: "#fff",
+                                        border: `1px solid ${colors.border}`,
+                                        borderRadius: "20px",
+                                        px: { xs: 3, md: 5 },
+                                        py: { xs: 4, md: 5 },
+                                    }}
+                                >
+                                    <TextField
+                                        sx={{ my: 1, ...fieldSx }}
+                                        required
+                                        fullWidth
+                                        label="First and Last Name"
+                                        name="user_name"
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={userName}
+                                        onChange={(e) => setUserName(e.target.value)}
+                                    />
+                                    <TextField
+                                        sx={{ my: 1, ...fieldSx }}
+                                        required
+                                        fullWidth
+                                        label="Email Address"
+                                        name="user_email"
+                                        margin="normal"
+                                        type="email"
+                                        variant="outlined"
+                                        value={userEmail}
+                                        onChange={(e) => setUserEmail(e.target.value)}
+                                    />
+                                    <TextField
+                                        sx={{ my: 1, ...fieldSx }}
+                                        required
+                                        fullWidth
+                                        label="Phone Number"
+                                        name="user_phone"
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={userPhone}
+                                        onChange={(e) => setUserPhone(e.target.value)}
+                                    />
+                                    <TextField
+                                        sx={{ my: 1, ...fieldSx }}
+                                        fullWidth
+                                        label="Company Name (if applicable)"
+                                        name="company_name"
+                                        margin="normal"
+                                        variant="outlined"
+                                        value={companyName}
+                                        onChange={(e) => setCompanyName(e.target.value)}
+                                    />
+
+                                    <Box sx={{ textAlign: "center", mt: 3 }}>
+                                        <Button
+                                            onClick={handleSendEmail}
+                                            disabled={isSending}
+                                            endIcon={!isSending && <ArrowForwardIcon />}
+                                            sx={{
+                                                backgroundColor: colors.primary,
+                                                color: "#fff",
+                                                textTransform: "uppercase",
+                                                fontWeight: 700,
+                                                letterSpacing: "0.05em",
+                                                borderRadius: "999px",
+                                                px: 3.5,
+                                                py: 1.5,
+                                                "&:hover": { backgroundColor: colors.primaryHover }
+                                            }}
+                                        >
+                                            {isSending ? "Sending..." : "Send Request"}
+                                        </Button>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Box>
+                    )}
+                </>
             )}
-        </>
+        </Box>
     );
 }
 

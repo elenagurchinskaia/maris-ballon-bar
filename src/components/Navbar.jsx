@@ -25,7 +25,7 @@ function Navbar() {
     { label: "about", path: "/about" },
     { label: "gallery", path: "/gallery" },
     { label: "seasonal", path: "/seasonal-items" },
-    { label: "rentals", path: "/rental-catalog" },
+    { label: "rental catalog", path: "/rental-catalog" },
     { label: "contact", path: "/contact" },
   ];
 

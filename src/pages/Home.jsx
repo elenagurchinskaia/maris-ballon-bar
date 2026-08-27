@@ -1,45 +1,162 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import Gallery from "../components/Gallery";
 import TestimonialCTA from "../components/TestimonialCTA";
 
-import { GiBalloons } from "react-icons/gi";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { Box, Typography, Button, Divider } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { colors } from "../theme";
+import { Squiggle, Dot } from "../components/Decor";
+import { useDocumentMeta } from "../utils/useDocumentMeta";
+
+const lilac = "#9370C7";
+
+// Custom line-style service icons — one cohesive stroke style (round caps/
+// joins, 2px weight, 48x48 canvas) instead of a generic icon library, so
+// each glyph reads as this specific service rather than a stock symbol.
+const iconSx = { width: 34, height: 34 };
+const iconProps = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: "2",
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+};
+
+function BalloonGarlandIcon() {
+  return (
+    <Box component="svg" viewBox="0 0 48 48" sx={iconSx} {...iconProps}>
+      <circle cx="7" cy="32" r="4.5" />
+      <circle cx="16.5" cy="20" r="5.5" />
+      <circle cx="24" cy="14" r="6" />
+      <circle cx="31.5" cy="20" r="5.5" />
+      <circle cx="41" cy="32" r="4.5" />
+    </Box>
+  );
+}
+
+function BackdropIcon() {
+  return (
+    <Box component="svg" viewBox="0 0 48 48" sx={iconSx} {...iconProps}>
+      <path d="M9 40 V20 C9 11 16 6 24 6 C32 6 39 11 39 20 V40" />
+      <circle cx="37" cy="9" r="3" fill="currentColor" stroke="none" />
+      <circle cx="42.5" cy="13" r="2.4" fill="currentColor" stroke="none" />
+      <circle cx="38.5" cy="16.5" r="2" fill="currentColor" stroke="none" />
+    </Box>
+  );
+}
+
+function TableSettingIcon() {
+  return (
+    <Box component="svg" viewBox="0 0 48 48" sx={iconSx} {...iconProps}>
+      <ellipse cx="20" cy="16" rx="13" ry="4" />
+      <line x1="20" y1="20" x2="20" y2="34" />
+      <ellipse cx="20" cy="36" rx="9" ry="2.6" />
+      <path
+        d="M38 8 L39.3 11.7 L43 13 L39.3 14.3 L38 18 L36.7 14.3 L33 13 L36.7 11.7 Z"
+        fill="currentColor"
+        stroke="none"
+      />
+    </Box>
+  );
+}
+
+function RentalPropIcon() {
+  return (
+    <Box component="svg" viewBox="0 0 48 48" sx={iconSx} {...iconProps}>
+      <path d="M9 38 L24 9 L39 38" />
+      <path d="M18 38 L24 21 L30 38" />
+      <path d="M24 9 V4" />
+      <path d="M24 4 L29 6 L24 8 Z" fill="currentColor" stroke="none" />
+    </Box>
+  );
+}
+
+// Real photos of Mari's own work — reused from the Gallery page's image set.
+const galleryPreviewImages = [
+  {
+    src: "/assets/gallery/cotton-candy.jpg",
+    alt: "Mari's Balloon Bar cotton candy cart with a rose-gold and cream balloon garland",
+  },
+  {
+    src: "/assets/gallery/shimmer-walls.jpg",
+    alt: "Rose-gold shimmer wall backdrop with a 'Happy Birthday' neon sign",
+  },
+  {
+    src: "/assets/gallery/maris-work-gallery-birthday-installs.png",
+    alt: "'Giraffe Jamboree' birthday backdrop with an orange, green and gold balloon garland",
+  },
+  {
+    src: "/assets/gallery/maris-work-gallery-numbers.png",
+    alt: "White light-up '50' marquee numbers with a blue and gold balloon garland",
+  },
+  {
+    src: "/assets/gallery/maris-work-gallery-balloon-installs.png",
+    alt: "Blush, black and cream balloon garland on a branded 'Revelry' event backdrop",
+  },
+  {
+    src: "/assets/gallery/maris-work-gallery-shimmer-wall.png",
+    alt: "Gold shimmer wall with 'GVA' marquee letters and a pastel candy-cane balloon garland",
+  },
+  {
+    src: "/assets/gallery/maris-work-gallery-flowers-arrangement.png",
+    alt: "Floral welcome sign arrangement for a baby shower, reading 'Because Baby Joon is Coming Soon'",
+  },
+  {
+    src: "/assets/gallery/maris-work-gallery-mothers-day.png",
+    alt: "Rose gold 'Happy Mother's Day' balloon bouquets with fresh flowers",
+  },
+];
 
 const features = [
   {
-    icon: <GiBalloons size={26} />,
-    title: "Custom Designs",
-    description: "Tailored to your vision and your event.",
+    icon: <BalloonGarlandIcon />,
+    title: "Balloon Installations",
+    description:
+      "Custom balloon decor, arches, garlands, and jumbo balloons designed around your celebration.",
     color: colors.primary,
+    bg: "#FDEDF4",
+    border: "rgba(242,90,155,0.18)",
+    decoration: "flower",
   },
   {
-    icon: <AutoAwesomeIcon fontSize="small" />,
-    title: "Premium Quality",
-    description: "Beautiful, high-quality balloons that last.",
-    color: colors.softAccent,
+    icon: <BackdropIcon />,
+    title: "Backdrops & Statement Pieces",
+    description:
+      "Photo-ready backdrops, shimmer walls, and marquees that transform the entire space.",
+    color: "#C9971A",
+    bg: "#FCF3D9",
+    border: "rgba(201,151,26,0.22)",
+    squiggleColor: "#C9971A",
   },
   {
-    icon: <CalendarMonthIcon fontSize="small" />,
-    title: "On-Time Setup",
-    description: "We handle the details so you can enjoy.",
-    color: colors.accent,
+    icon: <TableSettingIcon />,
+    title: "Event Styling",
+    description:
+      "Coordinated colors, statement details, and thoughtful finishing touches that bring the entire celebration together.",
+    color: lilac,
+    bg: "#F3ECFB",
+    border: "rgba(147,112,199,0.2)",
+    decoration: "star",
   },
   {
-    icon: <FavoriteBorderIcon fontSize="small" />,
-    title: "Made With Love",
-    description: "Passion in every detail, always.",
-    color: colors.primary,
+    icon: <RentalPropIcon />,
+    title: "Party Rentals",
+    description: "Tables, chairs, tents, and playful additions for a complete event setup.",
+    color: "#7B87B0",
+    bg: "#FBE1D3",
+    border: "rgba(217,119,87,0.22)",
   },
 ];
 
 function Home() {
+  useDocumentMeta(
+    "Mari's Balloon Bar | Balloon Decor, Backdrops & Event Styling in Austin, TX",
+    "Balloon decor, backdrops, event styling, and party rentals in Austin, Texas."
+  );
+
+  const galleryScrollRef = useRef(null);
+
   return (
     <Box sx={{ backgroundColor: colors.background }}>
       <Navbar />
@@ -51,7 +168,7 @@ function Home() {
           pb: { xs: 6, md: 10 },
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
+          alignItems: { xs: "center", md: "flex-start" },
           gap: { xs: 5, md: 0 },
         }}
       >
@@ -61,6 +178,7 @@ function Home() {
             flex: 1,
             position: "relative",
             px: { xs: 3, md: 8 },
+            mt: { xs: 0, md: 9 },
           }}
         >
           <Typography
@@ -110,8 +228,9 @@ function Home() {
               mb: 4,
             }}
           >
-            Luxury balloon installations for birthdays, events, weddings and
-            everything in between.
+            Custom balloon installations, statement backdrops, event styling,
+            and party rentals for unforgettable celebrations in Austin
+            and surrounding areas.
           </Typography>
 
           <Box sx={{ display: "flex", gap: { xs: 2, md: 1 }, flexWrap: "wrap" }}>
@@ -130,6 +249,7 @@ function Home() {
                 px: { xs: 3.5, md: 3 },
                 py: 1.5,
                 fontSize: { md: "0.75rem" },
+                flex: { md: 1 },
                 "&:hover": { backgroundColor: colors.primaryHover },
               }}
             >
@@ -147,9 +267,10 @@ function Home() {
                 letterSpacing: "0.05em",
                 borderRadius: "999px",
                 whiteSpace: "nowrap",
-                px: { xs: 3.5, md: 1.75 },
+                px: { xs: 3.5, md: 3 },
                 py: 1.5,
                 fontSize: { md: "0.75rem" },
+                flex: { md: 1 },
                 "&:hover": {
                   borderColor: colors.primaryHover,
                   backgroundColor: "rgba(242, 90, 155, 0.08)",
@@ -164,9 +285,9 @@ function Home() {
         {/* Image column */}
         <Box
           sx={{
-            width: { xs: "100%", md: "80%" },
+            width: { xs: "100%", md: "72%" },
             flexShrink: 0,
-            height: { xs: 380, sm: 480, md: "calc(100vh - 90px)" },
+            height: { xs: 342, sm: 432, md: "calc((100vh - 90px) * 0.9)" },
             overflow: "hidden",
             backgroundColor: colors.background,
             transform: { md: "translateX(-64px)" },
@@ -181,77 +302,538 @@ function Home() {
               height: "100%",
               objectFit: "contain",
               objectPosition: "center",
+              maskImage: {
+                xs: "none",
+                md: "linear-gradient(to right, transparent 0%, black 18%)",
+              },
+              WebkitMaskImage: {
+                xs: "none",
+                md: "linear-gradient(to right, transparent 0%, black 18%)",
+              },
             }}
           />
         </Box>
       </Box>
 
-      {/* Features */}
+      {/* Services */}
       <Box
+        component="section"
+        aria-labelledby="services-heading"
         sx={{
           px: { xs: 3, md: 8 },
-          pb: { xs: 6, md: 10 },
+          pb: { xs: 8, md: 12 },
+          maxWidth: 1400,
+          mx: "auto",
+        }}
+      >
+        <Typography
+          sx={{
+            color: colors.primary,
+            fontWeight: 700,
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            fontSize: "0.85rem",
+            mb: 0.5,
+          }}
+        >
+          Our Services
+        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: { xs: 4, md: 5 } }}>
+          <Typography
+            id="services-heading"
+            component="h2"
+            sx={{
+              fontFamily: "'Fraunces', serif",
+              fontWeight: 700,
+              color: colors.text,
+              fontSize: { xs: "1.85rem", md: "2.25rem" },
+              m: 0,
+            }}
+          >
+            How we can help
+          </Typography>
+          <Squiggle
+            color={colors.accent}
+            aria-hidden="true"
+            sx={{ position: "relative", top: 4, left: 0, width: 34, height: 22, display: { xs: "none", sm: "block" } }}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr", md: "repeat(4, 1fr)" },
+            gap: { xs: "24px", sm: "18px" },
+          }}
+        >
+          {features.map((feature) => (
+            <Box
+              key={feature.title}
+              sx={{
+                position: "relative",
+                backgroundColor: feature.bg,
+                border: `1px solid ${feature.border}`,
+                borderRadius: "24px",
+                p: 3,
+                display: "grid",
+                gridTemplateRows: "48px minmax(44px, auto) 1fr",
+                rowGap: "12px",
+                justifyItems: "center",
+                textAlign: "center",
+                minHeight: { xs: "auto", sm: 260, md: 280 },
+                overflow: "visible",
+              }}
+            >
+              {feature.decoration === "flower" && (
+                <Box
+                  component="img"
+                  src="/assets/logo/flower-inf-no-bg.png"
+                  alt=""
+                  aria-hidden="true"
+                  sx={{
+                    position: "absolute",
+                    zIndex: 2,
+                    bottom: { xs: -28, sm: -25, md: -53 },
+                    left: { xs: -10, sm: -8, md: -14 },
+                    width: { xs: 78, sm: 85, md: 115 },
+                    aspectRatio: "1301 / 1209",
+                    height: "auto",
+                  }}
+                />
+              )}
+              {feature.decoration === "star" && (
+                <Box
+                  component="img"
+                  src="/assets/logo/star-inf-no-bg.png"
+                  alt=""
+                  aria-hidden="true"
+                  sx={{
+                    position: "absolute",
+                    zIndex: 2,
+                    bottom: { xs: -26, sm: -26, md: -42 },
+                    right: { xs: -2, sm: 0, md: 4 },
+                    width: { xs: 56, sm: 60, md: 82 },
+                    aspectRatio: "1312 / 1199",
+                    height: "auto",
+                  }}
+                />
+              )}
+
+              <Box
+                aria-hidden="true"
+                sx={{
+                  position: "relative",
+                  zIndex: 1,
+                  width: 48,
+                  height: 48,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: feature.color,
+                }}
+              >
+                {feature.icon}
+              </Box>
+              <Typography
+                component="h3"
+                sx={{
+                  position: "relative",
+                  zIndex: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                  fontSize: "0.82rem",
+                  lineHeight: 1.35,
+                  maxWidth: 210,
+                  color: feature.color,
+                  m: 0,
+                }}
+              >
+                {feature.title}
+              </Typography>
+              <Typography
+                sx={{
+                  position: "relative",
+                  zIndex: 1,
+                  color: "rgba(48, 34, 54, 0.78)",
+                  fontSize: "0.9rem",
+                  maxWidth: 220,
+                }}
+              >
+                {feature.description}
+              </Typography>
+
+              {feature.squiggleColor && (
+                <Squiggle
+                  color={feature.squiggleColor}
+                  aria-hidden="true"
+                  sx={{ position: "absolute", zIndex: 1, bottom: 18, right: 18, width: 28, height: 18 }}
+                />
+              )}
+            </Box>
+          ))}
+        </Box>
+
+        <Box sx={{ display: "flex", justifyContent: "center", mt: "28px" }}>
+          <Button
+            component={Link}
+            to="/contact"
+            endIcon={<ArrowForwardIcon />}
+            sx={{
+              backgroundColor: colors.primary,
+              color: "#fff",
+              textTransform: "uppercase",
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              borderRadius: "999px",
+              px: 3.5,
+              py: 1.5,
+              fontSize: "0.8rem",
+              "&:hover": { backgroundColor: colors.primaryHover },
+            }}
+          >
+            Plan Your Event
+          </Button>
+        </Box>
+      </Box>
+
+      {/* Why Choose Mari */}
+      <Box
+        component="section"
+        aria-labelledby="why-mari-heading"
+        sx={{
+          position: "relative",
+          px: { xs: 3, md: 8 },
+          pb: { xs: 5, md: 6 },
           maxWidth: 1400,
           mx: "auto",
         }}
       >
         <Box
           sx={{
-            border: `1px solid ${colors.border}`,
-            borderRadius: "20px",
-            backgroundColor: "#fff",
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: "center",
+            gap: { xs: 4, sm: 3, md: 5 },
+          }}
+        >
+          {/* Portrait */}
+          <Box
+            sx={{
+              order: { xs: 3, sm: 1 },
+              flexShrink: 0,
+              width: { xs: "68%", sm: "26%", md: "18%" },
+              position: "relative",
+            }}
+          >
+            <Box
+              sx={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: { xs: "3 / 4", sm: "4 / 5" },
+                borderRadius: "220px 220px 20px 20px",
+                overflow: "hidden",
+                backgroundColor: "#F3ECFB",
+                boxShadow: "0 12px 28px rgba(48,34,54,0.1)",
+              }}
+            >
+              <Box
+                component="img"
+                src="/assets/gallery/bio.jpg"
+                alt="Mari, founder and balloon artist at Mari's Balloon Bar"
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "50% 18%",
+                  display: "block",
+                }}
+              />
+            </Box>
+
+            {/* Mobile-only flower accent, overlapping the portrait corner */}
+            <Box
+              component="img"
+              src="/assets/logo/flower-inf-no-bg.png"
+              alt=""
+              aria-hidden="true"
+              sx={{
+                display: { xs: "block", sm: "none" },
+                position: "absolute",
+                zIndex: 2,
+                bottom: -18,
+                right: -16,
+                width: 64,
+                aspectRatio: "1301 / 1209",
+                height: "auto",
+              }}
+            />
+          </Box>
+
+          {/* Center content */}
+          <Box sx={{ order: { xs: 1, sm: 2 }, flex: 1, textAlign: "left", minWidth: 0 }}>
+            <Typography
+              sx={{
+                color: colors.primary,
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                fontSize: "0.8rem",
+                mb: 1,
+              }}
+            >
+              Why Choose Mari
+            </Typography>
+            <Typography
+              id="why-mari-heading"
+              component="h2"
+              sx={{
+                fontFamily: "'Fraunces', serif",
+                fontWeight: 700,
+                color: colors.text,
+                fontSize: { xs: "1.9rem", md: "2.15rem" },
+                lineHeight: 1.15,
+                m: 0,
+                mb: 2,
+              }}
+            >
+              Unforgettable celebrations, beautifully{" "}designed
+            </Typography>
+            <Typography sx={{ color: colors.textMuted, fontSize: "1rem", lineHeight: 1.6, maxWidth: 420, mb: 3 }}>
+              From intimate gatherings to unforgettable events, we design custom balloon
+              experiences that bring your vision to life.
+            </Typography>
+            <Button
+              component={Link}
+              to="/about"
+              endIcon={<ArrowForwardIcon />}
+              sx={{
+                backgroundColor: colors.primary,
+                color: "#fff",
+                textTransform: "uppercase",
+                fontWeight: 700,
+                letterSpacing: "0.05em",
+                borderRadius: "999px",
+                px: 3.5,
+                py: 1.5,
+                fontSize: "0.8rem",
+                "&:hover": { backgroundColor: colors.primaryHover },
+              }}
+            >
+              About Mari
+            </Button>
+          </Box>
+
+          {/* Flower + confetti */}
+          <Box
+            sx={{
+              order: { xs: 2, sm: 3 },
+              display: { xs: "none", sm: "block" },
+              position: "relative",
+              flexShrink: 0,
+              width: { sm: "16%", md: "20%" },
+            }}
+          >
+            <Squiggle
+              color={colors.accent}
+              aria-hidden="true"
+              sx={{ top: 4, left: 4, width: 46, height: 36, transform: "rotate(-25deg)" }}
+            />
+            <Squiggle
+              color={colors.softAccent}
+              aria-hidden="true"
+              sx={{ top: -22, left: 68, width: 38, height: 52, transform: "rotate(8deg)", display: { sm: "none", md: "block" } }}
+            />
+            <Squiggle
+              color={colors.softAccent}
+              aria-hidden="true"
+              sx={{ top: 22, left: 120, width: 40, height: 46, transform: "rotate(-12deg)" }}
+            />
+            <Squiggle
+              color={colors.primary}
+              aria-hidden="true"
+              sx={{ top: -10, right: 45, width: 50, height: 34, transform: "rotate(12deg)" }}
+            />
+            <Dot
+              color={colors.primary}
+              aria-hidden="true"
+              sx={{ top: 56, left: 46, width: 10, height: 10 }}
+            />
+            <Dot
+              color={colors.softAccent}
+              aria-hidden="true"
+              sx={{ top: -18, left: 116, width: 9, height: 9, display: { sm: "none", md: "block" } }}
+            />
+            <Dot
+              color={colors.accent}
+              aria-hidden="true"
+              sx={{ top: 40, right: 55, width: 9, height: 9, display: { sm: "none", md: "block" } }}
+            />
+            <Box
+              component="img"
+              src="/assets/logo/flower-inf-no-bg.png"
+              alt=""
+              aria-hidden="true"
+              sx={{
+                position: "relative",
+                zIndex: 1,
+                mt: 5,
+                ml: "auto",
+                mr: 2,
+                width: "72%",
+                aspectRatio: "1301 / 1209",
+                height: "auto",
+                filter: "drop-shadow(0 12px 20px rgba(48,34,54,0.15))",
+              }}
+            />
+          </Box>
+        </Box>
+
+      </Box>
+
+      {/* Gallery preview */}
+      <Box
+        component="section"
+        aria-labelledby="gallery-preview-heading"
+        sx={{
+          px: { xs: 3, md: 8 },
+          py: { xs: 8, md: 10 },
+          maxWidth: 1600,
+          mx: "auto",
+          overflow: "hidden",
+        }}
+      >
+        <Box
+          sx={{
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             alignItems: { xs: "flex-start", md: "center" },
-            justifyContent: "space-between",
-            py: { xs: 1, md: 4 },
-            px: { xs: 3, md: 4 },
+            gap: { xs: 4, md: 6 },
           }}
         >
-          {features.map((feature, index) => (
-            <React.Fragment key={feature.title}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  gap: 2,
-                  py: { xs: 2, md: 0 },
-                }}
-              >
-                <Box sx={{ color: feature.color, fontSize: 26, mt: 0.5 }}>
-                  {feature.icon}
-                </Box>
-                <Box>
-                  <Typography
-                    sx={{
-                      fontWeight: 700,
-                      textTransform: "uppercase",
-                      fontSize: "0.85rem",
-                      letterSpacing: "0.03em",
-                      mb: 0.5,
-                    }}
-                  >
-                    {feature.title}
-                  </Typography>
-                  <Typography sx={{ color: colors.textMuted, fontSize: "0.9rem", maxWidth: 220 }}>
-                    {feature.description}
-                  </Typography>
-                </Box>
-              </Box>
-              {index < features.length - 1 && (
-                <Divider
-                  orientation="vertical"
-                  flexItem
-                  sx={{ display: { xs: "none", md: "block" }, mx: 2 }}
-                />
-              )}
-            </React.Fragment>
-          ))}
-        </Box>
-      </Box>
+          {/* Text column */}
+          <Box sx={{ flexShrink: 0, width: { xs: "100%", md: 420 } }}>
+            <Typography
+              sx={{
+                color: colors.primary,
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                fontSize: "0.8rem",
+                mb: 1,
+              }}
+            >
+              Gallery
+            </Typography>
+            <Typography
+              id="gallery-preview-heading"
+              component="h2"
+              sx={{
+                fontFamily: "'Fraunces', serif",
+                fontWeight: 700,
+                color: colors.text,
+                fontSize: { xs: "1.9rem", md: "2rem" },
+                lineHeight: 1.15,
+                whiteSpace: { md: "nowrap" },
+                m: 0,
+                mb: 3,
+              }}
+            >
+              A glimpse of our work
+            </Typography>
+            <Button
+              component={Link}
+              to="/gallery"
+              endIcon={<ArrowForwardIcon />}
+              variant="outlined"
+              sx={{
+                borderColor: colors.primary,
+                color: colors.primary,
+                textTransform: "uppercase",
+                fontWeight: 700,
+                letterSpacing: "0.05em",
+                borderRadius: "999px",
+                px: 3,
+                py: 1.5,
+                fontSize: "0.8rem",
+                "&:hover": {
+                  borderColor: colors.primaryHover,
+                  backgroundColor: "rgba(242, 90, 155, 0.08)",
+                },
+              }}
+            >
+              View Full Gallery
+            </Button>
+          </Box>
 
-      <Box sx={{ backgroundColor: colors.background }}>
-        <Gallery />
+          {/* Image row */}
+          <Box sx={{ position: "relative", flex: 1, minWidth: 0, width: "100%" }}>
+            <Box
+              ref={galleryScrollRef}
+              sx={{
+                display: "flex",
+                gap: 2,
+                overflowX: "auto",
+                scrollBehavior: "smooth",
+                pb: { xs: 1, md: 0 },
+                pr: { md: 4 },
+                scrollbarWidth: "none",
+                "&::-webkit-scrollbar": { display: "none" },
+              }}
+            >
+              {galleryPreviewImages.map((img) => (
+                <Box key={img.src} sx={{ flexShrink: 0, width: { xs: 200, md: 260 } }}>
+                  <Box
+                    component="img"
+                    src={img.src}
+                    alt={img.alt}
+                    sx={{
+                      width: "100%",
+                      height: { xs: 240, md: 260 },
+                      objectFit: "cover",
+                      borderRadius: "18px",
+                      display: "block",
+                      boxShadow: "0 8px 20px rgba(48,34,54,0.12)",
+                    }}
+                  />
+                </Box>
+              ))}
+            </Box>
+
+            <Box
+              component="button"
+              type="button"
+              onClick={() =>
+                galleryScrollRef.current?.scrollBy({ left: 300, behavior: "smooth" })
+              }
+              aria-label="Show more gallery photos"
+              sx={{
+                display: { xs: "none", md: "flex" },
+                position: "absolute",
+                top: "50%",
+                right: -28,
+                transform: "translateY(-50%)",
+                width: 56,
+                height: 56,
+                border: "none",
+                borderRadius: "50%",
+                backgroundColor: colors.primary,
+                color: "#fff",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                boxShadow: "0 8px 20px rgba(242,90,155,0.35)",
+                "&:hover": { backgroundColor: colors.primaryHover },
+                "&:focus-visible": { outline: `2px solid ${colors.text}`, outlineOffset: "3px" },
+              }}
+            >
+              <ArrowForwardIcon aria-hidden="true" />
+            </Box>
+          </Box>
+        </Box>
       </Box>
 
       <TestimonialCTA />
