@@ -138,7 +138,7 @@ function About() {
               From organic garlands and statement arches to custom backdrops and event details,
               every installation is thoughtfully designed around the client's colors, theme, and
               vision. Mari works closely with each client to create something personal — never
-              one-size-fits-all.
+              one‑size‑fits‑all.
             </Typography>
             <Typography sx={{ color: colors.textMuted, fontSize: "1.05rem", lineHeight: 1.7, mb: 4 }}>
               Whether she's styling a first birthday, baby shower, wedding, or corporate
@@ -152,8 +152,7 @@ function About() {
                 flexWrap: "wrap",
                 justifyContent: "space-between",
                 gap: 4,
-                pt: 3,
-                borderTop: `1px solid ${colors.border}`,
+                mt: 1,
                 maxWidth: 420,
               }}
             >

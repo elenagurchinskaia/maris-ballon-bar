@@ -15,15 +15,6 @@ import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import EcoIcon from "@mui/icons-material/EnergySavingsLeaf";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import { colors } from "../theme";
-import { Sparkle, Squiggle, Dot } from "../components/Decor";
-
-const seasons = [
-  { id: "all", label: "All" },
-  { id: "spring", label: "Spring" },
-  { id: "summer", label: "Summer" },
-  { id: "fall", label: "Fall" },
-  { id: "winter", label: "Winter" },
-];
 
 const items = [
   {
@@ -77,121 +68,53 @@ const items = [
 ];
 
 function SeasonalItems() {
-  const [active, setActive] = useState("all");
   const [selected, setSelected] = useState(null);
-  const filtered = active === "all" ? items : items.filter((i) => i.season === active);
 
   return (
     <Box sx={{ backgroundColor: colors.background }}>
       <Navbar />
 
       {/* Hero */}
-      <Box sx={{ px: { xs: 3, md: 8 }, pt: { xs: 5, md: 7 }, pb: { xs: 3, md: 4 } }}>
-        <Box
-          sx={{
-            maxWidth: 1400,
-            mx: "auto",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 4,
-          }}
-        >
-        <Box sx={{ flex: 1, minWidth: 0, position: "relative" }}>
-          <Squiggle
-            color={colors.softAccent}
-            sx={{ top: -6, left: { xs: 150, md: 200 }, display: { xs: "none", sm: "block" } }}
-          />
-          <Sparkle
-            color={colors.accent}
-            sx={{ top: -14, left: { xs: 195, md: 245 }, display: { xs: "none", sm: "block" } }}
-          />
+      <Box sx={{ px: { xs: 3, md: 8 }, pt: { xs: 2.5, md: 3 }, pb: { xs: 2, md: 2.5 } }}>
+        <Box sx={{ maxWidth: 1400, mx: "auto", textAlign: "center" }}>
           <Typography
+            component="h1"
             sx={{
-              fontFamily: "'Fraunces', serif",
-              fontWeight: 700,
-              color: colors.text,
-              fontSize: { xs: "2.75rem", md: "3.5rem" },
-              lineHeight: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "baseline",
+              gap: 1.5,
+              flexWrap: "wrap",
+              m: 0,
             }}
           >
-            Seasonal
+            <Box
+              component="span"
+              sx={{
+                fontFamily: "'Fraunces', serif",
+                fontWeight: 700,
+                color: colors.text,
+                fontSize: { xs: "2.75rem", md: "3.5rem" },
+                lineHeight: 1,
+              }}
+            >
+              Seasonal
+            </Box>
+            <Box
+              component="span"
+              sx={{
+                fontFamily: "'Fraunces', serif",
+                fontStyle: "italic",
+                fontWeight: 550,
+                fontVariationSettings: '"opsz" 20, "WONK" 0',
+                color: colors.softAccent,
+                fontSize: { xs: "3rem", md: "3.75rem" },
+                lineHeight: 1,
+              }}
+            >
+              celebrations
+            </Box>
           </Typography>
-          <Typography
-            sx={{
-              fontFamily: "'Fraunces', serif",
-              fontStyle: "italic",
-              fontWeight: 550,
-              fontVariationSettings: '"opsz" 20, "WONK" 0',
-              color: colors.softAccent,
-              fontSize: { xs: "3rem", md: "3.75rem" },
-              lineHeight: 1,
-              mt: -1,
-              mb: 3,
-            }}
-          >
-            celebrations
-          </Typography>
-          <Typography sx={{ color: colors.textMuted, fontSize: "1.05rem", maxWidth: 480, mb: 4 }}>
-            Something special for every season. Made with balloons, designed with love.
-          </Typography>
-
-          {/* Filter tabs */}
-          <Box sx={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-            {seasons.map((s) => (
-              <Box
-                key={s.id}
-                onClick={() => setActive(s.id)}
-                sx={{
-                  cursor: "pointer",
-                  pb: 0.5,
-                  textTransform: "uppercase",
-                  fontWeight: 700,
-                  fontSize: "0.8rem",
-                  letterSpacing: "0.05em",
-                  color: active === s.id ? colors.primary : colors.textMuted,
-                  borderBottom: active === s.id ? `2px solid ${colors.primary}` : "2px solid transparent",
-                }}
-              >
-                {s.label}
-              </Box>
-            ))}
-          </Box>
-        </Box>
-
-        <Box
-          sx={{
-            position: "relative",
-            flexShrink: 0,
-            mr: { md: 16 },
-            display: { xs: "none", md: "block" },
-          }}
-        >
-          <Squiggle color={colors.softAccent} sx={{ top: -66, left: 64, width: 22, height: 32 }} />
-          <Squiggle
-            color={colors.accent}
-            sx={{ top: -28, left: -14, width: 20, height: 14, transform: "rotate(-15deg)" }}
-          />
-          <Squiggle
-            color={colors.primary}
-            sx={{ top: -46, right: 6, width: 24, height: 18, transform: "scaleX(-1)" }}
-          />
-          <Squiggle color={colors.softAccent} sx={{ top: 14, left: 108, width: 22, height: 18 }} />
-          <Dot color={colors.primary} sx={{ top: 22, left: 66 }} />
-          <Dot color={colors.softAccent} sx={{ width: 6, height: 6, top: -18, left: 138 }} />
-          <Dot color={colors.primary} sx={{ width: 6, height: 6, top: 34, right: 22 }} />
-          <Box
-            component="img"
-            src="/assets/logo/flower-inf-no-bg.png"
-            alt=""
-            sx={{
-              width: 220,
-              height: "auto",
-              display: "block",
-              filter: "drop-shadow(0 16px 20px rgba(48,34,54,0.2))",
-            }}
-          />
-        </Box>
         </Box>
       </Box>
 
@@ -206,7 +129,7 @@ function SeasonalItems() {
             gap: 3,
           }}
         >
-          {filtered.map((item) => (
+          {items.map((item) => (
             <Box
               key={item.id}
               sx={{

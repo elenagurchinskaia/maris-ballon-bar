@@ -1,26 +1,34 @@
 import { useState } from "react";
-import { Box } from "@mui/material";
+import { Box, Dialog, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { colors } from "../theme";
 
-const categories = [
-  { id: "all", label: "All" },
-  { id: "birthdays", label: "Birthdays" },
-  { id: "baby-showers", label: "Baby Showers" },
-  { id: "weddings", label: "Weddings" },
-  { id: "corporate", label: "Corporate" },
-  { id: "seasonal", label: "Seasonal" },
-  { id: "other", label: "Other Celebrations" },
-];
+const categoryLabel = {
+  birthdays: "Birthdays",
+  "baby-showers": "Baby Showers",
+  weddings: "Weddings",
+  corporate: "Corporate",
+  seasonal: "Seasonal",
+  other: "Celebrations",
+};
 
+// Curated order: opens with three strong birthday shots (per request), then
+// alternates palette/framing/event type throughout so no two adjacent
+// photos read as the same install.
 const images = [
+  {
+    src: "/assets/gallery/maris-work-gallery-birthday-installs.png",
+    alt: "'Giraffe Jamboree' birthday backdrop with an orange, green and gold balloon garland",
+    category: "birthdays",
+  },
   {
     src: "/assets/gallery/neon-signs.jpg",
     alt: "Rose-gold sequin shimmer wall with a lit 'Happy Birthday' sign",
     category: "birthdays",
   },
   {
-    src: "/assets/gallery/shimmer-walls.jpg",
-    alt: "Close-up of a rose-gold shimmer wall backdrop with a 'Happy Birthday' neon sign",
+    src: "/assets/gallery/home.png",
+    alt: "White light-up '40' marquee numbers with a yellow, mauve and burgundy balloon garland and florals",
     category: "birthdays",
   },
   {
@@ -29,43 +37,8 @@ const images = [
     category: "other",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-numbers.png",
-    alt: "White light-up '50' marquee numbers with a blue and gold balloon garland",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-birthday-installs.png",
-    alt: "'Giraffe Jamboree' birthday backdrop with an orange, green and gold balloon garland",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-flowers-arrangement.png",
-    alt: "Floral welcome sign arrangement for a baby shower, reading 'Because Baby Joon is Coming Soon'",
-    category: "baby-showers",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-balloon-installs.png",
-    alt: "Blush, black and cream balloon garland on a branded 'Revelry' event backdrop",
-    category: "corporate",
-  },
-  {
     src: "/assets/gallery/maris-work-gallery-shimmer-wall.png",
     alt: "Gold shimmer wall with 'GVA' marquee letters and a pastel candy-cane balloon garland",
-    category: "seasonal",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-halloween.png",
-    alt: "Glowing skull archway with a cotton candy cart and orange, purple and green balloon garland",
-    category: "seasonal",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-halloween-01.png",
-    alt: "Pastel balloon archway with ghost-shaped foil balloons for a Halloween-themed celebration",
-    category: "seasonal",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-halloween-02.png",
-    alt: "Glowing blue skull backdrop with balloon garland at night",
     category: "seasonal",
   },
   {
@@ -83,57 +56,23 @@ const images = [
     alt: "White cotton candy cart with a fringed umbrella set up outdoors",
     category: "other",
   },
+  {
+    src: "/assets/gallery/shimmer-walls.jpg",
+    alt: "Close-up of a rose-gold shimmer wall backdrop with a 'Happy Birthday' neon sign",
+    category: "birthdays",
+  },
 ];
 
+// Subtle warmth/brightness/contrast lift so the balloons read as vibrant
+// rather than the slightly flat/gray tone of the raw phone photos.
+const photoFilter = "brightness(1.06) saturate(1.15) contrast(1.04)";
+
 function Gallery() {
-  const [activeCategory, setActiveCategory] = useState("all");
-  const filtered =
-    activeCategory === "all" ? images : images.filter((img) => img.category === activeCategory);
+  const [selected, setSelected] = useState(null);
 
   return (
-    <Box sx={{ backgroundColor: colors.background, px: { xs: 3, md: 8 }, py: { xs: 6, md: 8 } }}>
+    <Box sx={{ backgroundColor: colors.background, px: { xs: 3, md: 8 }, pt: { xs: 2, md: 2 }, pb: { xs: 10, md: 16 } }}>
       <Box sx={{ maxWidth: 1400, mx: "auto" }}>
-        {/* Filter tabs */}
-        <Box sx={{ display: "flex", gap: { xs: 2.5, md: 3 }, flexWrap: "wrap", mb: { xs: 4, md: 5 } }}>
-          {categories.map((cat) => (
-            <Box
-              key={cat.id}
-              component="button"
-              type="button"
-              onClick={() => setActiveCategory(cat.id)}
-              aria-pressed={activeCategory === cat.id}
-              sx={{
-                appearance: "none",
-                background: "none",
-                border: "none",
-                borderBottom:
-                  activeCategory === cat.id ? `2px solid ${colors.primary}` : "2px solid transparent",
-                cursor: "pointer",
-                p: 0,
-                pb: 0.5,
-                fontFamily: "inherit",
-                textTransform: "uppercase",
-                fontWeight: 700,
-                fontSize: "0.8rem",
-                letterSpacing: "0.05em",
-                color: activeCategory === cat.id ? colors.primary : colors.textMuted,
-                "&:focus-visible": { outline: `2px solid ${colors.primary}`, outlineOffset: "3px" },
-              }}
-            >
-              {cat.label}
-            </Box>
-          ))}
-        </Box>
-
-        {filtered.length === 0 ? (
-          <Box sx={{ color: colors.textMuted, fontSize: "0.95rem", py: 4 }}>
-            New photos for this category are coming soon — check back shortly, or{" "}
-            <Box component="a" href="/contact" sx={{ color: colors.primary, fontWeight: 700 }}>
-              reach out
-            </Box>{" "}
-            and we'll share examples directly.
-          </Box>
-        ) : (
         <Box
           sx={{
             display: "grid",
@@ -141,14 +80,23 @@ function Gallery() {
             gap: 3,
           }}
         >
-          {filtered.map((img) => (
+          {images.map((img) => (
             <Box
               key={img.src}
+              component="button"
+              type="button"
+              onClick={() => setSelected(img)}
+              aria-label={`View larger photo: ${img.alt}`}
               sx={{
+                appearance: "none",
+                border: "none",
+                p: 0,
+                cursor: "pointer",
                 borderRadius: "16px",
                 overflow: "hidden",
                 aspectRatio: "4 / 5",
                 boxShadow: "0 8px 20px rgba(48,34,54,0.12)",
+                "&:focus-visible": { outline: `2px solid ${colors.primary}`, outlineOffset: "3px" },
               }}
             >
               <Box
@@ -160,6 +108,7 @@ function Gallery() {
                   height: "100%",
                   objectFit: "cover",
                   display: "block",
+                  filter: photoFilter,
                   transition: "transform 0.3s ease",
                   "&:hover": { transform: "scale(1.04)" },
                 }}
@@ -167,8 +116,65 @@ function Gallery() {
             </Box>
           ))}
         </Box>
-        )}
       </Box>
+
+      {/* Lightbox */}
+      <Dialog
+        open={Boolean(selected)}
+        onClose={() => setSelected(null)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{ sx: { borderRadius: "16px", backgroundColor: colors.background, overflow: "hidden" } }}
+      >
+        {selected && (
+          <Box sx={{ position: "relative" }}>
+            <IconButton
+              onClick={() => setSelected(null)}
+              aria-label="Close"
+              sx={{
+                position: "absolute",
+                zIndex: 2,
+                top: 8,
+                right: 8,
+                backgroundColor: "#fff",
+                boxShadow: "0 4px 10px rgba(48,34,54,0.15)",
+                "&:hover": { backgroundColor: "#fff" },
+              }}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+            <Box
+              component="img"
+              src={selected.src}
+              alt={selected.alt}
+              sx={{
+                width: "100%",
+                maxHeight: "80vh",
+                objectFit: "contain",
+                display: "block",
+                filter: photoFilter,
+                backgroundColor: "#000",
+              }}
+            />
+            {selected.category && (
+              <Box
+                sx={{
+                  color: colors.primary,
+                  fontWeight: 700,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  fontSize: "0.75rem",
+                  px: 3,
+                  pt: 2,
+                  pb: 3,
+                }}
+              >
+                {categoryLabel[selected.category]}
+              </Box>
+            )}
+          </Box>
+        )}
+      </Dialog>
     </Box>
   );
 }

@@ -711,7 +711,7 @@ function Home() {
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             alignItems: { xs: "flex-start", md: "center" },
-            gap: { xs: 4, md: 6 },
+            gap: { xs: 4, md: 3 },
           }}
         >
           {/* Text column */}
