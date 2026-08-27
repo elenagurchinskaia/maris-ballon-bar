@@ -18,6 +18,9 @@ import { colors } from "../theme";
 // rate so totals can be summed instead of producing NaN.
 const getPriceValue = (price) => parseFloat(price.replace(/[^0-9.]/g, "")) || 0;
 
+const errorColor = "#C0392B";
+const errorBg = "#FCEBEA";
+
 const fieldSx = {
     "& .MuiOutlinedInput-root": {
         borderRadius: "10px",
@@ -37,6 +40,7 @@ function CartPage() {
     const [companyName, setCompanyName] = useState("");
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [isSending, setIsSending] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail);
 
     const removeItem = (index) => {
@@ -46,7 +50,12 @@ function CartPage() {
 
     const handleSendEmail = async () => {
         if (!userName || !userEmail || !userPhone) return;
+        if (!isEmailValid) {
+            setErrorMsg("Please enter a valid email address.");
+            return;
+        }
         setIsSending(true);
+        setErrorMsg("");
 
         const total = cart.reduce((acc, item) => acc + getPriceValue(item.price), 0);
 
@@ -55,7 +64,7 @@ function CartPage() {
             user_email: userEmail,
             user_phone: userPhone,
             company_name: companyName,
-            items: cart.map((item) => `${item.name} - ${item.price}`).join(", "),
+            items: cart.map((item) => `${item.name} - ${item.price}`).join("\n"),
             total: `$${total.toFixed(2)}`
         };
 
@@ -66,19 +75,23 @@ function CartPage() {
                 templateParams,
                 import.meta.env.VITE_EMAILJS_PUBLIC_KEY
             );
-            alert("Your request has been sent!");
             setCart([]);
             setUserName("");
             setUserEmail("");
             setUserPhone("");
             setCompanyName("");
+            setIsSubmitted(true);
         } catch (error) {
             console.error("Email error:", error);
-            alert("Oops! Something went wrong.");
+            setErrorMsg("Oops! Something went wrong. Please try again, or email us directly at marisballoonbar@gmail.com.");
         } finally {
             setIsSending(false);
-            setIsSubmitted(true);
         }
+    };
+
+    const handleReset = () => {
+        setIsSubmitted(false);
+        setErrorMsg("");
     };
 
     return (
@@ -88,6 +101,8 @@ function CartPage() {
             {isSubmitted ? (
                 <Box sx={{ px: { xs: 3, md: 8 }, py: { xs: 10, md: 14 }, textAlign: "center" }}>
                     <Box
+                        role="status"
+                        aria-live="polite"
                         sx={{
                             maxWidth: 520,
                             mx: "auto",
@@ -135,7 +150,7 @@ function CartPage() {
                                 py: 1.5,
                                 "&:hover": { backgroundColor: colors.primaryHover }
                             }}
-                            onClick={() => setIsSubmitted(false)}
+                            onClick={handleReset}
                         >
                             Back to Shop
                         </Button>
@@ -311,6 +326,26 @@ function CartPage() {
                                         value={companyName}
                                         onChange={(e) => setCompanyName(e.target.value)}
                                     />
+
+                                    {errorMsg && (
+                                        <Box
+                                            role="alert"
+                                            sx={{
+                                                mt: 3,
+                                                px: 2.5,
+                                                py: 1.5,
+                                                borderRadius: "10px",
+                                                backgroundColor: errorBg,
+                                                border: `1px solid ${errorColor}`,
+                                                color: errorColor,
+                                                fontSize: "0.9rem",
+                                                lineHeight: 1.5,
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            {errorMsg}
+                                        </Box>
+                                    )}
 
                                     <Box sx={{ textAlign: "center", mt: 3 }}>
                                         <Button

@@ -1,0 +1,105 @@
+<!--
+  Mari's Balloon Bar — Contact / Booking Inquiry email
+  Paste this into the EmailJS template body editor (Content tab, "Code" view)
+  for the template used by InquiryForm.jsx — shared by the Contact page and
+  the Book Event page (VITE_EMAILJS_TEMPLATE_ID).
+
+  Suggested subject line for that template:
+    New inquiry from {{user_name}} 🎈
+
+  Variables used below (all sent from InquiryForm.jsx via sendForm):
+    {{user_name}} {{user_email}} {{user_phone}} {{company_name}}
+    {{referral_source}} {{event_date}} {{services_interested}} {{message}}
+
+  Note: company_name, referral_source and event_date are optional fields.
+  EmailJS templates can't conditionally hide a row when a variable is
+  empty, so on submissions where the visitor skipped them, that row will
+  just render with a blank value rather than disappearing.
+
+  Don't forget: set this template's "Reply To" field (in EmailJS, not here)
+  to {{user_email}} so replying goes straight to the client.
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FFF7ED; padding:32px 16px; font-family: Helvetica, Arial, sans-serif;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#ffffff; border-radius:16px; overflow:hidden; border:1px solid rgba(48,34,54,0.12);">
+
+        <!-- Header -->
+        <tr>
+          <td style="background-color:#F25A9B; padding:28px 32px; text-align:center;">
+            <div style="font-family: Georgia, 'Times New Roman', serif; font-weight:bold; font-size:22px; color:#ffffff; letter-spacing:0.02em;">
+              Mari's Balloon Bar
+            </div>
+            <div style="font-family: Helvetica, Arial, sans-serif; font-size:13px; color:#FDEDF4; text-transform:uppercase; letter-spacing:0.12em; margin-top:6px;">
+              🎈 New Event Inquiry
+            </div>
+          </td>
+        </tr>
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:32px;">
+            <p style="margin:0 0 24px 0; font-family: Georgia, 'Times New Roman', serif; font-size:19px; color:#302236; line-height:1.4;">
+              <strong>{{user_name}}</strong> just reached out about an event.
+            </p>
+
+            <!-- Client details -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="padding:6px 0; font-size:14px; color:rgba(48,34,54,0.65); width:140px; vertical-align:top;">Name</td>
+                <td style="padding:6px 0; font-size:14px; color:#302236; font-weight:bold;">{{user_name}}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-size:14px; color:rgba(48,34,54,0.65); vertical-align:top;">Email</td>
+                <td style="padding:6px 0; font-size:14px;"><a href="mailto:{{user_email}}" style="color:#F25A9B; text-decoration:none; font-weight:bold;">{{user_email}}</a></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-size:14px; color:rgba(48,34,54,0.65); vertical-align:top;">Phone</td>
+                <td style="padding:6px 0; font-size:14px;"><a href="tel:{{user_phone}}" style="color:#302236; text-decoration:none; font-weight:bold;">{{user_phone}}</a></td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-size:14px; color:rgba(48,34,54,0.65); vertical-align:top;">Company</td>
+                <td style="padding:6px 0; font-size:14px; color:#302236;">{{company_name}}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-size:14px; color:rgba(48,34,54,0.65); vertical-align:top;">Preferred Date</td>
+                <td style="padding:6px 0; font-size:14px; color:#302236;">{{event_date}}</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 0; font-size:14px; color:rgba(48,34,54,0.65); vertical-align:top;">Heard About Us Via</td>
+                <td style="padding:6px 0; font-size:14px; color:#302236;">{{referral_source}}</td>
+              </tr>
+            </table>
+
+            <!-- Divider -->
+            <div style="border-top:1px solid rgba(48,34,54,0.12); margin:0 0 24px 0;"></div>
+
+            <!-- Services interested -->
+            <div style="font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:0.08em; color:#F25A9B; margin-bottom:10px;">
+              Services Interested In
+            </div>
+            <div style="background-color:#FFF7ED; border-radius:10px; padding:16px 18px; font-size:14px; color:#302236; line-height:1.8; white-space:pre-line; margin-bottom:24px;">{{services_interested}}</div>
+
+            <!-- Message -->
+            <div style="font-size:12px; font-weight:bold; text-transform:uppercase; letter-spacing:0.08em; color:#F25A9B; margin-bottom:10px;">
+              Message
+            </div>
+            <div style="background-color:#F3ECFB; border-left:3px solid #C7A5E8; border-radius:8px; padding:16px 18px; font-size:14px; color:#302236; line-height:1.7; white-space:pre-line;">{{message}}</div>
+
+            <p style="margin:28px 0 0 0; font-size:13px; color:rgba(48,34,54,0.65); line-height:1.6;">
+              Reply directly to this email to reach {{user_name}}, or call {{user_phone}}.
+            </p>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background-color:#FFF7ED; padding:18px 32px; text-align:center; border-top:1px solid rgba(48,34,54,0.12);">
+            <span style="font-size:12px; color:rgba(48,34,54,0.55);">Submitted through marisballoonbar.com</span>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>

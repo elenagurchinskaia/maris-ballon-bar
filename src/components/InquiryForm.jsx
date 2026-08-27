@@ -13,6 +13,9 @@ import {
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { colors } from "../theme";
 
+const errorColor = "#C0392B";
+const errorBg = "#FCEBEA";
+
 const SERVICE_OPTIONS = [
   "Balloon installations",
   "Jumbo balloons",
@@ -89,6 +92,8 @@ function InquiryForm({
 }) {
   const form = useRef();
   const [sending, setSending] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [selectedServices, setSelectedServices] = useState(preselectedServices);
 
   const toggleService = (service) => {
@@ -100,6 +105,7 @@ function InquiryForm({
   const handleSubmit = (e) => {
     e.preventDefault();
     setSending(true);
+    setErrorMsg("");
 
     emailjs
       .sendForm(
@@ -110,17 +116,22 @@ function InquiryForm({
       )
       .then(
         () => {
-          alert(successMessage);
-          form.current.reset();
-          setSelectedServices([]);
+          setSubmitted(true);
           setSending(false);
         },
         (error) => {
           console.error("Email error:", error.text);
-          alert("Oops! Something went wrong. Please try again later.");
+          setErrorMsg("Oops! Something went wrong. Please try again, or email us directly at marisballoonbar@gmail.com.");
           setSending(false);
         }
       );
+  };
+
+  const handleReset = () => {
+    form.current?.reset();
+    setSelectedServices(preselectedServices);
+    setErrorMsg("");
+    setSubmitted(false);
   };
 
   const fieldSx = {
@@ -149,6 +160,43 @@ function InquiryForm({
         py: { xs: 4, md: 5 },
       }}
     >
+      {submitted ? (
+        <Box sx={{ textAlign: "center", py: { xs: 2, md: 3 } }} role="status" aria-live="polite">
+          <Typography
+            sx={{
+              fontFamily: "'Fraunces', serif",
+              fontWeight: 700,
+              color: colors.text,
+              fontSize: { xs: "1.75rem", md: "2rem" },
+              mb: 1.5,
+            }}
+          >
+            Thank you! 🎉
+          </Typography>
+          <Typography sx={{ color: colors.textMuted, fontSize: "0.95rem", lineHeight: 1.6, maxWidth: 420, mx: "auto", mb: 3 }}>
+            {successMessage}
+          </Typography>
+          <Button
+            type="button"
+            onClick={handleReset}
+            sx={{
+              backgroundColor: colors.primary,
+              color: "#fff",
+              textTransform: "uppercase",
+              fontWeight: 700,
+              letterSpacing: "0.05em",
+              borderRadius: "999px",
+              px: 3.5,
+              py: 1.5,
+              fontSize: { xs: "0.85rem", md: "0.95rem" },
+              "&:hover": { backgroundColor: colors.primaryHover },
+            }}
+          >
+            Send Another Message
+          </Button>
+        </Box>
+      ) : (
+        <>
       {heading && (
         <Typography
           align="center"
@@ -168,6 +216,26 @@ function InquiryForm({
         <Typography align="center" sx={{ color: colors.textMuted, fontSize: "0.95rem", lineHeight: 1.6, mb: 3 }}>
           {description}
         </Typography>
+      )}
+
+      {errorMsg && (
+        <Box
+          role="alert"
+          sx={{
+            mb: 3,
+            px: 2.5,
+            py: 1.5,
+            borderRadius: "10px",
+            backgroundColor: errorBg,
+            border: `1px solid ${errorColor}`,
+            color: errorColor,
+            fontSize: "0.9rem",
+            lineHeight: 1.5,
+            textAlign: "center",
+          }}
+        >
+          {errorMsg}
+        </Box>
       )}
 
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
@@ -284,7 +352,7 @@ function InquiryForm({
             ))}
           </FormGroup>
         </Box>
-        <input type="hidden" name="services_interested" value={selectedServices.join(", ")} />
+        <input type="hidden" name="services_interested" value={selectedServices.join("\n")} />
 
         <Box>
           <FieldLabel htmlFor="message" required>
@@ -330,6 +398,8 @@ function InquiryForm({
           <Typography sx={{ mt: 2, color: colors.textMuted, fontSize: "0.85rem" }}>{responseNote}</Typography>
         )}
       </Box>
+        </>
+      )}
     </Box>
   );
 
