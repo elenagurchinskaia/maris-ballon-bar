@@ -194,7 +194,15 @@ function Home() {
             Bespoke Balloons For
           </Typography>
 
-          <Typography variant="h1" sx={{ lineHeight: 1, mb: 1, mt: -1 }}>
+          <Typography
+            variant="h1"
+            sx={{
+              fontSize: { xs: "4.25rem", sm: "5.25rem", md: "6rem" },
+              lineHeight: 1,
+              mb: 1,
+              mt: { xs: 0.5, md: -1 },
+            }}
+          >
             <Box
               component="span"
               sx={{
