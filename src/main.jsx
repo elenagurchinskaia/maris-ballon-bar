@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import Gallery from "./pages/Gallery";
 import RentalCatalog from "./pages/RentalCatalog";
 import SeasonalItems from "./pages/SeasonalItems";
+import SeasonalCategory from "./pages/SeasonalCategory";
 import BookEvent from "./pages/BookEvent";
 import Error from "./pages/Error";
 import CartPage from "./pages/CartPage";
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/seasonal-items",
         element: <SeasonalItems />
+      },
+      {
+        path: "/seasonal-items/:slug",
+        element: <SeasonalCategory />
       },
       {
         path: "/rental-catalog",

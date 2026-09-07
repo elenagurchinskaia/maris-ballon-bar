@@ -27,6 +27,7 @@ const SERVICE_OPTIONS = [
   "Tables and chairs",
   "Tents",
   "Cotton candy cart",
+  "Seasonal designs",
   "Not sure yet",
 ];
 
@@ -85,6 +86,7 @@ function InquiryForm({
   submitLabel = "Submit",
   successMessage = "Thank you! Your message has been sent successfully!",
   preselectedServices = [],
+  prefilledMessage = "",
   cardMaxWidth = 600,
   fullWidthSubmit = false,
   responseNote = "",
@@ -366,6 +368,7 @@ function InquiryForm({
             multiline
             rows={4}
             variant="outlined"
+            defaultValue={prefilledMessage}
             sx={fieldSx}
           />
         </Box>

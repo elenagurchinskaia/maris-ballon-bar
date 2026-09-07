@@ -13,6 +13,12 @@ function BookEvent() {
 
   const [searchParams] = useSearchParams();
   const preselectedService = searchParams.get("service");
+  const design = searchParams.get("design");
+
+  const preselectedServices = preselectedService ? [preselectedService] : [];
+  const prefilledMessage = design
+    ? `I'd love to book the "${design}" seasonal design for my event.`
+    : "";
 
   return (
     <Box sx={{ backgroundColor: colors.background }}>
@@ -22,7 +28,8 @@ function BookEvent() {
         description="Tell us your preferred date and event details below, and we'll follow up within 1-2 business days to confirm availability."
         submitLabel="Request Booking"
         successMessage="Thank you! Your booking request has been sent. We'll be in touch soon to confirm your date."
-        preselectedServices={preselectedService ? [preselectedService] : []}
+        preselectedServices={preselectedServices}
+        prefilledMessage={prefilledMessage}
       />
     </Box>
   );

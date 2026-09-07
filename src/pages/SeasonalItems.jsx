@@ -1,74 +1,16 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import {
-  Box,
-  Typography,
-  Button,
-  Dialog,
-  IconButton,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CloseIcon from "@mui/icons-material/Close";
-import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
-import WbSunnyIcon from "@mui/icons-material/WbSunny";
-import EcoIcon from "@mui/icons-material/EnergySavingsLeaf";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
 import { colors } from "../theme";
-
-const items = [
-  {
-    id: 1,
-    season: "spring",
-    name: "Spring Bouquet",
-    src: "/assets/gallery/spring-bouquet.png",
-    description:
-      "Fresh, soft and full of color. Perfect for showers, brunches and outdoor parties.",
-    price: "From $250",
-    icon: <LocalFloristIcon fontSize="small" />,
-    iconBg: "#FADCE9",
-    iconColor: colors.primary,
-  },
-  {
-    id: 2,
-    season: "summer",
-    name: "Summer Festival",
-    src: "/assets/gallery/summer-festival.png",
-    description:
-      "Bold, fun and tropical vibes for your best summer celebrations.",
-    price: "From $300",
-    icon: <WbSunnyIcon fontSize="small" />,
-    iconBg: "#FCF0C4",
-    iconColor: "#D6A81A",
-  },
-  {
-    id: 3,
-    season: "fall",
-    name: "Autumn Wreath",
-    src: "/assets/gallery/autumn-wreath.png",
-    description:
-      "Warm tones and cozy feels for gatherings, birthdays and harvest parties.",
-    price: "From $280",
-    icon: <EcoIcon fontSize="small" />,
-    iconBg: "#F6DCC0",
-    iconColor: "#C56A2E",
-  },
-  {
-    id: 4,
-    season: "winter",
-    name: "Winter Garland",
-    src: "/assets/gallery/winter-garland.png",
-    description:
-      "Elegant, crisp and magical for holiday parties and winter wonderlands.",
-    price: "From $350",
-    icon: <AcUnitIcon fontSize="small" />,
-    iconBg: "#E5DAF7",
-    iconColor: colors.softAccent,
-  },
-];
+import { seasonalCategoryList } from "../data/seasonalCategories";
+import { useDocumentMeta } from "../utils/useDocumentMeta";
 
 function SeasonalItems() {
-  const [selected, setSelected] = useState(null);
+  useDocumentMeta(
+    "Seasonal Celebrations | Mari's Balloon Bar",
+    "Seasonal balloon and floral designs for Christmas, Valentine's, Easter and everyday celebrations."
+  );
 
   return (
     <Box sx={{ backgroundColor: colors.background }}>
@@ -129,9 +71,11 @@ function SeasonalItems() {
             gap: 3,
           }}
         >
-          {items.map((item) => (
+          {seasonalCategoryList.map((category) => (
             <Box
-              key={item.id}
+              key={category.slug}
+              component={Link}
+              to={`/seasonal-items/${category.slug}`}
               sx={{
                 border: `1px solid ${colors.border}`,
                 borderRadius: "16px",
@@ -139,13 +83,20 @@ function SeasonalItems() {
                 overflow: "hidden",
                 display: "flex",
                 flexDirection: "column",
+                textDecoration: "none",
+                color: "inherit",
+                transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                "&:hover": {
+                  transform: "translateY(-4px)",
+                  boxShadow: "0 12px 24px rgba(48,34,54,0.12)",
+                },
               }}
             >
               <Box sx={{ position: "relative" }}>
                 <Box
                   component="img"
-                  src={item.src}
-                  alt={item.name}
+                  src={category.images[0]?.src}
+                  alt={category.name}
                   sx={{ width: "100%", height: 260, objectFit: "cover", display: "block" }}
                 />
                 <Box
@@ -156,27 +107,25 @@ function SeasonalItems() {
                     width: 40,
                     height: 40,
                     borderRadius: "50%",
-                    backgroundColor: item.iconBg,
-                    color: item.iconColor,
+                    backgroundColor: category.iconBg,
+                    color: category.iconColor,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     boxShadow: "0 4px 10px rgba(48,34,54,0.15)",
                   }}
                 >
-                  {item.icon}
+                  {category.icon}
                 </Box>
               </Box>
               <Box sx={{ p: 3, pt: 4, display: "flex", flexDirection: "column", flex: 1 }}>
                 <Typography sx={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "1.3rem", mb: 1 }}>
-                  {item.name}
+                  {category.name}
                 </Typography>
                 <Typography sx={{ color: colors.textMuted, fontSize: "0.9rem", mb: 2, flex: 1 }}>
-                  {item.description}
+                  {category.description}
                 </Typography>
-                <Typography sx={{ fontWeight: 700, color: colors.text, mb: 1 }}>{item.price}</Typography>
                 <Box
-                  onClick={() => setSelected(item)}
                   sx={{
                     display: "flex",
                     alignItems: "center",
@@ -186,88 +135,16 @@ function SeasonalItems() {
                     fontSize: "0.8rem",
                     textTransform: "uppercase",
                     letterSpacing: "0.03em",
-                    cursor: "pointer",
                     width: "fit-content",
                   }}
                 >
-                  View Details <ArrowForwardIcon sx={{ fontSize: 16 }} />
+                  View Photos <ArrowForwardIcon sx={{ fontSize: 16 }} />
                 </Box>
               </Box>
             </Box>
           ))}
         </Box>
       </Box>
-
-      <Dialog
-        open={Boolean(selected)}
-        onClose={() => setSelected(null)}
-        maxWidth="sm"
-        fullWidth
-        PaperProps={{ sx: { borderRadius: "16px", backgroundColor: colors.background } }}
-      >
-        {selected && (
-          <Box sx={{ position: "relative" }}>
-            <IconButton
-              onClick={() => setSelected(null)}
-              sx={{
-                position: "absolute",
-                top: 8,
-                right: 8,
-                backgroundColor: "#fff",
-                boxShadow: "0 4px 10px rgba(48,34,54,0.15)",
-                "&:hover": { backgroundColor: "#fff" },
-              }}
-            >
-              <CloseIcon fontSize="small" />
-            </IconButton>
-            <Box component="img" src={selected.src} alt={selected.name} sx={{ width: "100%", height: 280, objectFit: "cover", display: "block" }} />
-            <Box sx={{ p: 4 }}>
-              <Box
-                sx={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  backgroundColor: selected.iconBg,
-                  color: selected.iconColor,
-                  mb: 2,
-                }}
-              >
-                {selected.icon}
-              </Box>
-              <Typography sx={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontSize: "1.6rem", mb: 1 }}>
-                {selected.name}
-              </Typography>
-              <Typography sx={{ color: colors.textMuted, mb: 2 }}>{selected.description}</Typography>
-              <Typography sx={{ fontWeight: 700, color: colors.text, mb: 3 }}>{selected.price}</Typography>
-              <Typography sx={{ color: colors.textMuted, fontSize: "0.85rem", fontStyle: "italic", mb: 3 }}>
-                Full booking details for this design are coming soon — reach out and we'll help you plan it.
-              </Typography>
-              <Button
-                component={Link}
-                to="/book-event"
-                endIcon={<ArrowForwardIcon />}
-                onClick={() => setSelected(null)}
-                sx={{
-                  backgroundColor: colors.primary,
-                  color: "#fff",
-                  textTransform: "uppercase",
-                  fontWeight: 700,
-                  letterSpacing: "0.05em",
-                  borderRadius: "999px",
-                  px: 3.5,
-                  py: 1.5,
-                  "&:hover": { backgroundColor: colors.primaryHover },
-                }}
-              >
-                Book Your Date
-              </Button>
-            </Box>
-          </Box>
-        )}
-      </Dialog>
     </Box>
   );
 }
