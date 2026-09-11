@@ -83,7 +83,7 @@ function FieldLabel({ htmlFor, children, required, optional }) {
 function InquiryForm({
   heading,
   description,
-  submitLabel = "Submit",
+  submitLabel = "Send to Mari",
   successMessage = "Thank you! Your message has been sent successfully!",
   preselectedServices = [],
   prefilledMessage = "",

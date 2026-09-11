@@ -180,8 +180,9 @@ function RentalCatalog() {
                   startIcon={addedIds.includes(item.id) ? <CheckIcon sx={{ fontSize: "1rem !important" }} /> : null}
                   sx={{
                     alignSelf: "flex-start",
-                    backgroundColor: colors.primary,
-                    color: "#fff",
+                    backgroundColor: "transparent",
+                    color: colors.text,
+                    border: `1.5px solid ${colors.text}`,
                     textTransform: "uppercase",
                     fontWeight: 700,
                     letterSpacing: "0.05em",
@@ -189,11 +190,11 @@ function RentalCatalog() {
                     px: 2.5,
                     py: 1,
                     fontSize: "0.75rem",
-                    "&:hover": { backgroundColor: colors.primaryHover },
-                    "&.Mui-disabled": { backgroundColor: colors.primaryHover, color: "#fff", opacity: 1 },
+                    "&:hover": { backgroundColor: "rgba(48, 34, 54, 0.06)", border: `1.5px solid ${colors.text}` },
+                    "&.Mui-disabled": { backgroundColor: "rgba(48, 34, 54, 0.06)", color: colors.text, border: `1.5px solid ${colors.text}`, opacity: 1 },
                   }}
                 >
-                  {addedIds.includes(item.id) ? "Added" : "Add to Cart"}
+                  {addedIds.includes(item.id) ? "Added to my list" : "Add to my list"}
                 </Button>
               </Box>
             </Box>

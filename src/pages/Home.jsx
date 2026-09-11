@@ -9,8 +9,6 @@ import { colors } from "../theme";
 import { Squiggle, Dot } from "../components/Decor";
 import { useDocumentMeta } from "../utils/useDocumentMeta";
 
-const lilac = "#9370C7";
-
 // Custom line-style service icons — one cohesive stroke style (round caps/
 // joins, 2px weight, 48x48 canvas) instead of a generic icon library, so
 // each glyph reads as this specific service rather than a stock symbol.
@@ -108,44 +106,33 @@ const galleryPreviewImages = [
   },
 ];
 
+// One ground, one ink, one accent across all four cards — category is
+// carried by the photo/icon, never by a per-card tint.
 const features = [
   {
     icon: <BalloonGarlandIcon />,
-    title: "Balloon Installations",
+    title: "Balloon installations",
     description:
       "Custom balloon decor, arches, garlands, and jumbo balloons designed around your celebration.",
-    color: colors.primary,
-    bg: "#FDEDF4",
-    border: "rgba(242,90,155,0.18)",
     decoration: "flower",
   },
   {
     icon: <BackdropIcon />,
-    title: "Backdrops & Statement Pieces",
+    title: "Backdrops & statement pieces",
     description:
       "Photo-ready backdrops, shimmer walls, and marquees that transform the entire space.",
-    color: "#C9971A",
-    bg: "#FCF3D9",
-    border: "rgba(201,151,26,0.22)",
-    squiggleColor: "#C9971A",
   },
   {
     icon: <TableSettingIcon />,
-    title: "Event Styling",
+    title: "Event styling",
     description:
       "Coordinated colors, statement details, and thoughtful finishing touches that bring the entire celebration together.",
-    color: lilac,
-    bg: "#F3ECFB",
-    border: "rgba(147,112,199,0.2)",
     decoration: "star",
   },
   {
     icon: <RentalPropIcon />,
-    title: "Party Rentals",
+    title: "Party rentals",
     description: "Tables, chairs, tents, and playful additions for a complete event setup.",
-    color: "#7B87B0",
-    bg: "#FBE1D3",
-    border: "rgba(217,119,87,0.22)",
   },
 ];
 
@@ -164,10 +151,10 @@ function Home() {
       {/* Hero */}
       <Box
         sx={{
-          pt: { xs: 3, md: 4 },
+          pt: { xs: 0, md: 4 },
           pb: { xs: 4, md: 10 },
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: { xs: "column-reverse", md: "row" },
           alignItems: { xs: "center", md: "flex-start" },
           gap: { xs: 3, md: 0 },
         }}
@@ -228,11 +215,24 @@ function Home() {
             </Box>
           </Typography>
 
+          {/* Short one-liner on mobile; full description on desktop only */}
           <Typography
             sx={{
+              display: { xs: "block", md: "none" },
               color: colors.textMuted,
-              fontSize: { xs: "1.2rem", md: "1.05rem" },
-              maxWidth: { xs: "100%", md: 600 },
+              fontSize: "1.2rem",
+              maxWidth: "100%",
+              mb: 3,
+            }}
+          >
+            Custom balloon installations and event styling in Austin.
+          </Typography>
+          <Typography
+            sx={{
+              display: { xs: "none", md: "block" },
+              color: colors.textMuted,
+              fontSize: "1.05rem",
+              maxWidth: 600,
               mb: 4,
             }}
           >
@@ -241,7 +241,47 @@ function Home() {
             and surrounding areas.
           </Typography>
 
-          <Box sx={{ display: "flex", gap: { xs: 2, md: 1 }, flexWrap: "wrap" }}>
+          {/* Mobile: one full-width button + a text link */}
+          <Box sx={{ display: { xs: "block", md: "none" } }}>
+            <Button
+              component={Link}
+              to="/book-event"
+              fullWidth
+              endIcon={<ArrowForwardIcon />}
+              sx={{
+                backgroundColor: colors.primary,
+                color: "#fff",
+                textTransform: "uppercase",
+                fontWeight: 700,
+                letterSpacing: "0.05em",
+                borderRadius: "999px",
+                height: "52px",
+                "&:hover": { backgroundColor: colors.primaryHover },
+              }}
+            >
+              Check availability
+            </Button>
+            <Box
+              component={Link}
+              to="/gallery"
+              sx={{
+                display: "block",
+                textAlign: "center",
+                mt: 2,
+                color: colors.primary,
+                textDecoration: "underline",
+                textUnderlineOffset: "3px",
+                fontWeight: 700,
+                letterSpacing: "0.02em",
+                fontSize: "0.95rem",
+              }}
+            >
+              See the gallery
+            </Box>
+          </Box>
+
+          {/* Desktop: primary button + text link */}
+          <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center", gap: 3 }}>
             <Button
               component={Link}
               to="/book-event"
@@ -254,39 +294,29 @@ function Home() {
                 letterSpacing: "0.05em",
                 borderRadius: "999px",
                 whiteSpace: "nowrap",
-                px: { xs: 3.5, md: 3 },
+                px: 3,
                 py: 1.5,
-                fontSize: { md: "0.75rem" },
-                flex: { md: 1 },
+                fontSize: "0.75rem",
                 "&:hover": { backgroundColor: colors.primaryHover },
               }}
             >
-              Book Your Date
+              Check availability
             </Button>
-            <Button
+            <Box
               component={Link}
               to="/gallery"
-              variant="outlined"
               sx={{
-                borderColor: colors.primary,
                 color: colors.primary,
-                textTransform: "uppercase",
+                textDecoration: "underline",
+                textUnderlineOffset: "3px",
                 fontWeight: 700,
-                letterSpacing: "0.05em",
-                borderRadius: "999px",
+                letterSpacing: "0.02em",
+                fontSize: "0.9rem",
                 whiteSpace: "nowrap",
-                px: { xs: 3.5, md: 3 },
-                py: 1.5,
-                fontSize: { md: "0.75rem" },
-                flex: { md: 1 },
-                "&:hover": {
-                  borderColor: colors.primaryHover,
-                  backgroundColor: "rgba(242, 90, 155, 0.08)",
-                },
               }}
             >
-              View Gallery
-            </Button>
+              See the gallery
+            </Box>
           </Box>
         </Box>
 
@@ -295,31 +325,34 @@ function Home() {
           sx={{
             width: { xs: "100%", md: "72%" },
             flexShrink: 0,
-            height: { xs: 300, sm: 432, md: "calc((100vh - 90px) * 0.9)" },
+            height: { xs: "55vh", sm: "55vh", md: "calc((100vh - 90px) * 0.9)" },
             overflow: "hidden",
             backgroundColor: colors.background,
             transform: { md: "translateX(-64px)" },
           }}
         >
-          <Box
-            component="img"
-            src="/assets/logo/balloons-arch-v3.png"
-            alt="Custom balloon installation by Mari's Balloon Bar"
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-              objectPosition: "center",
-              maskImage: {
-                xs: "none",
-                md: "linear-gradient(to right, transparent 0%, black 18%)",
-              },
-              WebkitMaskImage: {
-                xs: "none",
-                md: "linear-gradient(to right, transparent 0%, black 18%)",
-              },
-            }}
-          />
+          <Box component="picture">
+            <source media="(max-width: 899.95px)" srcSet="/assets/logo/arch-mobile.png" />
+            <Box
+              component="img"
+              src="/assets/logo/balloons-arch-v3.png"
+              alt="Custom balloon installation by Mari's Balloon Bar"
+              sx={{
+                width: "100%",
+                height: "100%",
+                objectFit: { xs: "cover", md: "contain" },
+                objectPosition: "center",
+                maskImage: {
+                  xs: "none",
+                  md: "linear-gradient(to right, transparent 0%, black 18%)",
+                },
+                WebkitMaskImage: {
+                  xs: "none",
+                  md: "linear-gradient(to right, transparent 0%, black 18%)",
+                },
+              }}
+            />
+          </Box>
         </Box>
       </Box>
 
@@ -379,8 +412,8 @@ function Home() {
               key={feature.title}
               sx={{
                 position: "relative",
-                backgroundColor: feature.bg,
-                border: `1px solid ${feature.border}`,
+                backgroundColor: colors.background,
+                border: "1px solid rgba(48, 34, 54, 0.16)",
                 borderRadius: "24px",
                 p: { xs: 2.5, sm: 3 },
                 display: "grid",
@@ -390,6 +423,8 @@ function Home() {
                 textAlign: "center",
                 minHeight: { xs: "auto", sm: 260, md: 280 },
                 overflow: "visible",
+                transition: "background-color 0.2s ease",
+                "&:hover": { backgroundColor: colors.primary },
               }}
             >
               {feature.decoration === "flower" && (
@@ -401,11 +436,13 @@ function Home() {
                   sx={{
                     position: "absolute",
                     zIndex: 2,
-                    bottom: { xs: -28, sm: -25, md: -53 },
-                    left: { xs: -10, sm: -8, md: -14 },
-                    width: { xs: 78, sm: 85, md: 115 },
+                    bottom: { sm: -25, md: -53 },
+                    left: { sm: -8, md: -14 },
+                    width: { sm: 85, md: 115 },
                     aspectRatio: "1301 / 1209",
                     height: "auto",
+                    display: "none",
+                    "@media (min-width:768px)": { display: "block" },
                   }}
                 />
               )}
@@ -418,11 +455,13 @@ function Home() {
                   sx={{
                     position: "absolute",
                     zIndex: 2,
-                    bottom: { xs: -26, sm: -26, md: -42 },
-                    right: { xs: -2, sm: 0, md: 4 },
-                    width: { xs: 56, sm: 60, md: 82 },
+                    bottom: { sm: -26, md: -42 },
+                    right: { sm: 0, md: 4 },
+                    width: { sm: 60, md: 82 },
                     aspectRatio: "1312 / 1199",
                     height: "auto",
+                    display: "none",
+                    "@media (min-width:768px)": { display: "block" },
                   }}
                 />
               )}
@@ -437,36 +476,36 @@ function Home() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: feature.color,
+                  color: colors.text,
                 }}
               >
                 {feature.icon}
               </Box>
+              <Box sx={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 0.75 }}>
+                <Typography
+                  component="h3"
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: 700,
+                    letterSpacing: "0.01em",
+                    fontSize: { xs: "0.95rem", sm: "0.92rem" },
+                    lineHeight: 1.35,
+                    maxWidth: 210,
+                    color: colors.text,
+                    m: 0,
+                  }}
+                >
+                  {feature.title}
+                </Typography>
+                <Box sx={{ width: "26px", height: "3px", borderRadius: "2px", backgroundColor: colors.primary }} />
+              </Box>
               <Typography
-                component="h3"
                 sx={{
                   position: "relative",
                   zIndex: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontWeight: 700,
-                  textTransform: "uppercase",
-                  letterSpacing: "0.04em",
-                  fontSize: { xs: "0.85rem", sm: "0.82rem" },
-                  lineHeight: 1.35,
-                  maxWidth: 210,
-                  color: feature.color,
-                  m: 0,
-                }}
-              >
-                {feature.title}
-              </Typography>
-              <Typography
-                sx={{
-                  position: "relative",
-                  zIndex: 1,
-                  color: "rgba(48, 34, 54, 0.78)",
+                  color: "rgba(48, 34, 54, 0.8)",
                   fontSize: { xs: "0.93rem", sm: "0.9rem" },
                   lineHeight: 1.5,
                   maxWidth: 220,
@@ -474,38 +513,8 @@ function Home() {
               >
                 {feature.description}
               </Typography>
-
-              {feature.squiggleColor && (
-                <Squiggle
-                  color={feature.squiggleColor}
-                  aria-hidden="true"
-                  sx={{ position: "absolute", zIndex: 1, bottom: 18, right: 18, width: 28, height: 18 }}
-                />
-              )}
             </Box>
           ))}
-        </Box>
-
-        <Box sx={{ display: "flex", justifyContent: "center", mt: { xs: "20px", sm: "28px" } }}>
-          <Button
-            component={Link}
-            to="/contact"
-            endIcon={<ArrowForwardIcon />}
-            sx={{
-              backgroundColor: colors.primary,
-              color: "#fff",
-              textTransform: "uppercase",
-              fontWeight: 700,
-              letterSpacing: "0.05em",
-              borderRadius: "999px",
-              px: 3.5,
-              py: 1.5,
-              fontSize: "0.8rem",
-              "&:hover": { backgroundColor: colors.primaryHover },
-            }}
-          >
-            Plan Your Event
-          </Button>
         </Box>
       </Box>
 

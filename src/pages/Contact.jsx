@@ -140,7 +140,6 @@ function Contact() {
             sectionPadding={false}
             cardMaxWidth="100%"
             fullWidthSubmit
-            submitLabel="Send My Event Details"
             responseNote="We typically respond within 1–2 business days."
             preselectedServices={preselectedService ? [preselectedService] : []}
           />

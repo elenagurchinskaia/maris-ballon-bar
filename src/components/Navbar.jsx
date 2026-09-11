@@ -211,7 +211,7 @@ function Navbar() {
           </Box>
         </Box>
 
-        {/* Check Availability button */}
+        {/* Check availability button */}
         <Box
           component={Link}
           to="/book-event"
@@ -234,7 +234,7 @@ function Navbar() {
             },
           }}
         >
-          Check Availability
+          Check availability
         </Box>
 
         {/* Hamburger menu for mobile */}
@@ -356,7 +356,7 @@ function Navbar() {
               })}
             </Box>
 
-            {/* Check Availability button */}
+            {/* Check availability button */}
             <Box
               component={Link}
               to="/book-event"
@@ -383,7 +383,7 @@ function Navbar() {
                 "&:focus-visible": { outline: `2px solid ${colors.text}`, outlineOffset: "3px" },
               }}
             >
-              Check Availability
+              Check availability
             </Box>
           </Box>
 

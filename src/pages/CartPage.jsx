@@ -364,7 +364,7 @@ function CartPage() {
                                                 "&:hover": { backgroundColor: colors.primaryHover }
                                             }}
                                         >
-                                            {isSending ? "Sending..." : "Send Request"}
+                                            {isSending ? "Sending..." : "Send to Mari"}
                                         </Button>
                                     </Box>
                                 </Box>

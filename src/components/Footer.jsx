@@ -117,7 +117,7 @@ function Footer() {
                 "&:hover": { backgroundColor: colors.primaryHover },
               }}
             >
-              Check Availability
+              Check availability
             </Button>
 
             <Box sx={{ flex: { md: 1 }, display: { xs: "none", md: "block" } }} />

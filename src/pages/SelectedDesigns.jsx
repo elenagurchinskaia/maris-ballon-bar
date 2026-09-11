@@ -151,7 +151,6 @@ function SelectedDesigns() {
               key={favorites.map((item) => item.src).join(",")}
               heading="Request Your Selected Designs"
               description="Let us know about your event, and we'll follow up about the designs above."
-              submitLabel="Send Request"
               successMessage="Thank you! Your selected designs have been sent to Mari. We'll follow up within 1-2 business days."
               preselectedServices={["Seasonal designs"]}
               prefilledMessage={buildPrefilledMessage(favorites)}
