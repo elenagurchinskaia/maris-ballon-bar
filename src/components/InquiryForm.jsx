@@ -91,6 +91,7 @@ function InquiryForm({
   fullWidthSubmit = false,
   responseNote = "",
   sectionPadding = true,
+  onSuccess,
 }) {
   const form = useRef();
   const [sending, setSending] = useState(false);
@@ -120,6 +121,7 @@ function InquiryForm({
         () => {
           setSubmitted(true);
           setSending(false);
+          onSuccess?.();
         },
         (error) => {
           console.error("Email error:", error.text);

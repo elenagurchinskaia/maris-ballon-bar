@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FiInstagram, FiShoppingCart } from "react-icons/fi";
+import { FiInstagram, FiShoppingCart, FiHeart } from "react-icons/fi";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { Box, Typography, IconButton, Drawer, useMediaQuery } from "@mui/material";
 import { useCart } from "./CartContext";
+import { useFavorites } from "./FavoritesContext";
 import { colors } from "../theme";
 
 const iconColor = colors.textMuted;
@@ -14,6 +15,7 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const currentPage = useLocation().pathname;
   const { cart } = useCart();
+  const { favorites } = useFavorites();
   const navigate = useNavigate();
   const closeButtonRef = useRef(null);
   const prefersReducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
@@ -131,6 +133,44 @@ function Navbar() {
             }}
           >
             <FiInstagram />
+          </Box>
+
+          <Box
+            sx={{
+              position: "relative",
+              display: { xs: "none", md: "flex" },
+              cursor: "pointer",
+              color: iconColor,
+              fontSize: 22,
+              transition: "color 0.15s ease-in-out",
+              "&:hover": { color: colors.primary },
+            }}
+            onClick={() => navigate("/selected-designs")}
+            aria-label={`View selected designs${favorites.length > 0 ? `, ${favorites.length} selected` : ""}`}
+          >
+            <FiHeart />
+            {favorites.length > 0 && (
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: -6,
+                  right: -6,
+                  minWidth: 15,
+                  height: 15,
+                  px: "3px",
+                  borderRadius: "999px",
+                  backgroundColor: colors.accent,
+                  color: colors.text,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {favorites.length}
+              </Box>
+            )}
           </Box>
 
           <Box
@@ -378,6 +418,46 @@ function Navbar() {
               }}
             >
               <FiInstagram />
+            </IconButton>
+            <IconButton
+              aria-label={`View selected designs${favorites.length > 0 ? `, ${favorites.length} selected` : ""}`}
+              onClick={() => {
+                setMenuOpen(false);
+                navigate("/selected-designs");
+              }}
+              sx={{
+                position: "relative",
+                width: 48,
+                height: 48,
+                color: iconColor,
+                fontSize: 24,
+                "&:hover": { color: colors.primary },
+                "&:focus-visible": { outline: `2px solid ${colors.primary}`, outlineOffset: "2px" },
+              }}
+            >
+              <FiHeart />
+              {favorites.length > 0 && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 4,
+                    right: 4,
+                    minWidth: 16,
+                    height: 16,
+                    px: "3px",
+                    borderRadius: "999px",
+                    backgroundColor: colors.accent,
+                    color: colors.text,
+                    fontSize: 10,
+                    fontWeight: 700,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {favorites.length}
+                </Box>
+              )}
             </IconButton>
             <IconButton
               aria-label={`View cart${cart.length > 0 ? `, ${cart.length} item${cart.length === 1 ? "" : "s"}` : ""}`}

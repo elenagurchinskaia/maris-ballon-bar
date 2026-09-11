@@ -5,14 +5,18 @@ import { Box, Typography, Button, Dialog, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CloseIcon from "@mui/icons-material/Close";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { colors } from "../theme";
 import { seasonalCategories } from "../data/seasonalCategories";
+import { useFavorites } from "../components/FavoritesContext";
 import { useDocumentMeta } from "../utils/useDocumentMeta";
 
 function SeasonalCategory() {
   const { slug } = useParams();
   const category = seasonalCategories[slug];
   const [selected, setSelected] = useState(null);
+  const { favorites, isFavorite, toggleFavorite } = useFavorites();
 
   useDocumentMeta(
     category ? `${category.name} | Mari's Balloon Bar` : "Seasonal | Mari's Balloon Bar",
@@ -22,6 +26,13 @@ function SeasonalCategory() {
   if (!category) {
     return <Navigate to="/seasonal-items" replace />;
   }
+
+  const toFavoriteItem = (img) => ({
+    src: img.src,
+    alt: img.alt,
+    categoryName: category.name,
+    categorySlug: category.slug,
+  });
 
   return (
     <Box sx={{ backgroundColor: colors.background }}>
@@ -68,7 +79,11 @@ function SeasonalCategory() {
 
           <Button
             component={Link}
-            to={`/book-event?service=${encodeURIComponent("Seasonal designs")}&design=${encodeURIComponent(category.name)}`}
+            to={
+              favorites.length > 0
+                ? "/selected-designs"
+                : `/book-event?service=${encodeURIComponent("Seasonal designs")}&design=${encodeURIComponent(category.name)}`
+            }
             endIcon={<ArrowForwardIcon />}
             sx={{
               backgroundColor: colors.primary,
@@ -83,7 +98,9 @@ function SeasonalCategory() {
               "&:hover": { backgroundColor: colors.primaryHover },
             }}
           >
-            Request This Design
+            {favorites.length > 0
+              ? `Request Selected Designs (${favorites.length})`
+              : "Request This Design"}
           </Button>
         </Box>
       </Box>
@@ -98,40 +115,70 @@ function SeasonalCategory() {
               gap: 3,
             }}
           >
-            {category.images.map((img) => (
-              <Box
-                key={img.src}
-                component="button"
-                type="button"
-                onClick={() => setSelected(img)}
-                aria-label={`View larger photo: ${img.alt}`}
-                sx={{
-                  appearance: "none",
-                  border: "none",
-                  p: 0,
-                  cursor: "pointer",
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  aspectRatio: "4 / 5",
-                  boxShadow: "0 8px 20px rgba(48,34,54,0.12)",
-                  "&:focus-visible": { outline: `2px solid ${colors.primary}`, outlineOffset: "3px" },
-                }}
-              >
+            {category.images.map((img) => {
+              const favorited = isFavorite(img.src);
+              return (
                 <Box
-                  component="img"
-                  src={img.src}
-                  alt={img.alt}
+                  key={img.src}
                   sx={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    transition: "transform 0.3s ease",
-                    "&:hover": { transform: "scale(1.04)" },
+                    position: "relative",
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    aspectRatio: "4 / 5",
+                    boxShadow: "0 8px 20px rgba(48,34,54,0.12)",
                   }}
-                />
-              </Box>
-            ))}
+                >
+                  <Box
+                    component="button"
+                    type="button"
+                    onClick={() => setSelected(img)}
+                    aria-label={`View larger photo: ${img.alt}`}
+                    sx={{
+                      appearance: "none",
+                      border: "none",
+                      p: 0,
+                      cursor: "pointer",
+                      display: "block",
+                      width: "100%",
+                      height: "100%",
+                      "&:focus-visible": { outline: `2px solid ${colors.primary}`, outlineOffset: "3px" },
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={img.src}
+                      alt={img.alt}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                        transition: "transform 0.3s ease",
+                        "&:hover": { transform: "scale(1.04)" },
+                      }}
+                    />
+                  </Box>
+                  <IconButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleFavorite(toFavoriteItem(img));
+                    }}
+                    aria-label={favorited ? `Remove ${img.alt} from selected designs` : `Add ${img.alt} to selected designs`}
+                    sx={{
+                      position: "absolute",
+                      top: 8,
+                      right: 8,
+                      backgroundColor: "#fff",
+                      boxShadow: "0 4px 10px rgba(48,34,54,0.15)",
+                      color: favorited ? colors.primary : colors.textMuted,
+                      "&:hover": { backgroundColor: "#fff" },
+                    }}
+                  >
+                    {favorited ? <FavoriteIcon fontSize="small" /> : <FavoriteBorderIcon fontSize="small" />}
+                  </IconButton>
+                </Box>
+              );
+            })}
           </Box>
         </Box>
       </Box>
@@ -173,6 +220,29 @@ function SeasonalCategory() {
                 backgroundColor: "#000",
               }}
             />
+            <Box sx={{ p: 2.5, textAlign: "center" }}>
+              <Button
+                onClick={() => toggleFavorite(toFavoriteItem(selected))}
+                startIcon={isFavorite(selected.src) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                sx={{
+                  backgroundColor: isFavorite(selected.src) ? colors.primary : "transparent",
+                  color: isFavorite(selected.src) ? "#fff" : colors.primary,
+                  border: `1.5px solid ${colors.primary}`,
+                  textTransform: "uppercase",
+                  fontWeight: 700,
+                  letterSpacing: "0.05em",
+                  fontSize: "0.8rem",
+                  borderRadius: "999px",
+                  px: 3,
+                  py: 1.25,
+                  "&:hover": {
+                    backgroundColor: isFavorite(selected.src) ? colors.primaryHover : "#fff",
+                  },
+                }}
+              >
+                {isFavorite(selected.src) ? "Selected" : "Select This Photo"}
+              </Button>
+            </Box>
           </Box>
         )}
       </Dialog>

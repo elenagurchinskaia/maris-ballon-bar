@@ -13,6 +13,7 @@ import SeasonalCategory from "./pages/SeasonalCategory";
 import BookEvent from "./pages/BookEvent";
 import Error from "./pages/Error";
 import CartPage from "./pages/CartPage";
+import SelectedDesigns from "./pages/SelectedDesigns";
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartPage />
+      },
+      {
+        path: "/selected-designs",
+        element: <SelectedDesigns />
       },
     ],
     errorElement: <Error />,
