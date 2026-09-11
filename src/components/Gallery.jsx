@@ -12,144 +12,143 @@ const categoryLabel = {
   other: "Celebrations",
 };
 
-// Curated order: opens with three strong birthday shots (per request), then
-// alternates palette/framing/event type throughout so no two adjacent
-// photos read as the same install.
+// Curated order: alternates event type/palette/framing throughout so no two
+// adjacent photos read as the same install.
 const images = [
   {
-    src: "/assets/gallery/birthday-on the hills.png",
-    alt: "'Crystal' marquee letters with a pink, white and gold balloon garland beside a pool overlooking the Austin skyline",
+    src: "/assets/gallery/gallery-01-boho.png",
+    alt: "Boho-style '40' birthday marquee numbers with a mustard, plum and blush balloon garland in a backyard",
     category: "birthdays",
   },
   {
-    src: "/assets/gallery/neon-signs.jpg",
-    alt: "Rose-gold sequin shimmer wall with a lit 'Happy Birthday' sign",
-    category: "birthdays",
+    src: "/assets/gallery/gallery-02-bonjour-bebe.jpg",
+    alt: "'Bonjour Bebe' gender reveal backdrop with a light blue and white balloon garland",
+    category: "baby-showers",
   },
   {
-    src: "/assets/gallery/40-birthday.png",
-    alt: "White light-up '40' marquee numbers with a yellow, peach and burgundy balloon garland and florals",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-birthday-installs.png",
-    alt: "'Giraffe Jamboree' birthday backdrop with an orange, green and gold balloon garland",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/celebration-cotton-cart.png",
-    alt: "Pink and white balloon-trimmed cotton candy cart with fresh flowers under a fringed umbrella",
-    category: "other",
-  },
-  {
-    src: "/assets/gallery/rental-corporate-kit.webp",
-    alt: "Blue, cream and gold balloon garland arch around a lit 'OLTCC Conference 2024' sign",
+    src: "/assets/gallery/gallery-11.jpg",
+    alt: "'US Bank' step-and-repeat backdrop with a red, white and navy balloon garland",
     category: "corporate",
   },
   {
-    src: "/assets/gallery/baby-shower.png",
-    alt: "'We Can Bearly Wait' baby shower backdrop with a pink, tan and brown balloon garland, teddy bear and rattan chair",
-    category: "baby-showers",
+    src: "/assets/gallery/gallery-15-cowgirl.jpg",
+    alt: "Cow-print '28' birthday marquee numbers with a pink balloon garland and 'Happy Birthday' neon sign",
+    category: "birthdays",
   },
   {
-    src: "/assets/gallery/rental-wedding-decor-set.jpg",
-    alt: "White and rose-gold balloon garland arch above a dessert table with wooden 'LOVE' letters",
-    category: "weddings",
-  },
-  {
-    src: "/assets/gallery/baby-shower-02.png",
-    alt: "'Baby' marquee letters with pink, blue and white balloon clusters in an open field",
-    category: "baby-showers",
-  },
-  {
-    src: "/assets/gallery/party-celebration.png",
-    alt: "Black and gold balloon garland arch with a sequin backdrop at a masquerade-themed party",
-    category: "other",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-shimmer-wall.png",
-    alt: "Gold shimmer wall with 'GVA' marquee letters and a pastel candy-cane balloon garland",
+    src: "/assets/gallery/gallery-12-christmas-tree.jpg",
+    alt: "Balloon Christmas tree and red, green and gold garland beside lit marquee letters",
     category: "seasonal",
   },
   {
-    src: "/assets/gallery/kid-birthday.png",
-    alt: "Encanto-themed birthday backdrop with a colorful balloon garland, hanging florals and a '2' marquee number",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/maris-work-gallery-mothers-day.png",
-    alt: "Rose gold 'Happy Mother's Day' balloon bouquets with fresh flowers",
-    category: "seasonal",
-  },
-  {
-    src: "/assets/gallery/office installation.png",
-    alt: "Moana-themed birthday backdrop with a 'KIARA' wood-lettered sign and a white, yellow and coral balloon garland",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/birthday-on the hills-01.png",
-    alt: "Elegant poolside dinner table with gold-rimmed chargers and a greenery centerpiece, overlooking a hillside pool and marquee letters",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/balloons-on-the-fence.png",
-    alt: "Purple, lavender and silver balloon garland on a rustic wood fence backdrop",
-    category: "other",
-  },
-  {
-    src: "/assets/gallery/letters.png",
-    alt: "Light-up 'J&M' marquee letters displayed on the grass beside a pond at dusk",
+    src: "/assets/gallery/gallery-08-bridal-shower.jpg",
+    alt: "'Miss to Mrs.' bridal shower backdrop with a sage, ivory and gold balloon garland",
     category: "weddings",
   },
   {
-    src: "/assets/gallery/barbi-birthday.png",
-    alt: "Barbie-themed 'Tiffany' birthday backdrop with a pink balloon garland, roller skate and lips balloons, and a '5' marquee number",
-    category: "birthdays",
-  },
-  {
-    src: "/assets/gallery/cotton-candy.jpg",
-    alt: "Mari's Balloon Bar cotton candy cart with a rose-gold and cream balloon garland",
+    src: "/assets/gallery/gallery-17-hook-em.jpg",
+    alt: "'Hook 'Em' marquee letters with a burnt orange, gold and white balloon garland and fall florals",
     category: "other",
   },
   {
-    src: "/assets/gallery/baby-shower-01.png",
-    alt: "'We Can Bearly Wait' baby shower backdrop with a blue, tan and brown balloon garland and teddy bear",
+    src: "/assets/gallery/gallery-03-bridal-tiny-box.jpg",
+    alt: "Blush balloon garland with fresh florals beside a 'Baby in Bloom' sign",
     category: "baby-showers",
   },
   {
-    src: "/assets/gallery/birthday-lettering.png",
-    alt: "LEGO-themed birthday backdrop with '7' and '11' marquee numbers, a brick-pattern panel and Lego Movie character cutouts",
+    src: "/assets/gallery/gallery-07-70th-birthday.jpg",
+    alt: "'70' birthday marquee numbers with a black and silver balloon garland beside a sequin backdrop",
     category: "birthdays",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-flower-arrangment-01.png",
-    alt: "Floral centerpiece arrangement in a wooden planter box on an event table",
+    src: "/assets/gallery/gallery-19-gama.jpg",
+    alt: "'GAMA' marquee letters with a red, white and blue balloon garland",
+    category: "corporate",
+  },
+  {
+    src: "/assets/gallery/gallery-27-tropical.jpg",
+    alt: "Tropical pink, orange and yellow balloon garland with palm leaves against a greenery wall",
     category: "other",
   },
   {
-    src: "/assets/gallery/rental-deluxe-party-pack.avif",
-    alt: "Rose-gold and cream balloon bouquet with a personalized 'Happy 18th Birthday Tilly' bubble balloon",
+    src: "/assets/gallery/gallery-22-hello-kitty.jpg",
+    alt: "Hello Kitty birthday backdrop with pink and teal balloons and a 'Happy Birthday' neon sign",
     category: "birthdays",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-cart-rental.png",
-    alt: "White cotton candy cart with a fringed umbrella set up outdoors",
+    src: "/assets/gallery/gallery-24-marquees.jpg",
+    alt: "Lit '2024' New Year's Eve marquee numbers with white and gold balloon clusters",
+    category: "seasonal",
+  },
+  {
+    src: "/assets/gallery/gallery-09-grad.jpg",
+    alt: "Black and gold 'GRAD' marquee letters with balloon clusters on an outdoor patio",
     category: "other",
   },
   {
-    src: "/assets/gallery/birthday-01.png",
-    alt: "Bluey-themed 'Happy Birthday Xiomara' sign with a pink, blue and tan balloon garland and a '3' marquee number",
-    category: "birthdays",
+    src: "/assets/gallery/gallery-04-garland.jpg",
+    alt: "Blush, cream and black balloon garland installed over a kitchen island",
+    category: "other",
   },
   {
-    src: "/assets/gallery/shimmer-walls.jpg",
-    alt: "Close-up of a rose-gold shimmer wall backdrop with a 'Happy Birthday' neon sign",
-    category: "birthdays",
+    src: "/assets/gallery/gallery-18-gig-em.jpg",
+    alt: "'Gig Em' marquee letters with a maroon, black and gold balloon garland",
+    category: "other",
   },
   {
-    src: "/assets/gallery/rental-deluxe-party-pack-01.jpg",
-    alt: "Champagne and mauve balloon garland around a light-up '25' marquee number display",
-    category: "birthdays",
+    src: "/assets/gallery/gallery-06-boho-chic.jpg",
+    alt: "Boho chic sage, ivory and gold balloon arch installation with fresh florals",
+    category: "other",
+  },
+  {
+    src: "/assets/gallery/gallery-20-revelry.jpg",
+    alt: "'Revelry' office backdrop with a black, blush and cream balloon garland",
+    category: "corporate",
+  },
+  {
+    src: "/assets/gallery/gallery-05-grad-26.jpg",
+    alt: "Graduation guest posing beside a lit 'GRAD' marquee sign with black and gold balloon clusters",
+    category: "other",
+  },
+  {
+    src: "/assets/gallery/gallery-25-shimmer-silver.jpg",
+    alt: "'GVA' marquee letters with a maroon, silver and white winter balloon garland and snowflakes",
+    category: "seasonal",
+  },
+  {
+    src: "/assets/gallery/gallery-10-dog-party.jpg",
+    alt: "French bulldog neon signs with a pink and rose gold balloon garland around a dinner table",
+    category: "other",
+  },
+  {
+    src: "/assets/gallery/gallery-26-shimmer-wall-black.jpg",
+    alt: "Black, teal, white and silver balloon garland beside a black shimmer wall",
+    category: "corporate",
+  },
+  {
+    src: "/assets/gallery/gallery-14-farewell-arch.jpg",
+    alt: "Pink, red and gold rope balloon arch on a stage",
+    category: "other",
+  },
+  {
+    src: "/assets/gallery/gallery-13.jpg",
+    alt: "'Congrats Grad' neon backdrop with lit '25' marquee numbers and a black and silver balloon garland",
+    category: "other",
+  },
+  {
+    src: "/assets/gallery/gallery-16-friendsgiving.jpg",
+    alt: "Blush, mauve and cream balloon arch in a cozy living room",
+    category: "other",
+  },
+  {
+    src: "/assets/gallery/gallery-21-mini-shimmer.jpg",
+    alt: "Gold shimmer wall panel with a black and gold balloon garland",
+    category: "other",
+  },
+  {
+    src: "/assets/gallery/gallery-23-helium.jpg",
+    alt: "Rose gold and black orbz balloons on tassel ribbon",
+    category: "other",
   },
 ];
 

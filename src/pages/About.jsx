@@ -90,7 +90,7 @@ function About() {
             >
               <Box
                 component="img"
-                src="/assets/gallery/bio.jpg"
+                src="/assets/gallery/archive/bio.jpg"
                 alt="Mari, founder of Mari's Balloon Bar"
                 sx={{
                   width: "100%",

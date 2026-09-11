@@ -75,36 +75,36 @@ function RentalPropIcon() {
 // Real photos of Mari's own work — reused from the Gallery page's image set.
 const galleryPreviewImages = [
   {
-    src: "/assets/gallery/cotton-candy.jpg",
-    alt: "Mari's Balloon Bar cotton candy cart with a rose-gold and cream balloon garland",
+    src: "/assets/gallery/gallery-01-boho.png",
+    alt: "Boho-style '40' birthday marquee numbers with a mustard, plum and blush balloon garland in a backyard",
   },
   {
-    src: "/assets/gallery/shimmer-walls.jpg",
-    alt: "Rose-gold shimmer wall backdrop with a 'Happy Birthday' neon sign",
+    src: "/assets/gallery/gallery-08-bridal-shower.jpg",
+    alt: "'Miss to Mrs.' bridal shower backdrop with a sage, ivory and gold balloon garland",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-birthday-installs.png",
-    alt: "'Giraffe Jamboree' birthday backdrop with an orange, green and gold balloon garland",
+    src: "/assets/gallery/gallery-22-hello-kitty.jpg",
+    alt: "Hello Kitty birthday backdrop with pink and teal balloons and a 'Happy Birthday' neon sign",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-numbers.png",
-    alt: "White light-up '50' marquee numbers with a blue and gold balloon garland",
+    src: "/assets/gallery/gallery-12-christmas-tree.jpg",
+    alt: "Balloon Christmas tree and red, green and gold garland beside lit marquee letters",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-balloon-installs.png",
-    alt: "Blush, black and cream balloon garland on a branded 'Revelry' event backdrop",
+    src: "/assets/gallery/gallery-27-tropical.jpg",
+    alt: "Tropical pink, orange and yellow balloon garland with palm leaves against a greenery wall",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-shimmer-wall.png",
-    alt: "Gold shimmer wall with 'GVA' marquee letters and a pastel candy-cane balloon garland",
+    src: "/assets/gallery/gallery-07-70th-birthday.jpg",
+    alt: "'70' birthday marquee numbers with a black and silver balloon garland beside a sequin backdrop",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-flowers-arrangement.png",
-    alt: "Floral welcome sign arrangement for a baby shower, reading 'Because Baby Joon is Coming Soon'",
+    src: "/assets/gallery/gallery-03-bridal-tiny-box.jpg",
+    alt: "Blush balloon garland with fresh florals beside a 'Baby in Bloom' sign",
   },
   {
-    src: "/assets/gallery/maris-work-gallery-mothers-day.png",
-    alt: "Rose gold 'Happy Mother's Day' balloon bouquets with fresh flowers",
+    src: "/assets/gallery/gallery-24-marquees.jpg",
+    alt: "Lit '2024' New Year's Eve marquee numbers with white and gold balloon clusters",
   },
 ];
 
@@ -551,7 +551,7 @@ function Home() {
             >
               <Box
                 component="img"
-                src="/assets/gallery/bio.jpg"
+                src="/assets/gallery/archive/bio.jpg"
                 alt="Mari, founder and balloon artist at Mari's Balloon Bar"
                 sx={{
                   width: "100%",
